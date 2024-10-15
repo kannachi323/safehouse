@@ -8,14 +8,13 @@ interface LogoProps {
 
 export default function Logo({ linkHref = "/" }: LogoProps) {
     return (
-        <Link href={linkHref}>
             <Image
               src={SammySlug}
               width={80}
               height={80}
               alt="some logo"
             />
-        </Link>
+   
         
 
     )
