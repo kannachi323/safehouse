@@ -6,14 +6,19 @@ type SearchBarProps = {
 
 export default function SearchBar({children} : SearchBarProps) {
     return (
-        <div className="flex flex-row bg-white justify-between items-center max-w-full
-          m-5"
-        >
-          <input className="p-2 border-[#013c6c] border-2 rounded-md" type="search" />
+      <span className="inline-flex items-center justify-center">
+        <input className="rounded-md inline-flex px-2 h-8 outline-none text-base text-black w-[40vw] hover:text-[#d4d2d2]" 
+          type="search" 
+          placeholder="Enter an address, neighborhood, city, or ZIP code"
+          
+        />
   
-          {children}
+        {children}
 
-        </div>
+      
+      </span>
+         
+      
         
         
     )
