@@ -5,8 +5,8 @@ import { MdOutlineMenu } from "react-icons/md";
 
 export default function NavBar() {
   return (
-    <div className="w-screen flex flex-row justify-between items-center bg-[#013c6c]
-     text-white border-b-2 border-b-[#ffc00c] p-1"
+    <div className="flex flex-row justify-between items-center bg-[#013c6c]
+     text-white border-b-2 border-b-[#ffc00c]"
     >
 
       <div className="flex flex-row items-center justify-start">
@@ -19,9 +19,9 @@ export default function NavBar() {
       </div>
 
       <Link href="/">
-        <div className="flex flex-row items-center justify-center">
+        <div className="flex flex-row items-center justify-center hover:text-[#ffc00c]">
           <Logo />
-          <b className="text-3xl ml-5 pr-5 hover:text-[#ffc00c]">SafeHouse</b>
+          <b className="text-3xl ml-5">SafeHouse</b>
         </div>
       
       
@@ -30,9 +30,8 @@ export default function NavBar() {
       
       <div className="flex flex-row items-center justify-end">
         <Link className="m-5 hover:text-[#ffc00c]" href="/apply">Apply</Link>
-        <Link className="m-5 hover:text-[#ffc00c]" href="/rent">Manage rentals</Link>
         <Link className="m-5 hover:text-[#ffc00c]" href="/user-register">Sign Up</Link>
-        <Link className="m-5 hover:text-[#ffc00c]" href="/user-login">Log In</Link>
+        <Link className="m-5 hover:text-[#ffc00c]" href="/api/auth/login">Log In</Link>
       </div>
     </div>
   );
