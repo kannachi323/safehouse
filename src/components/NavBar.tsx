@@ -1,12 +1,19 @@
+"use client";
 import Link from "next/link";
 import Logo from "@/components/Logos";
 import { MdOutlineMenu } from "react-icons/md";
-
+import React, {useState} from 'react';
 
 export default function NavBar() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const toggleSidebar = () => {
+    console.log("Menu toggled:", !isSidebarOpen);
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
-    <div className="flex flex-row justify-between items-center bg-[#013c6c]
-     text-white border-b-2 border-b-[#ffc00c]"
+    <div className="w-screen flex flex-row justify-between items-center bg-[#013c6c]
+     text-white border-b-2 border-b-[#ffc00c] p-1"
     >
 
       <div className="flex flex-row items-center justify-start">
@@ -19,9 +26,9 @@ export default function NavBar() {
       </div>
 
       <Link href="/">
-        <div className="flex flex-row items-center justify-center hover:text-[#ffc00c]">
+        <div className="flex flex-row items-center justify-center">
           <Logo />
-          <b className="text-3xl ml-5">SafeHouse</b>
+          <b className="text-3xl ml-5 pr-5 hover:text-[#ffc00c]">SafeHouse</b>
         </div>
       
       
@@ -30,8 +37,9 @@ export default function NavBar() {
       
       <div className="flex flex-row items-center justify-end">
         <Link className="m-5 hover:text-[#ffc00c]" href="/apply">Apply</Link>
+        <Link className="m-5 hover:text-[#ffc00c]" href="/rent">Manage rentals</Link>
         <Link className="m-5 hover:text-[#ffc00c]" href="/user-register">Sign Up</Link>
-        <Link className="m-5 hover:text-[#ffc00c]" href="/api/auth/login">Log In</Link>
+        <Link className="m-5 hover:text-[#ffc00c]" href="/user-login">Log In</Link>
       </div>
     </div>
   );
