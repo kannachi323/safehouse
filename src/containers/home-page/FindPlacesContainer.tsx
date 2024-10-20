@@ -1,7 +1,9 @@
+"use client";
 import Image from "next/image";
 import BKG1 from "@public/images/bkg1.jpg"
 import RENT1 from "@public/images/rent1.jpg";
 import RENT2 from "@public/images/rent2.jpg";
+import { useState } from "react";
 
 import Dropdown from "@components/Dropdown"
 import SearchBar from "@components/SearchBar"
@@ -10,6 +12,18 @@ import { CiLocationOn } from "react-icons/ci";
 
 
 export default function FindPlacesContainer() {
+  const [location, setLocation] = useState({ latitude: null, longitude: null });
+  const [error, setError] = useState(null);
+  const getLocation = () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+      }
+    )
+  }
   return (
     <div className="flex flex-row justify-between items-center bg-blue-500 relative h-[45vh] w-full text-3xl"
       style={{
@@ -29,7 +43,7 @@ export default function FindPlacesContainer() {
         <b className="text-white text-xl pr-12">Find a specific location</b>
         <SearchBar
           children={
-            <CiLocationOn className="text-4xl text-white hover:text-[#d4d2d2] cursor-pointer"/>
+            <CiLocationOn className="text-4xl text-white hover:text-[#d4d2d2] cursor-pointer" onClick={getLocation}/>
           } 
         />
       </div>
