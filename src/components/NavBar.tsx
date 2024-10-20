@@ -42,21 +42,21 @@ export default function NavBar() {
         style={{ width: "250px" }}>
         <h2 className="text-xl font-bold mb-5">Filters</h2>
         <ul>
-          <li className="mb-5"><Link href="bedrooms" onClick={toggleSidebar}> Bedrooms</Link>
+          <li className="mb-5"><button className="bedrooms">Bedrooms</button>
           </li>
-          <li className="mb-5"><Link href="Bathrooms" onClick={toggleSidebar}>Bathrooms</Link>
+          <li className="mb-5"><button className="Bathrooms">Bathrooms</button>
           </li>
-          <li className="mb-5"><Link href="price-range" onClick={toggleSidebar}>Price Range</Link>
+          <li className="mb-5"><button className="price-range">Price Range</button>
           </li>
-          <li className="mb-5"><Link href="distance" onClick={toggleSidebar}>Distance</Link>
+          <li className="mb-5"><button className="distance">Distance</button>
           </li>
-          <li className="mb-5"><Link href="housing-type" onClick={toggleSidebar}>Housing Type</Link>
+          <li className="mb-5"><button className="housing-type">Housing Type</button>
           </li>
-          <li className="mb-5"><Link href="parking" onClick={toggleSidebar}>Parking</Link>
+          <li className="mb-5"><button className="parking">Parking</button>
           </li>
-          <li className="mb-5"><Link href="pet-status" onClick={toggleSidebar}>Pet Status</Link>
+          <li className="mb-5"><button className="pet-status">Pet Status</button>
           </li>
-          <li className="mb-5"><Link href="laundry" onClick={toggleSidebar}>Laundry</Link>
+          <li className="mb-5"><button className="laundry">Laundry</button>
           </li>
           <li className="mb-5">
           </li>
