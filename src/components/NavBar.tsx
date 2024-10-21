@@ -42,25 +42,25 @@ export default function NavBar() {
         style={{ width: "250px" }}>
         <h2 className="text-xl font-bold mb-5">Filters</h2>
         <ul>
-          <li className="mb-5"><button className="bedrooms">Bedrooms</button>
+          <li className="mb-5 hover:text-[#ffc00c]"><button className="bedrooms">Bedrooms</button>
           </li>
-          <li className="mb-5"><button className="Bathrooms">Bathrooms</button>
+          <li className="mb-5 hover:text-[#ffc00c]"><button className="Bathrooms">Bathrooms</button>
           </li>
-          <li className="mb-5"><button className="price-range">Price Range</button>
+          <li className="mb-5 hover:text-[#ffc00c]"><button className="price-range">Price Range</button>
           </li>
-          <li className="mb-5"><button className="distance">Distance</button>
+          <li className="mb-5 hover:text-[#ffc00c]"><button className="distance">Distance</button>
           </li>
-          <li className="mb-5"><button className="housing-type">Housing Type</button>
+          <li className="mb-5 hover:text-[#ffc00c]"><button className="housing-type">Housing Type</button>
           </li>
-          <li className="mb-5"><button className="parking">Parking</button>
+          <li className="mb-5 hover:text-[#ffc00c]"><button className="parking">Parking</button>
           </li>
-          <li className="mb-5"><button className="pet-status">Pet Status</button>
+          <li className="mb-5 hover:text-[#ffc00c]"><button className="pet-status">Pet Status</button>
           </li>
-          <li className="mb-5"><button className="laundry">Laundry</button>
+          <li className="mb-5 hover:text-[#ffc00c]"><button className="laundry">Laundry</button>
           </li>
-          <li className="mb-5">
+          <li className="mb-5 hover:text-[#ffc00c]">
           </li>
-          <li className="mb-5"><button className="mr-3">Reset</button>
+          <li className="mb-5 hover:text-[#ffc00c]"><button className="mr-3">Reset</button>
           <button>Apply</button>
           </li>
         </ul>
