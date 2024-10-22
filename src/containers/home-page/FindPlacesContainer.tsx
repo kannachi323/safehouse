@@ -50,16 +50,6 @@ export default function FindPlacesContainer() {
             </button>
           } 
         />
-
-        {loc.length > 0 && (
-          <div className="mt-4 text-white">
-            <ul>
-              {loc.map((ll, index) => (
-                <li key={index}>{ll}</li>
-              ))}
-            </ul>
-          </div>
-        )}
       </div>
       
     </div>
