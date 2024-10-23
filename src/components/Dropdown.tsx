@@ -7,27 +7,31 @@ import { useState } from "react";
 type DropdownProps = {
   color: string;
   elements: string[];
+  children: string;
+  className: string;
 };
 
-export default function Dropdown({ color, elements }: DropdownProps) {
+export default function Dropdown({ color, elements, children, className }: DropdownProps) {
   const [showOptions, setShowOptions] = useState(false);
-  const [label, setLabel] = useState("......");
+  const [selectedLabel, setSelectedLabel] = useState('')
 
   return (
     <>
       <button
         onClick={() => setShowOptions(!showOptions)}
-        className={`relative bg-white flex flex-row justify-between items-center border-2 w-56 h-8
-          border-white rounded-lg text-[${color}] text-base px-2`}
+        className={className + ` text-[${color}]`}
       >
-        {label}
-        <MdOutlineArrowDropDown className="self-center text-4xl" />
+        <span className="flex flex-row justify-around items-center w-full pl-2">
+          {selectedLabel ? selectedLabel : children}
+          <MdOutlineArrowDropDown className="self-center text-3xl" />
+        </span>
+      
       </button>
 
       {showOptions && (
         <DropdownOptions
           elements={elements}
-          setLabel={setLabel}
+          setSelectedLabel={setSelectedLabel}
           setShowOptions={setShowOptions}
         />
       )}
@@ -37,11 +41,11 @@ export default function Dropdown({ color, elements }: DropdownProps) {
 
 type DropdownOptionsProps = {
   elements: string[];
-  setLabel: (label: string) => void;
+  setSelectedLabel: (label: string) => void;
   setShowOptions: (show: boolean) => void;
 };
 
-function DropdownOptions({ elements, setLabel, setShowOptions }: DropdownOptionsProps) {
+function DropdownOptions({ elements, setSelectedLabel, setShowOptions }: DropdownOptionsProps) {
   return (
     <div className="absolute left-1/6 top-1/2 mt-7 bg-white w-56 border rounded-lg shadow-lg z-10">
       {elements.map((element, index) => (
@@ -49,7 +53,7 @@ function DropdownOptions({ elements, setLabel, setShowOptions }: DropdownOptions
           key={index}
           className="p-2 w-full text-left text-base hover:bg-gray-200 cursor-pointer"
           onClick={() => {
-            setLabel(element);
+            setSelectedLabel(element);
             setShowOptions(false);
           }}
         >

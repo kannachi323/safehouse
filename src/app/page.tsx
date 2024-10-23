@@ -1,29 +1,14 @@
-'use client'
-
-import { useState, useEffect } from 'react';
-
 import RENT1 from "@public/images/rent1.jpg";
 import RENT2 from "@public/images/rent2.jpg"
 import Image from "next/image"
 import FindPlacesContainer from "@/containers/home-page/FindPlacesContainer"
 
-
 export default function Home() {
-  const [googleMap, setGoogleMap] = useState(null)
-
-  {/* try to set the user location if it's stored in db, ow ask for location*/}
-  useEffect(() => {
-    async function fetchUserLocation() {
-      let res = await fetch
-    }
-  })
-
-
 
   return (
     <>
       {/* section 1 */}
-      <div className=" bg-white text-[#013c6c] flex flex-col justify-start items-center" >
+      <div className="bg-white text-[#013c6c] flex flex-col justify-start items-center" >
         <FindPlacesContainer />
         <b className="text-[#013c6c] self-start text-3xl mx-20 my-20">
           Finding your next place <span className="text-[#ffc00c]">starts with us</span>
@@ -42,7 +27,7 @@ export default function Home() {
 
         
         <b className="text-[#013c6c] self-end text-3xl mx-20 my-20">
-          And <span className="text-[#ffc00c]">we're here to help</span> every step of the way
+          And <span className="text-[#ffc00c]">{`we're to help`}</span> every step of the way
         </b>
 
       </div>

@@ -12,7 +12,7 @@ export default function NavBar() {
   };
 
   return (
-    <div className="w-screen flex flex-row justify-between items-center bg-[#013c6c]
+    <div className="flex flex-row justify-between items-center bg-[#013c6c]
      text-white border-b-2 border-b-[#ffc00c] p-1"
     >
 
