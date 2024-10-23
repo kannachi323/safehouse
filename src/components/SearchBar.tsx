@@ -1,39 +1,25 @@
+
+import { useState } from 'react';
+import { getCity } from '@utils/db'
+import { IoMdSearch } from "react-icons/io";
+import { useQuery } from "@contexts/QueryContext"
+
 type SearchBarProps = {
-  children? : React.ReactElement
+  children? : React.ReactNode
   width: string
 }
 
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  // Add other relevant fields as needed
-}
-
-
-
 export default function SearchBar({children, width} : SearchBarProps) {
-    async function getLocation(): Promise<void> {
-    
-      const url: string = `http://localhost:3000/api/db/listings?address=Anton Pacific, 800 Pacific Ave, Santa Cruz, CA`;
-      
-      try {
-        const response: Response = await fetch(url);
-        
-        if (!response.ok) {
-          throw new Error(`Response status: ${response.status}`);
-        }
-    
-        const json: Product[] = await response.json();
-        console.log(json);
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          console.error('Error message:', error.message);
-        } else {
-          console.error('Unexpected error:', error);
-        }
+   const queryContext = useQuery();
+
+   const { searchQuery, setSearchQuery } = queryContext;
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        getCity(searchQuery);
       }
-    }
+    };
 
     return (
       <span className="inline-flex items-center justify-center rounded-lg bg-white h-9 border-[#013c6c] border-2"
@@ -43,9 +29,16 @@ export default function SearchBar({children, width} : SearchBarProps) {
           id="search-bar"
           type="search" 
           placeholder="Enter an address, neighborhood, city, or ZIP code"
-          onKeyDown={() => getLocation}
+          onChange={(e) => {{
+            setSearchQuery(e.target.value)
+            console.log(searchQuery);
+          }}}
+          onKeyDown={handleKeyDown}
         />
         {children}
+        <IoMdSearch className="text-3xl text-black hover:text-[#d4d2d2] cursor-pointer m-0"
+          onClick={() => getCity(searchQuery) }
+        />
       </span>
          
       

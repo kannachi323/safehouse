@@ -1,7 +1,6 @@
 import "./globals.css";
 import NavBar from "../components/NavBar";
-import { UserProvider } from '@auth0/nextjs-auth0/client';
-
+import { QueryProvider } from "@contexts/QueryContext"
 
 export default function RootLayout({
   children,
@@ -10,13 +9,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <UserProvider>
         <body>
           <NavBar/>
-          <main>{children}</main>
+          <QueryProvider>
+            <main>{children}</main>
+          </QueryProvider>
+          
         </body>
-      </UserProvider>
-      
     </html>
   );
 }
