@@ -13,7 +13,7 @@ export default function NavBar() {
 
   return (
     <div className="flex flex-row justify-between items-center bg-[#013c6c]
-     text-white border-b-2 border-b-[#ffc00c] p-1"
+     text-white border-b-2 border-b-[#ffc00c] p-1 h-[10vh]"
     >
 
       <div className="flex flex-row items-center justify-start">

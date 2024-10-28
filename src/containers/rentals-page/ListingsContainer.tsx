@@ -10,7 +10,7 @@ export default function ListingsContainer() {
     console.log(listings); // For debugging purposes
     console.log(listings[0].prices)
     return (
-        <div className="w-[50vw]">
+        <div className="w-[50vw] h-[82vh] overflow-y-scroll">
             <h1 className="text-3xl font-bold w-full p-5">Available for rent</h1>
             <div className="grid grid-cols-2 gap-4 w-full place-items-center">
                 {listings.map((listing) => (

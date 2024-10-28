@@ -3,12 +3,13 @@ import Image from "next/image"
 import Listing from "@containers/rentals-page/ListingsContainer"
 
 export interface Listing {
-    prices: string
-    address: string
-    features: string
-    city: string
-    state: string
-    zipcode: string
+    prices?: string
+    address?: string
+    features?: string
+    city?: string
+    state?: string
+    zipcode?: string | number | null;
+    id?: number
 }
 
 interface ListingContentCardProps {
