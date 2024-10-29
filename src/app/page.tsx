@@ -3,13 +3,12 @@ import RENT2 from "@public/images/rent2.jpg"
 import Image from "next/image"
 import FindPlacesContainer from "@/containers/home-page/FindPlacesContainer"
 
-
-
 export default function Home() {
+
   return (
     <>
       {/* section 1 */}
-      <div className="w-screen bg-white text-[#013c6c] flex flex-col justify-start items-center" >
+      <div className="bg-white text-[#013c6c] flex flex-col justify-start items-center" >
         <FindPlacesContainer />
         <b className="text-[#013c6c] self-start text-3xl mx-20 my-20">
           Finding your next place <span className="text-[#ffc00c]">starts with us</span>
@@ -28,13 +27,13 @@ export default function Home() {
 
         
         <b className="text-[#013c6c] self-end text-3xl mx-20 my-20">
-          And <span className="text-[#ffc00c]">we're here to help</span> every step of the way
+          And <span className="text-[#ffc00c]">{`we're to help`}</span> every step of the way
         </b>
 
       </div>
 
       {/* section 2 */}
-      <div className="w-screen bg-[#f7f7f7] text-[#013c6c] flex flex-col justify-start items-center">
+      <div className="bg-[#f7f7f7] text-[#013c6c] flex flex-col justify-start items-center">
         <div className="flex flex-row justify-around items-center my-20">
           <Image src={RENT1} alt="First image" className="w-1/3 h-full object-cover rounded-xl" />
           <b className="text-[#013c6c] text-3xl mx-20 my-20">
@@ -44,7 +43,7 @@ export default function Home() {
       
       </div>
 
-      <div className="w-screen bg-white text-[#013c6c] flex flex-col justify-start items-center">
+      <div className="bg-white text-[#013c6c] flex flex-col justify-start items-center">
         <div className="flex flex-row justify-center items-center my-20">
           <b className="text-[#013c6c] text-3xl mx-20 my-20 text-center">
           Get recommendations tailored to <span className="text-[#ffc00c]">your preferences</span>
@@ -54,7 +53,7 @@ export default function Home() {
       </div>
 
       {/* section 3 */}
-      <div className="w-screen bg-[#f7f7f7] text-[#013c6c] flex flex-col justify-start items-center">
+      <div className=" bg-[#f7f7f7] text-[#013c6c] flex flex-col justify-start items-center">
         <b className="text-[#013c6c] self-center text-3xl mx-20 my-20">
         <span className="text-[#ffc00c]">Safe</span> and <span className="text-[#ffc00c]">secure</span> communication
         </b>

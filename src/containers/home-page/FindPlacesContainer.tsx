@@ -1,36 +1,24 @@
-"use client";
-import Image from "next/image";
+'use client'
 import BKG1 from "@public/images/bkg1.jpg"
-import RENT1 from "@public/images/rent1.jpg";
-import RENT2 from "@public/images/rent2.jpg";
-import { useState } from "react";
-import { GoogleMap, LoadScript } from '@react-google-maps/api';
 
 import Dropdown from "@components/Dropdown"
 import SearchBar from "@components/SearchBar"
 import { CiLocationOn } from "react-icons/ci";
 
-const UCSC = {
-  lat: 36.9905,
-  lng: -122.0584,
-};
+import { LoadScript, GoogleMap } from "@react-google-maps/api";
 const containerStyle = {
-  width: "100%",
-  height: "100%",
+  width: '100%',
+  height: '45vh'
 };
+const location = {
+  lat: 37.7749,
+  lng: -122.4194
+};
+
 export default function FindPlacesContainer() {
-  const [location, setLocation] = useState(UCSC);
-  const [error, setError] = useState(null);
-  const getLocation = () => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setLocation({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-      }
-    )
-  }
+  const schoolList : string[] = ["UC Santa Cruz", "UC Berkeley", "UCLA", "UC Riverside", "UC Santa Barbara", 
+    "UC Davis", "UC San Diego", "UC Irvine"]
+
   return (
     <div className="flex flex-row justify-between items-center bg-blue-500 relative h-[45vh] w-full text-3xl"
       style={{
@@ -51,19 +39,23 @@ export default function FindPlacesContainer() {
 
       <div className="flex flex-col justify-center items-center m-20 w-">
         <b className="text-white text-xl">Select a school</b>
-        <Dropdown label={"......"} color={"#ffffff"}/>
+        <Dropdown color={"#013c6c"} elements={schoolList} className="relative bg-white flex flex-row justify-between items-center border-2 w-56 h-8
+          border-white rounded-lg text-base">
+          -------
+        </Dropdown>
         
       </div>
       
-      <div className="flex flex-col justify-center items-center m-20 w-3/4">
-        <b className="text-white text-xl pr-12">Find a specific location</b>
-        <SearchBar
-          children={
-            <CiLocationOn className="text-4xl text-white hover:text-[#d4d2d2] cursor-pointer" onClick={getLocation}/>
-          } 
-        />
+      <div className="flex flex-col justify-center items-center m-20 w-1/2">
+        <b className="text-white text-xl">Find a specific location</b>
+        <SearchBar width="40vw">
+          <CiLocationOn className="text-3xl text-[#013c6c]hover:text-[#d4d2d2] cursor-pointer m-0"
+          />
+        </SearchBar>
       </div>
       
     </div>
   );
 }
+
+
