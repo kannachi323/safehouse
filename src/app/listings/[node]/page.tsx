@@ -1,9 +1,9 @@
-import FiltersContainer from "@/containers/rentals-page/FiltersContainer"
-import ListingsContainer from "@containers/rentals-page/ListingsContainer"
-import MapsContainer from "@containers/rentals-page/MapsContainer"
+import FiltersContainer from "@containers/listings-page/FiltersContainer"
+import ListingsContainer from "@containers/listings-page/ListingsContainer"
+import MapsContainer from "@containers/listings-page/MapsContainer"
 import { QueryProvider } from "@contexts/QueryContext"
 
-export default function Rent() {
+export default function Listings() {
     return (
         <QueryProvider>
           <div className="flex flex-col">
@@ -13,7 +13,7 @@ export default function Rent() {
             <div className="flex flex-row">
               
                 <MapsContainer />
-                <ListingsContainer />
+                <ListingsContainer className="w-[50vw] h-[82vh] overflow-y-scroll"/>
               
             </div>
               
@@ -26,4 +26,8 @@ export default function Rent() {
         </QueryProvider>
         
     )
+}
+
+export function MyListings() {
+
 }

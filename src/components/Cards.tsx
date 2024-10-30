@@ -1,6 +1,6 @@
 import RENT1 from "@public/images/rent1.jpg";
 import Image from "next/image"
-import Listing from "@containers/rentals-page/ListingsContainer"
+import Listing from "@/containers/listings-page/ListingsContainer"
 
 export interface Listing {
     prices?: string
