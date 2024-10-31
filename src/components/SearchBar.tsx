@@ -1,18 +1,18 @@
 
-import { useState } from 'react';
+'use client'
+
 import { getCity } from '@utils/db'
 import { IoMdSearch } from "react-icons/io";
-import { useQuery } from "@contexts/QueryContext"
+
 
 type SearchBarProps = {
   children? : React.ReactNode
-  width: string
+  className? : string;
+  context? : any;
 }
 
-export default function SearchBar({children, width} : SearchBarProps) {
-   const queryContext = useQuery();
-
-   const { searchQuery, setSearchQuery } = queryContext;
+export default function SearchBar({children, className, context} : SearchBarProps) {
+   const { searchQuery, setSearchQuery } = context || {};
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       if (event.key === 'Enter') {
@@ -22,9 +22,7 @@ export default function SearchBar({children, width} : SearchBarProps) {
     };
 
     return (
-      <span className="inline-flex items-center justify-center rounded-lg bg-white h-9 border-[#013c6c] border-2"
-        style={{width}}
-      >
+      <span className={className}>
         <input className="rounded-md inline-flex h-7 outline-none text-base text-[#013c6c] px-2 w-full"
           id="search-bar"
           type="search" 

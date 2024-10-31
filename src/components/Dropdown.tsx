@@ -2,6 +2,8 @@
 
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { useState } from "react";
+import { QueryContextProps, Filter } from "@/contexts/QueryContext";
+
 
 // TypeScript type definitions for props
 type DropdownProps = {
@@ -9,7 +11,7 @@ type DropdownProps = {
   elements: string[];
   children: string;
   className: string;
-  context?: any;
+  context?: QueryContextProps;
 };
 
 export default function Dropdown({ color, elements, children, className, context }: DropdownProps) {
@@ -36,7 +38,7 @@ export default function Dropdown({ color, elements, children, className, context
           elements={elements}
           setLabel={setLabel}
           setShowOptions={setShowOptions}
-          contextProps = {setFilters}
+          setFilters = {setFilters}
         />
       )}
     </div>
@@ -47,10 +49,10 @@ type DropdownOptionsProps = {
   elements: string[];
   setLabel: (label: string) => void;
   setShowOptions: (show: boolean) => void;
-  contextProps : any;
+  setFilters?: (filter: Filter) => void;
 };
 
-function DropdownOptions({ elements, setLabel, setShowOptions }: DropdownOptionsProps) {
+function DropdownOptions({ elements, setLabel, setShowOptions, setFilters }: DropdownOptionsProps) {
   return (
     <div className="absolute left-0 top-[80%] mt-1 bg-white w-full border rounded-lg shadow-lg z-50">
       {elements.map((element, index) => (

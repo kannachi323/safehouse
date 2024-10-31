@@ -2,11 +2,13 @@ import RENT1 from "@public/images/rent1.jpg";
 import RENT2 from "@public/images/rent2.jpg"
 import Image from "next/image"
 import FindPlacesContainer from "@/containers/home-page/FindPlacesContainer"
+import NavBar from "@/components/NavBar";
 
 export default function Home() {
 
   return (
     <>
+      <NavBar/>
       {/* section 1 */}
       <div className="bg-white text-[#013c6c] flex flex-col justify-start items-center" >
         <FindPlacesContainer />

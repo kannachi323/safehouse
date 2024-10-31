@@ -1,5 +1,5 @@
 import { app } from "@/app/api/firebase/config"
-import { getAuth, signInWithPopup, GoogleAuthProvider
+import { getAuth, signInWithRedirect, GoogleAuthProvider
 } from "firebase/auth";
 //DOCUMENTATION: https://firebase.google.com/docs/auth/web/manage-users#web
 
@@ -17,18 +17,18 @@ const auth = getAuth(app);
 
 
 //google provider
+
 export async function signInWithGoogle() {
-  const GoogleProvider = await new GoogleAuthProvider();
-  await signInWithPopup(auth, GoogleProvider).then((result) => {
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const user = result.user;
-  }).catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.customData.email;
-    // The AuthCredential type that was used.
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    // ...
-  });
+  try {
+    const GoogleProvider = new GoogleAuthProvider();
+    const result = await signInWithRedirect(auth, GoogleProvider);
+
+    if (result) {
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      console.log('Credential:', credential);
+    }
+  } catch {
+
+    console.error('Error: something went wrong with firebase');
+  }
 }

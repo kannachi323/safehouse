@@ -7,21 +7,4 @@
   --foreground: #013c6c;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-}
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}

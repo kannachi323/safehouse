@@ -21,8 +21,8 @@ export default function FiltersContainer() {
   };
 
   return (
-    <div className="flex flex-row items-center justify-center border-b-[#ffc00c] border-2 px-2 h-[8vh]">
-      <SearchBar width="50%">
+    <div className="flex flex-row items-center justify-center border-b-[#ffc00c] border-2 px-2 h-[8vh] w-full">
+      <SearchBar className="inline-flex items-center justify-center rounded-lg bg-white h-9 border-[#013c6c] border-2 w-1/2" context={queryContext}>
           <CiLocationOn className="text-3xl text-black hover:text-[#d4d2d2] cursor-pointer m-0"/>
       </SearchBar>
       <div className="relative flex flex-row items-center justify-start w-[50%]">

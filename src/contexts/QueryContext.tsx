@@ -1,7 +1,7 @@
 'use client'
 import React, { createContext, useState, useContext } from 'react';
 
-interface Filter {
+export interface Filter {
     bedCount?: number;
     bathCount?: number;
     homeType?: string;
@@ -27,7 +27,9 @@ export function useQuery() {
 }
 
 export function QueryProvider({ children } : { children : React.ReactNode}) {
-    const [filters, setFilters] = useState({})
+    const [filters, setFilters] = useState<Filter>({
+
+    })
     const [searchQuery, setSearchQuery] = useState('')
 
     const value : QueryContextProps = {
