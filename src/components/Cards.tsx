@@ -13,12 +13,13 @@ export interface Listing {
 }
 
 interface ListingContentCardProps {
+    className? : string
     listing: Listing
 }
 
-export function ListingContentCard({listing} : ListingContentCardProps) {
+export function ListingContentCard({ className, listing } : ListingContentCardProps) {
     return (
-        <div className="flex flex-col w-[90%] rounded-lg border-2 border-[#013c6c]">
+        <div className={className}>
             <Image src={RENT1} alt="some image" className="w-full h-[60%] rounded-t-md" />
             <div className="flex flex-col w-full">
                 <h1 className="text-xl">{listing.prices}</h1>

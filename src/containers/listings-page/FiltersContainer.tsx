@@ -7,6 +7,7 @@ import { useQuery } from "@contexts/QueryContext"
 
 import { CiLocationOn } from "react-icons/ci";
 import { IoFilter } from "react-icons/io5";
+import { MdOutlineArrowDropDown } from "react-icons/md";
 
 
 
@@ -27,44 +28,35 @@ export default function FiltersContainer() {
       </SearchBar>
       <div className="relative flex flex-row items-center justify-start w-[50%]">
         
-        <Dropdown color="#013c6c" elements={[]} 
-          className="flex flex-row justify-around items-center m-3 border-2 rounded-lg h-9 border-[#013c6c] hover:bg-[#e7e6e6]">
+        <Dropdown elements={[]} 
+          className="inline-flex items-center justify-center m-3 pl-2 border-2 rounded-lg h-9 border-[#013c6c] text-[#013c6c] hover:bg-[#e7e6e6]">
           Bed/baths
+          <MdOutlineArrowDropDown className="self-center text-3xl" />
         </Dropdown>
         
-        <Dropdown color="#013c6c" elements={['3500']} context={queryContext}
-          className="flex flex-row justify-around items-center m-3 border-2 rounded-lg h-9 border-[#013c6c] hover:bg-[#e7e6e6]">
+        <Dropdown elements={['3500']}
+          className="inline-flex items-center justify-center m-3 pl-2 border-2 rounded-lg h-9 border-[#013c6c] text-[#013c6c] hover:bg-[#e7e6e6]">
           Price
+          <MdOutlineArrowDropDown className="self-center text-3xl" />
         </Dropdown>
         
-        <Dropdown color="#013c6c" elements={['Apartment', 'Condo', 'House']} 
-          className="flex flex-row justify-around items-center m-3 border-2 rounded-lg h-9 border-[#013c6c] hover:bg-[#e7e6e6]">
+        <Dropdown className="inline-flex items-center justify-center m-3 pl-2 border-2 rounded-lg h-9 border-[#013c6c] text-[#013c6c] hover:bg-[#e7e6e6]" elements={['Apartment', 'Condo', 'House']}>
           Home type
+          <MdOutlineArrowDropDown className="self-center text-3xl" />
         </Dropdown>
         
-        <div className="relative">
-          <button
-            className="flex flex-row justify-around items-center m-3 border-2 rounded-lg h-9 border-[#013c6c] hover:bg-[#e7e6e6]"
-            onClick={toggleSidebar}
-          >
-            <span className="flex flex-row justify-between items-center w-full ml-2">
+        <Dropdown className="inline-flex items-center justify-center m-3 pl-2 border-2 rounded-lg h-9 border-[#013c6c] text-[#013c6c] hover:bg-[#e7e6e6]" elements={[]}>
               More Filters
-              <IoFilter className="self-center text-lg m-1"/>
-            
-            </span>
-          </button>
+              <IoFilter className="self-center text-lg m-2"/>
+              
+              
+        </Dropdown>
 
-          {isSidebarOpen && <SideBar/>}
-
-
-        </div>
-        
-
-   
-        
-        <Dropdown color="013c6c" elements={[]}
-          className="flex flex-row justify-around items-center m-3 border-2 rounded-lg h-9 border-[#013c6c] hover:bg-[#e7e6e6] bg-[#ffc00c]">
+  
+        <Dropdown className="inline-flex items-center justify-center m-3 pl-2 border-2 rounded-lg h-9 border-[#013c6c] text-[#013c6c] hover:bg-[#e7e6e6]" elements={[]}
+        >
             Save search
+            <MdOutlineArrowDropDown className="self-center text-3xl" />
         </Dropdown>
       </div>
     </div>
