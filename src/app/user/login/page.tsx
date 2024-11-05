@@ -1,10 +1,19 @@
 "use client";
+import { useEffect } from 'react';
 import { GoogleButton } from '@/components/Buttons/Buttons';
 import { signInWithGoogle } from '@/auth/provider';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@contexts/AuthContext'
 
 export default async function SignIn() {
     const router = useRouter();
+    
+    const { user } = useAuth();
+    
+    if (user) {
+        router.push('/listings/default')
+    }
+   
 
     async function handleSignIn() {
         const result = await signInWithGoogle();

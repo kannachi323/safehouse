@@ -8,7 +8,7 @@ export interface Listing {
     features?: string
     city?: string
     state?: string
-    zipcode?: string | number | null;
+    zipcode?: string;
     id?: number
 }
 
@@ -17,19 +17,22 @@ interface ListingContentCardProps {
     listing: Listing
 }
 
-export function ListingContentCard({ className, listing } : ListingContentCardProps) {
+export function ListingContentCard({ className, listing }: ListingContentCardProps) {
     return (
-        <div className={className}>
-            <Image src={RENT1} alt="some image" className="w-full h-[60%] rounded-t-md" />
-            <div className="flex flex-col w-full">
-                <h1 className="text-xl">{listing.prices}</h1>
-                <p>{listing.features}</p>
-                <p>{listing.address}</p>
-                <p>{listing.city}</p>
-                <p>{listing.state}</p>
-                <p>{listing.zipcode}</p>
-
+        <div className={`${className} bg-white shadow-lg rounded-lg overflow-hidden`}>
+            <Image src={RENT1} alt="some image" className="w-full h-[60%] object-cover" />
+            <div className="flex flex-col w-full p-4">
+                {/* Price */}
+                <h1 className="text-2xl font-semibold text-gray-800 mb-2">{listing.prices} /mo</h1>
+                
+                {/* Address and Features */}
+                <p className="text-gray-600 text-sm">{listing.features}</p>
+                
+                {/* Address Details */}
+                <p className="text-gray-700 mt-2">
+                    {listing.address}, {listing.city}, {listing.state} {listing.zipcode}
+                </p>
             </div>
         </div>
-    )
+    );
 }
