@@ -3,25 +3,21 @@
 
 import { getCity } from '@utils/db'
 import { IoMdSearch } from "react-icons/io";
-import { QueryContextProps } from '@/contexts/QueryContext';
 
 
 type SearchBarProps = {
   children? : React.ReactNode
   className? : string;
-  context? : QueryContextProps;
+  context? : any;
 }
 
 export default function SearchBar({children, className, context} : SearchBarProps) {
    const { searchQuery, setSearchQuery } = context || {};
-   if (!searchQuery || !setSearchQuery) {
-    return
-   }
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       if (event.key === 'Enter') {
         event.preventDefault();
-        getCity(searchQuery || '');
+        getCity(searchQuery);
       }
     };
 

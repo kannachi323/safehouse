@@ -1,4 +1,5 @@
 'use client'
+import { useState } from 'react';
 import Dropdown from "@/components/Dropdown";
 import SearchBar from "@components/SearchBar"
 import { useQuery } from "@contexts/QueryContext"
@@ -11,8 +12,13 @@ import { MdOutlineArrowDropDown } from "react-icons/md";
 export default function FiltersContainer() {
   const queryContext = useQuery();
 
-
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     
+  function toggleSidebar() {
+    console.log("Menu toggled:", !isSidebarOpen);
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <div className="flex flex-row items-center justify-center border-b-[#ffc00c] border-2 px-2 h-[8vh] w-full">
       <SearchBar className="inline-flex items-center justify-center rounded-lg bg-white h-9 border-[#013c6c] border-2 w-1/2" context={queryContext}>

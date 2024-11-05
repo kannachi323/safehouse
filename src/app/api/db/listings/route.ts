@@ -16,19 +16,3 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Failed to create listing' }, { status: 500 });
   }
 }
-
-export async function GET() {
-
-  try {
-    const result = await sql`
-      SELECT * FROM listings;
-    `;
-    
-    if (result) {
-      return NextResponse.json(result.rows)
-    }
-  } catch (error) {
-    console.error("error fetching default listings:", error);
-    return NextResponse.json({ error: "can't fetch listings" }, { status: 500});
-  }
-}

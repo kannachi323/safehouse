@@ -1,12 +1,17 @@
 'use client'
+import { useState, useEffect } from "react";
+import { useParams } from 'next/navigation';
 import { QueryProvider } from "@/contexts/QueryContext";
 import Logo from "@/components/Logos";
 import Link from 'next/link';
+import FiltersContainer from "@containers/user-page/FiltersContainer";
 import { BiMessageSquareDetail } from "react-icons/bi";
 import { FaHouseUser } from "react-icons/fa";
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { IoSettingsSharp } from "react-icons/io5";
+import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from 'next/navigation';
 
 
 interface Props {
@@ -16,12 +21,21 @@ interface Props {
 
 
 export default function UserManagerContainer({children, node} : Props) {
-  const { user } = useAuth();
-  if (!user) {
-    return 
-  }
+    const router = useRouter();
 
+    const { user, loading } = useAuth();
     
+    useEffect(() => {
+      if (!loading && user === null) {
+        router.replace('/user/login');
+      }
+    }, [loading, user, router]);
+    
+    if (loading) {
+        return null;
+    }
+      
+   
 
     const selectedLinkStyles = (linkNode : string | string[]) => {
       return node === linkNode
@@ -30,13 +44,20 @@ export default function UserManagerContainer({children, node} : Props) {
     }
    
     return (
+        user && 
           <QueryProvider>
             <div className="w-screen h-screen flex flex-row justify-start items-center">
 
               <div id="side-panel" className="w-1/5 h-full flex flex-col justify-start items-start border-r-black border-r-2 p-5">
                   
                   <Logo className="flex flex-row items-center justify-center w-full mb-5" />
-                
+                  
+                  <Link className={selectedLinkStyles('dashboard')} href="/user/dashboard">
+                    <span className="inline-flex justify-center items-center">
+                      <MdOutlineSpaceDashboard className="inline-flex text-3xl mx-2"/>
+                      Dashboard
+                    </span>
+                  </Link>
                   
                   <Link className={selectedLinkStyles('my-properties')} href="/user/properties">
                     <span className="inline-flex justify-center items-center">

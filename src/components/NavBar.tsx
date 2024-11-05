@@ -13,16 +13,19 @@ export default function NavBar() {
   
   
   const dropdownElements = [
-    <Link href="/user/properties" key={0} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200">
+    <Link href="/user/dashboard" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200">
+      Dashboard
+    </Link>,
+    <Link href="/user/properties" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200">
       My Properties
     </Link>,
-    <Link href="/user/messages" key={1} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200">
+    <Link href="/user/messages" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200">
       Messages
     </Link>,
-    <Link href="/user/settings" key={2} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200">
+    <Link href="/user/settings" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200">
       Settings
     </Link>,
-    <button onClick={userSignOut} key={3} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200 text-left">
+    <button onClick={userSignOut} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200 text-left">
       Logout
     </button>
   ];

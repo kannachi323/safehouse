@@ -21,7 +21,6 @@ export default function ViewMyListingsContainer() {
         return null;
     }
 
-    setParams({uid : user.uid})
 
     const getUserListings = async (params: Record<string, string>) => {
         const urlParams = new URLSearchParams(params);
