@@ -8,7 +8,6 @@ export default function MapsContainer() {
         return
     }
 
-  
     return (
         <APIProvider apiKey={googleMapsAPIKey}>
             

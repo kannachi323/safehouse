@@ -2,7 +2,6 @@
 'use client';
 
 import React, { useState, ReactNode, useRef, useEffect } from 'react';
-import Link from 'next/link';
 
 interface DropdownProps {
   className?: string;

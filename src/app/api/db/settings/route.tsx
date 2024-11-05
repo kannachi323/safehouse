@@ -2,15 +2,15 @@ import { NextResponse } from 'next/server'
 import { sql } from '@vercel/postgres';
 
 export async function POST(request: Request) {
+    console.log(request);
     const uid = '00001';
     const notifs = 0;
     const theme = 1;   
-    // get settings values
 
     try {
         const result = await sql`
-            INSERT INTO table_name (uid, {notifs}, {theme})
-            VALUES ({uid}, {notifs}, {theme})
+            INSERT INTO table_name (uid, notifs, theme)
+            VALUES (${uid}, ${notifs}, ${theme})
             ON CONFLICT (uid) DO UPDATE
             SET notifs = EXCLUDED.{notifs},
             theme = EXCLUDED.{theme};

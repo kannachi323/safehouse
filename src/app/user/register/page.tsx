@@ -1,5 +1,5 @@
 "use client";
-import { signInWithGoogle, signUpWithGoogle } from '@/auth/provider';
+import { signUpWithGoogle } from '@/auth/provider';
 import { GoogleButton } from '@/components/Buttons/Buttons';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';

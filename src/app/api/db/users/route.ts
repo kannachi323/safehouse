@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { sql } from '@vercel/postgres';
 
 
+
 export async function POST(request: Request) {
     const { first_name, last_name, email, is_landlord, uid} = await request.json();
 
