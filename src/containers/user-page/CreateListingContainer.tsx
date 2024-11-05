@@ -1,116 +1,183 @@
-'use client'
+'use client';
+import { useAuth } from "@contexts/AuthContext"
 import { MdAdd } from "react-icons/md";
-import { useState, useEffect, useMemo, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect} from 'react';
 import { ListingContentCard } from "@/components/Cards";
 import { Listing } from "@components/Cards";
-import debounce from 'lodash.debounce';
 import { IoMdArrowRoundBack } from "react-icons/io";
-import STATES from '@utils/states.json'
-
+import STATES from '@utils/states.json';
 
 export default function CreateListingContainer() {
+  const { user } = useAuth();
+  if (!user) {
+    return
+  }
+  
+  
+
   const [showContent, setShowContent] = useState(false);
 
-  const [listingValues, setListingValues] = useState<Listing>({
-    prices: '',
-    address: '',
-    city: '',
-    state: '',
-    zipcode: '',
-    features: '',
-    id: 0,
-  });
+  const [listingValues, setListingValues] = useState<Listing>({uid : user.uid})
 
-  const [debouncedValues, setDebouncedValues] = useState<Listing>(listingValues);
-
-  const updateDebouncedValues = debounce((values: Listing) => setDebouncedValues(values), 500);
-
-  useEffect(() => {
-    updateDebouncedValues(listingValues);
-  }, [listingValues, updateDebouncedValues]);
-
-  useEffect(() => {
-    return () => {
-      updateDebouncedValues.cancel();
-    };
-  }, [updateDebouncedValues]);
-
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleFeatureChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+  
+    setListingValues((prevValues) => ({
+      ...prevValues,
+      feature: {
+        ...prevValues.feature,
+        [name]: value === "" ? "" : Number(value), 
+      },
+    }));
+  };
+
+  const handleListingChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+
     setListingValues((prevValues) => ({
       ...prevValues,
       [name]: value,
     }));
   };
 
-  const handleSubmit = () => {
-    return 'blah';
+  const handleSubmit  = async (e : React.FormEvent) => {
+    e.preventDefault()
+    console.log(JSON.stringify(listingValues));
+    
+    try {
+      const response = await fetch('/api/db/listings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(listingValues)
+      })
+      if (!response.ok) {
+        console.log("something went wrong with adding a new listing");
+        return;
+      }
+
+      console.log("new listing created")
+    } catch (error) {
+      console.log("some server stuff went wrong idk")
+    }
   };
 
   return showContent ? (
     <> 
-      <IoMdArrowRoundBack className="text-5xl text-black m-2 hover:text-[#3d3c3c] cursor-pointer" onClick={() => setShowContent(!showContent)} />
-      <div className="flex flex-row justify-center items-center w-full h-full text-3xl gap-20">
+      <IoMdArrowRoundBack className="text-4xl text-gray-600 hover:text-gray-800 m-4 cursor-pointer" onClick={() => setShowContent(!showContent)} />
+      <div className="flex flex-row justify-around items-start w-full h-full p-8 gap-10 text-lg">
+        
         <ListingContentCard
-          className="flex flex-col w-2/5 h-[70%] rounded-lg border-2 border-[#013c6c]"
-          listing={debouncedValues}
+          className="flex flex-col w-1/2 h-auto rounded-lg border-2 border-gray-300 shadow-lg"
+          listing={listingValues}
         />
 
-        <div className="flex flex-col justify-center items-center text-xl">
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <div className="flex items-center gap-2 w-full">
+        <div className="flex flex-col justify-start items-center text-lg w-1/3">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-6">Create a New Listing</h2>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
+            
+            {/* Price */}
+            <div className="flex flex-col">
+              <label className="text-gray-700 font-medium mb-1" htmlFor="prices">Price (per month)</label>
               <input
                 type="text"
                 name="prices"
-                placeholder="Price"
+                placeholder="$0.00"
                 value={listingValues.prices}
-                onChange={handleChange}
-                className="border p-2 rounded w-full"
+                onChange={handleListingChange}
+                className="border p-2 rounded focus:outline-none focus:ring focus:ring-blue-300"
               />
-              <p>/mo</p>
             </div>
-            <input
-              type="text"
-              name="address"
-              placeholder="Address"
-              value={listingValues.address}
-              onChange={handleChange}
-              className="border p-2 rounded"
-            />
-            <input
-              type="text"
-              name="city"
-              placeholder="City"
-              value={listingValues.city}
-              onChange={handleChange}
-              className="border p-2 rounded"
-            />
-            <select
-              className="border rounded p-2"
-              name="state"
-              value={listingValues.state}
-              onChange={handleChange}
-            >
-              <option value="">--Choose a State--</option>
-              {Object.entries(STATES).map(([stateName, abbreviation]) => (
-                <option key={abbreviation} value={abbreviation}>
-                  {stateName}
-                </option>
-              ))}
-            </select>
-            <input
-              type="text"
-              name="zipcode"
-              placeholder="Zipcode"
-              value={listingValues.zipcode}
-              onChange={handleChange}
-              className="border p-2 rounded"
-            />
-            
+
+            {/* Address */}
+            <div className="flex flex-col">
+              <label className="text-gray-700 font-medium mb-1" htmlFor="address">Address</label>
+              <input
+                type="text"
+                name="address"
+                placeholder="123 Main St"
+                value={listingValues.address}
+                onChange={handleListingChange}
+                className="border p-2 rounded focus:outline-none focus:ring focus:ring-blue-300"
+              />
+            </div>
+
+            {/* City */}
+            <div className="flex flex-col">
+              <label className="text-gray-700 font-medium mb-1" htmlFor="city">City</label>
+              <input
+                type="text"
+                name="city"
+                placeholder="City"
+                value={listingValues.city}
+                onChange={handleListingChange}
+                className="border p-2 rounded focus:outline-none focus:ring focus:ring-blue-300"
+              />
+            </div>
+
+            {/* State */}
+            <div className="flex flex-col">
+              <label className="text-gray-700 font-medium mb-1" htmlFor="state">State</label>
+              <select
+                className="border rounded p-2 focus:outline-none focus:ring focus:ring-blue-300"
+                name="state"
+                value={listingValues.state_code}
+                onChange={handleListingChange}
+              >
+                <option value="">--Choose a State--</option>
+                {Object.entries(STATES).map(([stateName, abbreviation]) => (
+                  <option key={abbreviation} value={abbreviation}>
+                    {stateName}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Zipcode */}
+            <div className="flex flex-col">
+              <label className="text-gray-700 font-medium mb-1" htmlFor="zipcode">ZIP Code</label>
+              <input
+                type="text"
+                name="zipcode"
+                placeholder="ZIP code"
+                value={listingValues.zipcode}
+                onChange={handleListingChange}
+                className="border p-2 rounded focus:outline-none focus:ring focus:ring-blue-300"
+              />
+            </div>
+
+            {/* Beds and Baths */}
+            <div className="flex items-center justify-between w-full gap-4">
+              <div className="flex flex-col w-1/2">
+                <label className="text-gray-700 font-medium mb-1" htmlFor="feature.bed">Beds</label>
+                <input
+                  type="number"
+                  name="bed"
+                  placeholder="0"
+                  value={listingValues.feature?.bed}
+                  onChange={handleFeatureChange}
+                  className="border p-2 rounded focus:outline-none focus:ring focus:ring-blue-300"
+                />
+              </div>
+
+              <div className="flex flex-col w-1/2">
+                <label className="text-gray-700 font-medium mb-1" htmlFor="feature.bath">Baths</label>
+                <input
+                  type="number"
+                  name="bath"
+                  placeholder="0"
+                  value={listingValues.feature?.bath}
+                  onChange={handleFeatureChange}
+                  className="border p-2 rounded focus:outline-none focus:ring focus:ring-blue-300"
+                />
+              </div>
+            </div>
+
+            {/* Submit Button */}
             <button
               type="submit"
-              className="bg-blue-500 text-white p-2 rounded mt-4"
+              className="bg-blue-600 text-white py-2 rounded mt-6 hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300"
             >
               Save Listing
             </button>
@@ -120,11 +187,11 @@ export default function CreateListingContainer() {
     </>
   ) : (
     <div
-      className="flex flex-col justify-center items-center bg-red-500 w-1/3 h-1/2 m-5 text-3xl rounded-3xl"
+      className="flex flex-col justify-center items-center bg-blue-600 text-white w-1/3 h-1/2 m-5 text-2xl font-semibold rounded-lg shadow-lg cursor-pointer hover:bg-blue-700"
       onClick={() => setShowContent(!showContent)}
     >
       Create a new listing
-      <MdAdd className="text-3xl" />
+      <MdAdd className="text-4xl mt-4" />
     </div>
   );
 }

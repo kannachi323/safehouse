@@ -1,44 +1,99 @@
-import { app } from "@/auth/config"
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut
-} from "firebase/auth";
-
-//DOCUMENTATION: https://firebase.google.com/docs/auth/web/manage-users#web
-
+import { app } from "@/auth/config";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 
 export async function signInWithGoogle() {
   const auth = getAuth(app);
-
   const provider = new GoogleAuthProvider();
 
   try {
-      const result = await signInWithPopup(auth, provider);
-      console.log("User signed in:", result.user);
+    const result = await signInWithPopup(auth, provider);
+    console.log("User signed in:", result.user);
 
-      // Extract user details
-      const { displayName, email } = result.user;
-      const [first_name, last_name] = displayName ? displayName.split(" ") : ["", ""];
+    // Try to fetch the existing user data
+    const response = await fetch(`/api/db/users?email=${result.user.email}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-      // Send user data to API route
-      await fetch("/api/db/user", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ first_name, last_name, email, is_landlord: false })
-      });
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} - ${response.statusText}`);
+    }
 
-      return result;
-      // Handle the user info as needed, e.g., save it to the database or update state
+    const data = await response.json();
+    console.log('User data:', data);
+    return data;
+
   } catch (error) {
-      console.error("Error with Google sign-in:", error);
+    console.error("Error with Google sign-in:", error);
+  }
+}
+
+export async function signUpWithGoogle(isLandlord : boolean) {
+
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  try {
+    const result = await signInWithPopup(auth, provider);
+    console.log("User signed up:", result.user);
+
+    // Extract user details
+    const user = result.user;
+    if (!user) {
+      console.error("User not found after Google sign-up");
+      return;
+    }
+
+    // Check if the user already exists in the database
+    const response = await fetch(`/api/db/users?email=${user.email}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log("User already exists:", data);
+      return data; // User exists, return their data
+    }
+
+    // If user does not exist, create a new user in the database
+    const createUserResponse = await fetch(`/api/db/users`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        first_name: user.displayName?.split(' ')[0] || '',
+        last_name: user.displayName?.split(' ')[1] || '',
+        email: user.email,
+        is_landlord: isLandlord,
+        uid: user.uid,
+      }),
+    });
+
+    if (!createUserResponse.ok) {
+      throw new Error(`Error creating user: ${createUserResponse.status} - ${createUserResponse.statusText}`);
+    }
+
+    const newUser = await createUserResponse.json();
+    console.log("New user created:", newUser);
+    return newUser;
+
+  } catch (error) {
+    console.error("Error with Google sign-up:", error);
   }
 }
 
 export async function userSignOut() {
   const auth = getAuth(app);
   try {
-    const result = await signOut(auth);
-    console.log(result);
-    
+    await signOut(auth);
+    console.log("User signed out successfully");
   } catch (error) {
-    console.error("Error trying to log out");
+    console.error("Error trying to log out:", error);
   }
 }

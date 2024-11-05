@@ -7,20 +7,20 @@ import NavBar from "@/components/NavBar"
 export default function Listings() {
     return (
       <QueryProvider>
-          <NavBar/>
-          <div className="flex flex-col">
-            <FiltersContainer />
-            
-            
-              <div className="flex flex-row">
-                
-                <MapsContainer />
-                <ListingsContainer className="w-[50vw] h-[82vh] overflow-y-scroll"/>
+        <NavBar/>
+        <div className="flex flex-col">
+          <FiltersContainer />
+          
+          
+            <div className="flex flex-row">
               
-              </div>
+              <MapsContainer />
+              <ListingsContainer className="w-[50vw] h-[82vh] overflow-y-scroll"/>
+            
+            </div>
 
-
-           </div>
+  
+          </div>
         </QueryProvider>
         
     )

@@ -1,20 +1,17 @@
-"use client";
-import { useEffect } from 'react';
-import { GoogleButton } from '@/components/Buttons/Buttons';
-import { signInWithGoogle } from '@/auth/provider';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@contexts/AuthContext'
+'use client'
+import { signInWithGoogle } from "@/auth/provider";
+import { GoogleButton } from "@/components/Buttons/Buttons";
+import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "next/navigation";
 
-export default async function SignIn() {
+export default function LogIn() {
     const router = useRouter();
-    
     const { user } = useAuth();
     
     if (user) {
         router.push('/listings/default')
     }
-   
-
+    
     async function handleSignIn() {
         const result = await signInWithGoogle();
         if (result) {
@@ -22,12 +19,10 @@ export default async function SignIn() {
         }
     }
 
-    
-    
     return (
-        <div className="h-[90vh] flex items-center justify-center">
-            <div className="p-8 rounded-lg shadow-2xl max-w-md w-full border-2 flex flex-col"
-            >
+        <div className="h-screen flex flex-col items-center justify-center">
+        
+            <div className="p-8 rounded-lg shadow-2xl max-w-md w-full border-2 flex flex-col">
                 <h2 className="text-3xl font-bold mb-6 text-center">Sign In</h2>
                 <form className="flex flex-col space-y-6">
                     <div>
@@ -74,8 +69,7 @@ export default async function SignIn() {
                     <GoogleButton onClick={handleSignIn}/>
                 </div>
                 
-            </div>
+            </div> 
         </div>
-    );
+    )
 }
-

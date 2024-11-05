@@ -7,7 +7,7 @@ import Link from 'next/link';
 interface DropdownProps {
   className?: string;
   width? : string;
-  elements: string[];
+  elements: ReactNode[];
   children: ReactNode; 
 }
 
@@ -39,16 +39,7 @@ function Dropdown({ className, width, elements, children } : DropdownProps) {
         <div className={`flex flex-col absolute top-[90%] mt-1 right-0 w-full py-2 bg-white rounded-md shadow-xl z-50`}
           style={{width : width}}
         >
-          {elements.map((element, index) => (
-            <Link
-              key={index}
-              href={`/user/${element.toLowerCase()}`}
-              className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200"
-              onClick={closeDropdown}
-            >
-              {element}
-            </Link>
-          ))}
+          {elements}
         </div>
       )}
     </div>
