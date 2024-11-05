@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server'
 import { sql } from '@vercel/postgres';
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { app } from "@/auth/config"
 
 export async function POST(request: Request) {
-    const first_name = 'First';
-    const last_name = 'Last';
-    const email = 'firstlast@email.com';
-    const is_landlord = false;
+    const { first_name, last_name, email, is_landlord } = await request.json();
 
     try {
         const result = await sql`
