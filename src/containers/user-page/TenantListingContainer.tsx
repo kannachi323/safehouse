@@ -4,7 +4,7 @@ import Link from 'next/link';
 import FiltersContainer from "../listings-page/FiltersContainer";
 import SearchBar from "@/components/SearchBar";
 
-export default function CreateListingContainer() {
+export default function TenantListingContainer() {
    
     return (
         <QueryProvider>
@@ -18,19 +18,18 @@ export default function CreateListingContainer() {
               
               <Link className="w-full my-5 p-2 hover:text-[#ffc00c] hover:bg-slate-100" href="/listings/default">Dashboard</Link>
               
-              <Link className="w-full my-5 p-2 hover:text-[#ffc00c] hover:bg-slate-100" href="/listings/default">Create a listing</Link>
-              <Link className="w-full my-5 p-2 hover:text-[#ffc00c] hover:bg-slate-100" href="/listings/default">Messages</Link>
-              <Link className="w-full my-5 p-2 hover:text-[#ffc00c] hover:bg-slate-100" href="/listings/default">Profile</Link>
-              <Link className="w-full my-5 p-2 hover:text-[#ffc00c] hover:bg-slate-100" href="/listings/default">Settings</Link>
+              <Link className="w-full my-5 p-2 hover:text-[#ffc00c] hover:bg-slate-100" href="/user/messages">Messages</Link>
+              <Link className="w-full my-5 p-2 hover:text-[#ffc00c] hover:bg-slate-100" href="/user/notifications">Notifications</Link>
+              <Link className="w-full my-5 p-2 hover:text-[#ffc00c] hover:bg-slate-100" href="/user/profile">Profile</Link>
+              <Link className="w-full my-5 p-2 hover:text-[#ffc00c] hover:bg-slate-100" href="/user/settings">Settings</Link>
               
             </div>
   
   
             <div id="content" className="w-4/5 h-full flex flex-col items-start justify-start overflow-y-auto p-5">
-                <h1 className="text-3xl m-30">My Listings</h1>
+                <h1 className="text-3xl m-30">Saved Listings</h1>
                 
                 
-                <FiltersContainer />
                
   
   
