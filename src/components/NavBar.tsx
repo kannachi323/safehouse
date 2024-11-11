@@ -6,26 +6,26 @@ import { MdOutlineMenu } from "react-icons/md";
 import { useAuth } from '@contexts/AuthContext';
 import { CgProfile } from "react-icons/cg";
 import Dropdown from "./Dropdown";
-import { userSignOut } from "@/auth/provider";
+import { userSignOut } from "@/firebase/auth";
 
 export default function NavBar() {
   const { user } = useAuth();
   
   
   const dropdownElements = [
-    <Link href="/user/dashboard" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200">
+    <Link href="/user/dashboard" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200" key={0}>
       Dashboard
     </Link>,
-    <Link href="/user/properties" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200">
+    <Link href="/user/properties" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200" key={1}>
       My Properties
     </Link>,
-    <Link href="/user/messages" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200">
+    <Link href="/user/messages" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200" key={2}>
       Messages
     </Link>,
-    <Link href="/user/settings" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200">
+    <Link href="/user/settings" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200" key={3}>
       Settings
     </Link>,
-    <button onClick={userSignOut} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200 text-left">
+    <button onClick={userSignOut} className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200 text-left" key={4}>
       Logout
     </button>
   ];
@@ -48,7 +48,6 @@ export default function NavBar() {
       
       <div className="flex flex-row items-center justify-end w-1/3">
         
-        <Link className="m-5 hover:text-[#ffc00c]" href="/user/dashboard">Manage Rentals</Link>
         {user ? (
          <Dropdown className="text-[#013c6c]" elements={dropdownElements} width="250%">
           <CgProfile className="text-white text-3xl m-5 hover:text-[#ffc00c] cursor-pointer" />

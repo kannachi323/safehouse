@@ -1,8 +1,7 @@
-import { app } from "@/auth/config";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { auth } from "@/firebase/config";
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 
 export async function signInWithGoogle() {
-  const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
 
   try {
@@ -32,7 +31,6 @@ export async function signInWithGoogle() {
 
 export async function signUpWithGoogle(isLandlord : boolean) {
 
-  const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
 
   try {
@@ -89,7 +87,6 @@ export async function signUpWithGoogle(isLandlord : boolean) {
 }
 
 export async function userSignOut() {
-  const auth = getAuth(app);
   try {
     await signOut(auth);
     console.log("User signed out successfully");

@@ -1,17 +1,13 @@
 'use client'
-import { useState, useEffect } from "react";
-import { useParams } from 'next/navigation';
 import { QueryProvider } from "@/contexts/QueryContext";
 import Logo from "@/components/Logos";
 import Link from 'next/link';
-import FiltersContainer from "@containers/user-page/FiltersContainer";
 import { BiMessageSquareDetail } from "react-icons/bi";
 import { FaHouseUser } from "react-icons/fa";
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { IoSettingsSharp } from "react-icons/io5";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { useAuth } from "@/contexts/AuthContext";
-import { useRouter } from 'next/navigation';
 
 
 interface Props {
@@ -21,20 +17,10 @@ interface Props {
 
 
 export default function UserManagerContainer({children, node} : Props) {
-    const router = useRouter();
 
-    const { user, loading } = useAuth();
+    const { user } = useAuth();
     
-    useEffect(() => {
-      if (!loading && user === null) {
-        router.replace('/user/login');
-      }
-    }, [loading, user, router]);
     
-    if (loading) {
-        return null;
-    }
-      
    
 
     const selectedLinkStyles = (linkNode : string | string[]) => {
@@ -92,7 +78,7 @@ export default function UserManagerContainer({children, node} : Props) {
 
                   
               </div>
-
+              
               {children}
 
             </div>

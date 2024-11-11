@@ -7,7 +7,7 @@ export async function GET(request: Request) {
 
 
     try {
-        
+        console.log(uid);
         const result = await sql`
             SELECT * FROM listings WHERE uid = ${uid};
         `;

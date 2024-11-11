@@ -1,5 +1,5 @@
 'use client'
-import { signInWithGoogle } from "@/auth/provider";
+import { signInWithGoogle } from "@/firebase/auth";
 import { GoogleButton } from "@/components/Buttons/Buttons";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
