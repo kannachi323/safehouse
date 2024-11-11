@@ -9,7 +9,7 @@ export default function Listings() {
       <QueryProvider>
         <NavBar/>
         <div className="flex flex-col">
-          <FiltersContainer />
+          <FiltersContainer/>
           
           
             <div className="flex flex-row">

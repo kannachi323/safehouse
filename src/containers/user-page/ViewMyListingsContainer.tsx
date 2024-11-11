@@ -4,8 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useState, useEffect } from 'react';
 import { Listing, ListingContentCard } from "@components/Cards";
 import FiltersContainer from "@containers/listings-page/FiltersContainer";
-import { QueryProvider } from "@contexts/QueryContext"
-
+import { QueryProvider, useQuery } from "@contexts/QueryContext"
 
 export default function ViewMyListingsContainer() {
     const [userListings, setUserListings] = useState<Listing[]>([]);

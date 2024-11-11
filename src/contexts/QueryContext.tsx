@@ -1,7 +1,11 @@
 'use client'
 import React, { createContext, useState, useContext } from 'react';
 
-export interface Filter {
+export interface Filters {
+    address?: string;
+    city?: string;
+    state?: string;
+    zip_code?: string;
     bedCount?: number;
     bathCount?: number;
     homeType?: string;
@@ -10,8 +14,10 @@ export interface Filter {
 export interface QueryContextProps {
     searchQuery: string;
     setSearchQuery: (query: string) => void;
-    filters: Filter;
-    setFilters: (filter: Filter) => void;
+    filters: Filters;
+    setFilters: (filter: Filters | ((prevFilters: Filters) => Filters)) => void;
+    refresh: boolean;
+    setRefresh: (refresh: boolean) => void;
 }
 
 export const QueryContext = createContext<QueryContextProps | undefined>(undefined);
@@ -27,16 +33,17 @@ export function useQuery() {
 }
 
 export function QueryProvider({ children } : { children : React.ReactNode}) {
-    const [filters, setFilters] = useState<Filter>({
-
-    })
+    const [filters, setFilters] = useState<Filters>({})
+    const [refresh, setRefresh] = useState(false);
     const [searchQuery, setSearchQuery] = useState('')
 
     const value : QueryContextProps = {
         searchQuery : searchQuery,
         setSearchQuery : setSearchQuery,
         filters : filters,
-        setFilters : setFilters
+        setFilters : setFilters,
+        refresh : refresh,
+        setRefresh : setRefresh
     }
 
     return (
