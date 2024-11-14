@@ -39,11 +39,11 @@ export function ListingContentCard({ className, listing }: ListingContentCardPro
           
           {/* Address Details */}
           <p className="text-gray-700 mt-2">
-            {listing.address} {listing.city}
+            {listing.address + ' '}{listing.city + ' '}
             
           </p>
           <p className="text-gray-700 mt-2">
-            {listing.state_code} {listing.zipcode}
+            {listing.state_code + ' '}{listing.zipcode}
           </p>
 
           {/* Feature */}

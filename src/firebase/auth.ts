@@ -1,5 +1,6 @@
 import { auth } from "@/firebase/config";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { redirect, useRouter } from 'next/navigation';
 
 export async function signInWithGoogle() {
   const provider = new GoogleAuthProvider();
@@ -89,7 +90,9 @@ export async function signUpWithGoogle(isLandlord : boolean) {
 export async function userSignOut() {
   try {
     await signOut(auth);
-    console.log("User signed out successfully");
+    redirect("/user/login");
+    
+    
   } catch (error) {
     console.error("Error trying to log out:", error);
   }

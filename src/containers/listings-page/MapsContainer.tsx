@@ -1,26 +1,27 @@
 'use client'
-import { APIProvider, Map } from "@vis.gl/react-google-maps"
+import { useQuery } from '@/contexts/QueryContext';
+import { GoogleMap, Marker } from '@react-google-maps/api';
 
 export default function MapsContainer() {
-
-    const googleMapsAPIKey= process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-    if (googleMapsAPIKey === undefined) {
-        return
-    }
-
+  const { selectedLocation } = useQuery();
   
-    return (
-        <APIProvider apiKey={googleMapsAPIKey}>
-            
-            <Map
-                className="w-[50vw] h-[82vh]"
-                defaultCenter={{lat: 22.54992, lng: 0}}
-                defaultZoom={3}
-                gestureHandling={'greedy'}
-            >
-            
-            </Map>
-           
-        </APIProvider>
-    )
+  const defaultCoordinates = { lat: 36.9741, lng: -122.0308 };
+  
+
+  const coordinates = selectedLocation?.geometry?.location
+    ? { lat: selectedLocation.geometry.location.lat(), lng: selectedLocation.geometry.location.lng() }
+    : defaultCoordinates;
+
+  // Set the map center to the coordinates (use the selected location if available)
+  const mapCenter = coordinates;
+
+  return (
+    <GoogleMap
+      mapContainerStyle={{ width: '50vw', height: '82vh' }}
+      center={mapCenter}  // Set map center to coordinates
+      zoom={12}
+    >
+      <Marker position={coordinates} />
+    </GoogleMap>
+  );
 }

@@ -8,10 +8,10 @@ import { Filters, useQuery } from '@/contexts/QueryContext';
 function buildFilterParams(filters : Filters) {
   const queryParams = new URLSearchParams();
     
-  filters.address && queryParams.append('address', filters.address);
-  filters.city && queryParams.append('city', filters.city);
-  filters.state && queryParams.append('state', filters.state);
-  filters.zip_code && queryParams.append('zip_code', filters.zip_code);
+  if (filters.address) queryParams.append('address', filters.address);
+  if (filters.city) queryParams.append('city', filters.city);
+  if (filters.state) queryParams.append('state', filters.state);
+  if (filters.zip_code) queryParams.append('zip_code', filters.zip_code);
   
   return queryParams.toString();
 }
@@ -23,19 +23,18 @@ interface Props {
 export default function ListingsContainer({className} : Props) {
     const [listings, setListings] = useState<Listing[]>([]);
 
-    const { filters, refresh } = useQuery();
+    const { filters } = useQuery();
 
     useEffect(() => {
        async function fetchUserListings() {        
            try {
               const filtersParams = buildFilterParams(filters)
-              console.log(filtersParams)
+              console.log('i fetched user listings')
               const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/search?${filtersParams}`);
               
               if (response.ok) {
                   const data = await response.json();
                   console.log(data);
-                  console.log('happy');
                   setListings(data); // Assuming the API returns the listings array
               } else {
                   console.error("Failed to fetch listings:", response.statusText);
@@ -45,7 +44,7 @@ export default function ListingsContainer({className} : Props) {
            }
        }
         fetchUserListings();
-    }, [refresh])
+    }, [filters])
 
    
 

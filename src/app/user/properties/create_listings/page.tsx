@@ -76,7 +76,7 @@ export default function Page() {
           return;
         }
         console.log("New listing created");
-        router.push("/user/properties/my-listings")
+        router.push("/user/properties/my_listings")
       } catch (error) {
         console.error("Error during the server request:", error);
       }

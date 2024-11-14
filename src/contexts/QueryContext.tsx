@@ -11,6 +11,9 @@ export interface Filters {
     homeType?: string;
 }
 
+// Define the type for the selectedLocation
+export type Location = google.maps.places.PlaceResult | undefined;
+
 export interface QueryContextProps {
     searchQuery: string;
     setSearchQuery: (query: string) => void;
@@ -18,6 +21,8 @@ export interface QueryContextProps {
     setFilters: (filter: Filters | ((prevFilters: Filters) => Filters)) => void;
     refresh: boolean;
     setRefresh: (refresh: boolean) => void;
+    selectedLocation: Location;  // Use the SelectedLocation type
+    setSelectedLocation: (selectedLocation: Location) => void;
 }
 
 export const QueryContext = createContext<QueryContextProps | undefined>(undefined);
@@ -32,23 +37,26 @@ export function useQuery() {
     return queryContext;
 }
 
-export function QueryProvider({ children } : { children : React.ReactNode}) {
-    const [filters, setFilters] = useState<Filters>({})
+export function QueryProvider({ children }: { children: React.ReactNode }) {
+    const [filters, setFilters] = useState<Filters>({});
     const [refresh, setRefresh] = useState(false);
-    const [searchQuery, setSearchQuery] = useState('')
+    const [searchQuery, setSearchQuery] = useState('');
+    const [selectedLocation, setSelectedLocation] = useState<Location>(undefined); // Properly typed
 
-    const value : QueryContextProps = {
-        searchQuery : searchQuery,
-        setSearchQuery : setSearchQuery,
-        filters : filters,
-        setFilters : setFilters,
-        refresh : refresh,
-        setRefresh : setRefresh
-    }
+    const value: QueryContextProps = {
+        searchQuery: searchQuery,
+        setSearchQuery: setSearchQuery,
+        filters: filters,
+        setFilters: setFilters,
+        refresh: refresh,
+        setRefresh: setRefresh,
+        selectedLocation: selectedLocation,
+        setSelectedLocation: setSelectedLocation,
+    };
 
     return (
         <QueryContext.Provider value={value}>
             {children}
         </QueryContext.Provider>
-    )
+    );
 }

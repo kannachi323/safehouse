@@ -1,80 +1,78 @@
-
 'use client'
 
-import { useQuery } from '@/contexts/QueryContext';
+import { Filters, useQuery } from '@/contexts/QueryContext';
+import { Autocomplete } from '@react-google-maps/api';
 import { IoMdSearch } from "react-icons/io";
-
-interface Location {
-  address?: string;
-  city?: string;
-  state?: string;
-  zip_code?: string;
-}
-
-function parseAddress(input: string): Location {
-  const location: Location = {};
-
-  // Updated regex to handle optional unit/apartment numbers in the address
-  const regex = /^(.+?),\s*([A-Za-z\s]+),\s*([A-Z]{2})\s*(\d{5})$/;
-  const match = input.match(regex);
-
-  if (match) {
-      location.address = match[1].trim(); // Street address with optional apartment number
-      location.city = match[2].trim();    // City name
-      location.state = match[3];          // State code
-      location.zip_code = match[4];       // Zip code
-  } else {
-      console.error("Input address format is invalid or does not match expected pattern.");
-  }
-
-  return location;
-}
-
-// Test the function
-const addressString = "433 E Duarte Rd Apt A, Arcadia, CA 91006";
-console.log(parseAddress(addressString));
-
+import { useRef } from 'react';
 
 type SearchBarProps = {
-  children? : React.ReactNode
-  className? : string;
+  children?: React.ReactNode;
+  className?: string;
 }
 
-export default function SearchBar({children, className } : SearchBarProps) {
-   const { searchQuery, setSearchQuery, setFilters, setRefresh, refresh } = useQuery();
+export default function SearchBar({ children, className }: SearchBarProps) {
+  const { setSelectedLocation, setFilters } = useQuery();
 
-    const handleQuery = () => {
-      console.log(searchQuery)
-      const updatedFilters = parseAddress(searchQuery)
-      setFilters((prevFilters) => ({
-        ...prevFilters,
-        ...updatedFilters,
-      }));
-      setRefresh(!refresh);
 
+
+  // Create a ref for the Autocomplete component
+  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
+
+  const handlePlaceChanged = () => {
+    if (autocompleteRef.current) {
+      const place = autocompleteRef.current.getPlace();
+      const address_components = place.address_components;
+
+      // Initialize filters object
+      const newFilters: Filters = {};
+
+      if (address_components) {
+        address_components.forEach((component) => {
+          const types = component.types;
+
+          // Map address component types to the filters
+          if (types.includes('street_number')) {
+            newFilters.address = component.long_name; // Street number
+          } else if (types.includes('route')) {
+            newFilters.address = (newFilters.address || '') + ' ' + component.long_name; // Street name
+          } else if (types.includes('locality')) {
+            newFilters.city = component.long_name; // City
+          } else if (types.includes('administrative_area_level_1')) {
+            newFilters.state = component.short_name; // State (e.g., 'CA')
+          } else if (types.includes('postal_code')) {
+            newFilters.zip_code = component.long_name; // Zip code
+          }
+        });
+
+        // Set filters based on the extracted components
+        setFilters(newFilters);
+      }
+
+      if (place.geometry) {
+        setSelectedLocation(place); // Update selected location with place details
+      }
     }
-  
+  };
 
-    return (
-      <span className={className}>
-        <input className="rounded-md inline-flex h-7 outline-none text-base text-[#013c6c] px-2 w-full"
+  return (
+    <div className={className}>
+      <Autocomplete
+        onLoad={(autocomplete) => { autocompleteRef.current = autocomplete }} // Store the Autocomplete instance
+        onPlaceChanged={handlePlaceChanged} 
+        className="flex w-full items-center"
+      >
+        <input
+          className="rounded-md inline-flex h-7 outline-none text-base text-[#013c6c] px-2 w-full"
           id="search-bar"
-          type="search" 
+          type="search"
           placeholder="Enter an address, neighborhood, city, or ZIP code"
-          onChange={(e) => {{
-            setSearchQuery(e.target.value)
-          }}}
-          onKeyDown={handleQuery}
+          autoComplete="off"
         />
-        {children}
-        <button onClick={handleQuery}>
-          <IoMdSearch className="text-3xl text-black hover:text-[#d4d2d2] cursor-pointer m-0"/>
-        </button>
-        
-      </span>
-         
-      
-        
-        
-    )
+      </Autocomplete>
+      {children}
+      <button>
+        <IoMdSearch className="text-3xl text-black hover:text-[#d4d2d2] cursor-pointer m-0" />
+      </button>
+    </div>
+  );
 }

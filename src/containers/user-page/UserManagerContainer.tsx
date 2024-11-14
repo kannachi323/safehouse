@@ -32,7 +32,7 @@ export default function UserManagerContainer({children, node} : Props) {
     return (
         user && 
           <QueryProvider>
-            <div className="w-screen h-screen flex flex-row justify-start items-center">
+            <div className="w-screen h-screen flex">
 
               <div id="side-panel" className="w-1/5 h-full flex flex-col justify-start items-start border-r-black border-r-2 p-5">
                   

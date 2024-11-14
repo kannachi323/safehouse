@@ -2,21 +2,14 @@
 import { signInWithGoogle } from "@/firebase/auth";
 import { GoogleButton } from "@/components/Buttons/Buttons";
 import { useAuth } from "@/contexts/AuthContext";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 export default function LogIn() {
-    const router = useRouter();
-    const { user } = useAuth();
-    
-    if (user) {
-        router.push('/listings/default')
-    }
+    const router = useRouter()
     
     async function handleSignIn() {
         const result = await signInWithGoogle();
-        if (result) {
-            router.push('/listings/default')
-        }
+        router.push("/")
     }
 
     return (

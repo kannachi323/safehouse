@@ -14,7 +14,7 @@ export default function ViewMyListingsContainer() {
      useEffect(() => {
         async function fetchUserListings() {        
             try {
-                const response = await fetch(`http://localhost:3000/api/search?uid=${user?.uid}`);
+                const response = await fetch(`http://localhost:3000/api/search?uid=${user?.uid}&city=${city}`);
                 if (response.ok) {
                     const data = await response.json();
                     console.log(data);

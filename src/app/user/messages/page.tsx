@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import './messages.css';
 import Link from 'next/link';
 import { IoMdArrowRoundBack } from "react-icons/io";
+import { getChatRoom } from '@/firebase/db';
 
 interface Conversation {
   id: number;
@@ -13,6 +14,11 @@ const test: Conversation[] = [
   { id: 1, name: 'Bob', messages: ['Hello'] },
   { id: 2, name: 'Dude', messages: ['Hi'] },
 ];
+
+function handleSend() {
+  const response = getChatRoom();
+  console.log(response);
+}
 
 const MessagesPage: React.FC = () => {
   const [conversations, setConversations] = useState<Conversation[]>(test);
@@ -51,7 +57,7 @@ const MessagesPage: React.FC = () => {
             </div>
             <div className="message-input-section">
               <input type="text" className="message-input" placeholder="Type a message..." />
-              <button className="send-button" onClick={() => setConversations(conversations)}>Send</button>
+              <button className="send-button" onClick={handleSend}>Send</button>
             </div>
           </>
         ) : (
