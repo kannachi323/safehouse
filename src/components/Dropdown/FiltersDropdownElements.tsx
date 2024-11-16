@@ -56,6 +56,7 @@ export function BedBathFilters({filters, setFilters} : FilterDropdownProps) {
             <button 
                 className="self-center text-md text-white bg-[#023c6c] w-1/2 rounded-full py-2 m-5"
                 onClick={handleBedBathFilters}
+                action-attr="close"
             >
                 Apply
             </button>
@@ -64,14 +65,14 @@ export function BedBathFilters({filters, setFilters} : FilterDropdownProps) {
   }
   
   export function PriceFilters({ filters, setFilters }: FilterDropdownProps) {
-    const [minPrice, setMinPrice] = useState<number | undefined>(filters.minPrice || undefined);
-    const [maxPrice, setMaxPrice] = useState<number | undefined>(filters.maxPrice || undefined);
+    const [minPrice, setMinPrice] = useState<number | undefined>(filters.min_price || undefined);
+    const [maxPrice, setMaxPrice] = useState<number | undefined>(filters.max_price || undefined);
 
     function handlePriceFilters() {
         setFilters({
             ...filters,
-            minPrice,
-            maxPrice,
+            min_price: minPrice,
+            max_price: maxPrice
         });
     }
 
@@ -118,6 +119,7 @@ export function BedBathFilters({filters, setFilters} : FilterDropdownProps) {
             <button
                 className="self-center text-md text-white bg-[#023c6c] w-1/3 rounded-full py-2 mt-6 mb-3"
                 onClick={handlePriceFilters}
+                action-attr="close"
             >
                 Apply
             </button> 

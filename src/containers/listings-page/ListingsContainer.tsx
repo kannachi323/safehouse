@@ -13,6 +13,8 @@ function buildFilterParams(filters : Filters) {
   if (filters.city) queryParams.append('city', filters.city);
   if (filters.state) queryParams.append('state', filters.state);
   if (filters.zip_code) queryParams.append('zip_code', filters.zip_code);
+  if (filters.min_price) queryParams.append('min_price', String(filters.min_price));
+  if (filters.max_price) queryParams.append('max_price', String(filters.max_price));
   
   return queryParams.toString();
 }
@@ -30,7 +32,7 @@ export default function ListingsContainer({className} : Props) {
        async function fetchUserListings() {        
            try {
               const filtersParams = buildFilterParams(filters)
-              console.log('i fetched user listings')
+              console.log(filtersParams)
               const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/search?${filtersParams}`);
               
               if (response.ok) {

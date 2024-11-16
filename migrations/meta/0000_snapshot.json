@@ -1,5 +1,5 @@
 {
-  "id": "bfa0a982-acba-4275-8e42-e2c52c83987d",
+  "id": "4ec211d4-90e0-437f-b189-73a474d806b7",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -10,7 +10,7 @@
       "columns": {
         "listing_id": {
           "name": "listing_id",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": true,
           "notNull": true
         },
@@ -20,9 +20,9 @@
           "primaryKey": false,
           "notNull": true
         },
-        "prices": {
-          "name": "prices",
-          "type": "text",
+        "price": {
+          "name": "price",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -64,7 +64,21 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "listings_uid_users_uid_fk": {
+          "name": "listings_uid_users_uid_fk",
+          "tableFrom": "listings",
+          "tableTo": "users",
+          "columnsFrom": [
+            "uid"
+          ],
+          "columnsTo": [
+            "uid"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -77,7 +91,7 @@
       "columns": {
         "uid": {
           "name": "uid",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },

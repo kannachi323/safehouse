@@ -14,7 +14,7 @@ export interface Feature {
 }
 
 export interface Listing {
-  prices?: string;
+  price?: number;
   address?: string;
   feature?: Feature;
   city?: string;
@@ -72,7 +72,7 @@ export function ListingContentCard({ className, listing }: ListingContentCardPro
       {listing && (
         <div className="flex flex-col w-full p-4">
           {/* Price */}
-          <h1 className="text-2xl font-semibold text-gray-800 mb-2">${listing.prices} /mo</h1>
+          <h1 className="text-2xl font-semibold text-gray-800 mb-2">${listing.price} /mo</h1>
           
           {/* Address Details */}
           <p className="text-gray-700 mt-2">
