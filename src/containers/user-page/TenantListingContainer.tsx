@@ -28,6 +28,7 @@ export default function TenantListingContainer() {
   
             <div id="content" className="w-4/5 h-full flex flex-col items-start justify-start overflow-y-auto p-5">
                 <h1 className="text-3xl m-30">Saved Listings</h1>
+                <FiltersContainer/>
                 
                 
                
@@ -38,7 +39,7 @@ export default function TenantListingContainer() {
             </div>
           </div>
         </QueryProvider>
-            
+        
        
     )
 }
