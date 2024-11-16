@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { ListingContentCard } from "@components/Cards";
 import { Listing } from '@components/Cards';
 import { Filters, useQuery } from '@/contexts/QueryContext';
+import { HiOutlineEmojiSad } from "react-icons/hi";
 
 
 function buildFilterParams(filters : Filters) {
@@ -51,12 +52,19 @@ export default function ListingsContainer({className} : Props) {
 
     return (
         <div className={className}>
-            <h1 className="text-3xl font-bold w-full p-5">Available for rent</h1>
+            <h1 className="text-3xl font-bold w-full pb-5">Available for rent</h1>
             <div className="grid grid-cols-2 gap-4 w-full place-items-center">
-                {listings?.map((listing, id) => (
+                {listings.length > 0 ? listings.map((listing, id) => (
+                    
                     <ListingContentCard className="flex flex-col w-[90%] rounded-lg border-2 border-[#013c6c]"
                     key={id} listing={listing} />
-                ))}
+                )) : (
+                    <span className="inline-flex items-center justify-evenly w-full h-full bg-red-50">
+                        <h1 className="text-lg font-bold">No listings found</h1>
+                        <HiOutlineEmojiSad className="text-3xl text-[#013c6c]"/>
+                    </span>
+                   
+                )}
             </div>
         </div>
     );

@@ -1,6 +1,6 @@
 import { auth } from "@/firebase/config";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
-import { redirect, useRouter } from 'next/navigation';
+
 
 export async function signInWithGoogle() {
   const provider = new GoogleAuthProvider();
@@ -20,7 +20,7 @@ export async function signInWithGoogle() {
     if (!response.ok) {
       throw new Error(`Error: ${response.status} - ${response.statusText}`);
     }
-
+    
     const data = await response.json();
     console.log('User data:', data);
     return data;
@@ -90,7 +90,6 @@ export async function signUpWithGoogle(isLandlord : boolean) {
 export async function userSignOut() {
   try {
     await signOut(auth);
-    redirect("/user/login");
     
     
   } catch (error) {

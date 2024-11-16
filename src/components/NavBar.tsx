@@ -5,11 +5,13 @@ import Logo from "@/components/Logos";
 import { MdOutlineMenu } from "react-icons/md";
 import { useAuth } from '@contexts/AuthContext';
 import { CgProfile } from "react-icons/cg";
-import Dropdown from "./DropdownElements/Dropdown";
+import Dropdown from "./Dropdown/Dropdown";
 import { userSignOut } from "@/firebase/auth";
+import { useRouter } from "next/navigation";
 
 export default function NavBar() {
   const { user } = useAuth();
+  const router = useRouter();
 
   const userElements = [
     { href: '/user/dashboard', label: 'Dashboard' },
@@ -45,6 +47,7 @@ export default function NavBar() {
             <button
               onClick={async () => {
                 await userSignOut();
+                router.push('/');
               }}
               className="block w-full px-4 py-2 text-sm text-gray-800 hover:bg-gray-200 text-left rounded-md"
               key="logout"
@@ -57,8 +60,8 @@ export default function NavBar() {
           </Dropdown>
         ) : (
           <>
-            <Link className="m-5 hover:text-[#ffc00c]" href="/user/login">Log In</Link>
-            <Link className="m-5 hover:text-[#ffc00c]" href="/user/register">Sign Up</Link>
+            <Link className="m-5 hover:text-[#ffc00c]" href="/login">Log In</Link>
+            <Link className="m-5 hover:text-[#ffc00c]" href="/register">Sign Up</Link>
           </>
         )}
       </div>

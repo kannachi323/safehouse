@@ -19,7 +19,7 @@ export default function MapsContainer() {
     <GoogleMap
       mapContainerStyle={{ width: '50vw', height: '82vh' }}
       center={mapCenter}  // Set map center to coordinates
-      zoom={12}
+      zoom={14}
     >
       <Marker position={coordinates} />
     </GoogleMap>

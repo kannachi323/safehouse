@@ -3,26 +3,28 @@ import React, { useState } from 'react';
 import './messages.css';
 import Link from 'next/link';
 import { IoMdArrowRoundBack } from "react-icons/io";
-import { getChatRoom } from '@/firebase/db';
+import { createChat } from '@/firebase/db';
 
 interface Conversation {
   id: number;
   name: string;
   messages: string[];
 }
+
 const test: Conversation[] = [
   { id: 1, name: 'Bob', messages: ['Hello'] },
   { id: 2, name: 'Dude', messages: ['Hi'] },
 ];
 
 function handleSend() {
-  const response = getChatRoom();
-  console.log(response);
+  const chatRefId = createChat("mattdev727@gmail.com", "safehousegroup727@gmail.com");
+  console.log(chatRefId);
 }
 
 const MessagesPage: React.FC = () => {
   const [conversations, setConversations] = useState<Conversation[]>(test);
   const [activeConversation, setActiveConversation] = useState<Conversation | null>(conversations[0]);
+  
 
   return (
     <div className="messages-page">

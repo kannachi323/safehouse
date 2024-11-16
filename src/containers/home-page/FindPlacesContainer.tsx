@@ -1,7 +1,7 @@
 'use client'
 import BKG1 from "@public/images/bkg1.jpg"
 
-import Dropdown from "@/components/DropdownElements/Dropdown"
+import Dropdown from "@/components/Dropdown/Dropdown"
 import SearchBar from "@components/SearchBar"
 import { CiLocationOn } from "react-icons/ci";
 import { MdOutlineArrowDropDown } from "react-icons/md";

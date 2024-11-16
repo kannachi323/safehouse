@@ -8,26 +8,22 @@ import { useJsApiLoader } from "@react-google-maps/api";
 
 export default function Home() {
   const googleMapsAPIKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-    if (googleMapsAPIKey === undefined) {
-        return
-    }
-
-  const { isLoaded } = useJsApiLoader({
+  
+  const { isLoaded, loadError } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: googleMapsAPIKey,
+    googleMapsApiKey: googleMapsAPIKey || '',
     libraries: ['places'],
   });
 
   if (!isLoaded) {
-    return <div>Loading...</div>;
+    return <div className="self-center items-center">Loading...</div>;
+  }
+  if (loadError) {
+    return <div className="self-center items-center">Sorry, experiencing some issues at the moment</div>
   }
 
   return(
-    
     <>
-    
-    
-     
         <NavBar/>
         {/* section 1 */}
         <div className="bg-white text-[#013c6c] flex flex-col justify-start items-center" >
