@@ -28,5 +28,11 @@ export const listings = pgTable('listings', {
     feature: jsonb('feature').notNull()
 });
 
+export const settings = pgTable('settings', {
+    uid: serial('uid').primaryKey(),
+    display_name: text('display_name').notNull(),
+    theme: integer('theme').notNull(),
+    notifs: integer('notifs').notNull().default(0)
+});
   
 
