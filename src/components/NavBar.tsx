@@ -31,29 +31,40 @@ export default function NavBar() {
 
       <div className="flex flex-row items-center justify-end w-1/3">
         {user ? (
-          <Dropdown className="text-[#013c6c]" width="250%" hover={false} elements={[
-            ...userElements.map((item, index) => (
-              <Link
-                key={index}
-                href={item.href}
-                className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200 rounded-md"
+          <Dropdown
+            className="text-[#013c6c]"
+            width="250%"
+            hover={false}
+            elements={[
+              ...userElements.map((item, index) => (
+                <Link
+                  key={index}
+                  href={item.href}
+                  className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200 rounded-md"
+                >
+                  {item.label}
+                </Link>
+              )),
+              <button
+                onClick={async () => {
+                  await userSignOut();
+                }}
+                className="block w-full px-4 py-2 text-sm text-gray-800 hover:bg-gray-200 text-left rounded-md"
+                key="logout"
               >
-                {item.label}
-              </Link>
-            )),
-           
-            <button
-              onClick={async () => {
-                await userSignOut();
-              }}
-              className="block w-full px-4 py-2 text-sm text-gray-800 hover:bg-gray-200 text-left rounded-md"
-              key="logout"
-            >
-              
-              Logout
-            </button>
-          ]}>
-            <CgProfile className="text-white text-4xl m-5 hover:text-[#ffc00c] cursor-pointer" />
+                Logout
+              </button>,
+            ]}
+          >
+            {user.photoURL ? (
+              <img
+                src={user.photoURL}
+                alt="User Avatar"
+                className="w-10 h-10 rounded-full m-5 hover:opacity-80 cursor-pointer"
+              />
+            ) : (
+              <CgProfile className="text-white text-4xl m-5 hover:text-[#ffc00c] cursor-pointer" />
+            )}
           </Dropdown>
         ) : (
           <>
