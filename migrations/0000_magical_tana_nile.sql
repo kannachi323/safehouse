@@ -10,6 +10,13 @@ CREATE TABLE IF NOT EXISTS "listings" (
 	"feature" jsonb NOT NULL
 );
 --> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "settings" (
+	"uid" serial PRIMARY KEY NOT NULL,
+	"display_name" text NOT NULL,
+	"theme" integer NOT NULL,
+	"notifs" integer DEFAULT 0 NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "users" (
 	"uid" serial PRIMARY KEY NOT NULL,
 	"first_name" text NOT NULL,
