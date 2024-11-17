@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import AuthGuard from '@/components/AuthChecker';
 import './messages.css';
 import Link from 'next/link';
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -67,4 +68,11 @@ const MessagesPage: React.FC = () => {
     </div>
   );
 };
-export default MessagesPage;
+
+export default function ProtectedMessagesPage() {
+  return (
+    <AuthGuard>
+      <MessagesPage />
+    </AuthGuard>
+  );
+}

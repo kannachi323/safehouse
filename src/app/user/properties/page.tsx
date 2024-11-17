@@ -1,11 +1,13 @@
+import AuthGuard from '@/components/AuthChecker';
 import UserManagerContainer from "@/containers/user-page/UserManagerContainer";
 import Link from "next/link";
 import { MdAdd } from "react-icons/md";
 
 export default function PropertiesPage() {
     return (
-        <UserManagerContainer node="properties">
-            <div className="flex flex-row items-center justify-center w-4/5 h-full bg-red-50">
+        <AuthGuard>
+            <UserManagerContainer node="properties">
+                <div className="flex flex-row items-center justify-center w-4/5 h-full bg-red-50">
                 <Link
                     className="flex flex-col justify-center items-center w-1/4 h-1/3 m-5 text-2xl font-semibold rounded-lg shadow-lg cursor-pointer hover:bg-gray-300"
                     href="/user/properties/create_listings"
@@ -22,5 +24,6 @@ export default function PropertiesPage() {
                 </Link>
             </div>
         </UserManagerContainer>
+        </AuthGuard>
     )
 }
