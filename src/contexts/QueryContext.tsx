@@ -6,8 +6,8 @@ export interface Filters {
     city?: string;
     state?: string;
     zip_code?: string;
-    bedCount?: number;
-    bathCount?: number;
+    bed_count?: number;
+    bath_count?: number;
     min_price?: number;
     max_price?: number;
     homeType?: string;

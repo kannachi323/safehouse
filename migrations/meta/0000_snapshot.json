@@ -1,13 +1,84 @@
 {
-<<<<<<< HEAD
-  "id": "4ec211d4-90e0-437f-b189-73a474d806b7",
-=======
-  "id": "2ac545ad-6476-408b-ad27-4bae647df2ca",
->>>>>>> 87e06db337c98939f4fd6f302b59a8d1e464f3b0
+  "id": "1795e7c2-c21c-4459-9d73-c51609cdcf91",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.features": {
+      "name": "features",
+      "schema": "",
+      "columns": {
+        "feature_id": {
+          "name": "feature_id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "listing_id": {
+          "name": "listing_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bedCount": {
+          "name": "bedCount",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bathCount": {
+          "name": "bathCount",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "roomType": {
+          "name": "roomType",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "roommateGender": {
+          "name": "roommateGender",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "distanceFromSchool": {
+          "name": "distanceFromSchool",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "isPets": {
+          "name": "isPets",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "features_listing_id_listings_listing_id_fk": {
+          "name": "features_listing_id_listings_listing_id_fk",
+          "tableFrom": "features",
+          "tableTo": "listings",
+          "columnsFrom": [
+            "listing_id"
+          ],
+          "columnsTo": [
+            "listing_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.listings": {
       "name": "listings",
       "schema": "",
@@ -59,12 +130,6 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false
-        },
-        "feature": {
-          "name": "feature",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
         }
       },
       "indexes": {},
@@ -95,7 +160,7 @@
       "columns": {
         "uid": {
           "name": "uid",
-          "type": "serial",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },

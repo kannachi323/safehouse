@@ -6,6 +6,7 @@ export async function GET(request: Request) {
    
     try {
         const response = await getFilteredListings(searchParams);
+        console.log(response);
         // Return the query results as JSON
         return NextResponse.json(response, { status: 200 });
     

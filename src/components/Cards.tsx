@@ -8,24 +8,30 @@ import Image from "next/image";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 
-export interface Feature {
-  bed?: number;
-  bath?: number;
+interface Feature {
+  bed_count?: number;
+  bath_count?: number;
+  room_type?: string;
+  roommate_gender?: string;
+  distance_from_school?: number;
+  is_pets?: boolean;
 }
 
-export interface Listing {
+
+interface Listing {
   price?: number;
   address?: string;
-  feature?: Feature;
   city?: string;
-  state_code?: string;
-  zipcode?: string;
+  state?: string;
+  zip_code?: string;
   uid: string;
+  feature?: Feature;
 }
 
 interface ListingContentCardProps {
   className?: string;
   listing?: Listing;
+  feature?: Feature;
 }
 
 export function ListingContentCard({ className, listing }: ListingContentCardProps) {
@@ -44,12 +50,12 @@ export function ListingContentCard({ className, listing }: ListingContentCardPro
 
   return (
     <div className={`${className} bg-white shadow-lg rounded-lg overflow-hidden`}>
-      <div id="framer-slideshow" className="relative w-full h-[200px]" onMouseEnter={() => setShowArrows(true)} onMouseLeave={() => setShowArrows(false)}> 
+      <div id="framer-slideshow" className="relative w-full" onMouseEnter={() => setShowArrows(true)} onMouseLeave={() => setShowArrows(false)}> 
         
         <Image
           src={images[currentIndex]} // Correct src usage
           alt="Listing Image"
-          className="object-cover w-full h-full"
+          className="object-cover w-full h-full max-h-[200px]"
         />
         {showArrows && 
           <button
@@ -79,13 +85,13 @@ export function ListingContentCard({ className, listing }: ListingContentCardPro
             {listing.address + ' '}{listing.city + ' '}
           </p>
           <p className="text-gray-700 mt-2">
-            {listing.state_code + ' '}{listing.zipcode}
+            {listing.state + ' '}{listing.zip_code}
           </p>
 
           {/* Feature */}
           {listing.feature && (
             <p className="text-gray-600 text-sm mt-2">
-              {listing.feature.bed ?? 0} bd / {listing.feature.bath ?? 0} ba
+              {listing.feature.bed_count ?? 0} bd / {listing.feature.bath_count ?? 0} ba
             </p>
           )}
         </div>
