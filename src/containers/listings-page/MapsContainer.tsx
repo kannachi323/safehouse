@@ -11,7 +11,7 @@ export default function MapsContainer() {
   const mapCenter = currentCoordinates ?? defaultCoordinates;
  
 
-  const maxRadius = filters?.max_distance ?? 10;
+  const maxRadius = filters?.max_distance ?? 5;
   console.log(maxRadius);
 
   //apply the distance filter no matter what (we might need to think abt this)

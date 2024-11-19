@@ -75,6 +75,7 @@ export function buildFilters({ autocompleteRef, setFilters, setCurrentCoordinate
     if (autocompleteRef.current) {
       const place = autocompleteRef.current.getPlace();
       const address_components = place.address_components;
+      console.log(address_components);
 
       // Initialize filters object
       const newFilters: Filters = {};
@@ -98,6 +99,7 @@ export function buildFilters({ autocompleteRef, setFilters, setCurrentCoordinate
         });
 
         // Set filters based on the extracted components
+        console.log(newFilters);
         setFilters(newFilters);
       }
  

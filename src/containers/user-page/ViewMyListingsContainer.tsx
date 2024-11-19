@@ -17,7 +17,7 @@ export default function ViewMyListingsContainer() {
         async function fetchListings() {
             try {
                 //this time, pass user uid to searchParams
-                
+                console.log(user?.uid);
                 const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/search?uid=${user?.uid}`, {
                     method: 'POST',
                     headers: {
@@ -27,6 +27,7 @@ export default function ViewMyListingsContainer() {
                 });
 
                 if (response.ok) {
+                    console.log('weh response was ok');
                     const listings = await response.json();
                     console.log(listings);
                     setListings(listings);
@@ -52,15 +53,15 @@ export default function ViewMyListingsContainer() {
                 ) <= (filters?.max_distance ?? 10)
             );
         }
-    }, [filters]);
+    }, [filters, user?.uid]);
 
 
     return (
-        <QueryProvider>
+        <>
             <h1 className="text-3xl font-bold w-full p-5">My Listings</h1>
             <FiltersContainer />
             <div className="grid grid-cols-4 gap-4 w-full place-items-center my-5">
-                {listings && listings.map((listing, key) => (
+                {listings.length > 0 && listings.map((listing, key) => (
                     <ListingContentCard
                         className="flex flex-col w-[90%] rounded-lg border-2 border-[#013c6c]"
                         key={key}
@@ -68,6 +69,6 @@ export default function ViewMyListingsContainer() {
                     />
                 ))}
             </div>
-        </QueryProvider>
+        </>
     );
 }

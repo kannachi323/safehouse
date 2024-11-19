@@ -12,7 +12,7 @@ export async function POST(request: Request) {
         if (uid) {
             filters.uid = uid;
         }
-
+        console.log(filters);
         const response = await getListings(filters);
         console.log(response);
         // Return the query results as JSON

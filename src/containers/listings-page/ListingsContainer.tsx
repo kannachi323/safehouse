@@ -47,7 +47,7 @@ export default function ListingsContainer({ className }: { className: string }) 
                     listing.latitude,
                     listing.longitude,
                     true
-                ) <= (filters?.max_distance ?? 10)
+                ) <= (filters?.max_distance ?? 5)
             );
         }
     }, [filters]);

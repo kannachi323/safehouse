@@ -37,16 +37,13 @@ export default function Page() {
   }, [user]);  // Run the effect when the user object changes
 
 
-
-
-
   const handleSubmit = async (e : React.FormEvent) => {
     e.preventDefault();
     console.log(JSON.stringify(listingValues));
 
     try {
       
-      const response = await fetch('/api/listings', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listings`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
