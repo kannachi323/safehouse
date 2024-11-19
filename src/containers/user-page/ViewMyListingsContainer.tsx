@@ -4,7 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useEffect } from 'react';
 import {  ListingContentCard } from "@components/Cards";
 import FiltersContainer from "@containers/listings-page/FiltersContainer";
-import { QueryProvider, useQuery } from "@contexts/QueryContext"
+import { useQuery } from "@contexts/QueryContext"
 import { findDistanceBetweenTwoPoints } from "@/utils/helper";
 
 export default function ViewMyListingsContainer() {
