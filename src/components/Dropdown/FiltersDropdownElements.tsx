@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Filters } from "@/contexts/QueryContext";
+import { Filters } from "@/types";
 
 interface FilterDropdownProps {
     filters: Filters;

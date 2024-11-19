@@ -3,42 +3,8 @@ import { db } from '../index';
 import { listings } from '../schema';
 import { features } from '../schema';
 
-interface Filters {
-    address?: string;
-    city?: string;
-    state?: string;
-    zip_code?: string;
-    bedCount?: number;
-    bathCount?: number;
-    min_price?: number;
-    max_price?: number;
-    roomType?: string;
-    roommateGender?: string;
-    pets?: boolean;
-}
 
-interface Feature {
-    bed?: number;
-    bath?: number;
-    room_type?: string;
-    roommate_gender?: string;
-    distance_from_school?: number;
-    is_pets?: boolean;
-}
-
-interface Listing {
-    price?: number;
-    address?: string;
-    city?: string;
-    state_code?: string;
-    zipcode?: string;
-    uid: string;
-    feature?: Feature[];
-}
-
-
-
-export async function getFilteredListings(searchParams: URLSearchParams) {
+export async function getListings(searchParams: URLSearchParams) {
     const conditions = [];
     
     // Dynamically iterate over searchParams and build conditions
@@ -78,14 +44,16 @@ export async function getFilteredListings(searchParams: URLSearchParams) {
     }
 
     // Construct the query with the dynamically built conditions
-    const query_results = await db
+    const rows = await db
         .select()
         .from(listings)
         .innerJoin(features, eq(listings.listing_id, features.listing_id))// Join the features table
         .where(and(...conditions));
 
+    console.log(rows);
+
     // Now, merge the listings and features
-    const filteredListings = query_results.map((item) => {
+    const filteredListings = rows.map((item) => {
         // Destructure listings and features from the result
         const { listings: listing, features: feature } = item;
 
@@ -98,6 +66,7 @@ export async function getFilteredListings(searchParams: URLSearchParams) {
                 room_type: feature.room_type,
                 roommate_gender: feature.roommate_gender,
                 is_pets: feature.is_pets,
+                max_radius: feature.max_radius
             }
         };
     });

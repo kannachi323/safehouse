@@ -15,9 +15,10 @@ export default function DashboardLayout({children, PropertiesForRent, ListingAcc
     return (
        
         <UserManagerContainer node="dashboard">
-            <div className="grid grid-cols-9 grid-rows-4 gap-10 w-4/5 h-full p-10 bg-blue-200">
+            
+            <div className="grid grid-cols-9 grid-rows-4 gap-10 w-4/5 h-full p-5">
 
-        
+              
   
               {PropertiesForRent}
 

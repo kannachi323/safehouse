@@ -12,7 +12,7 @@ export default function Home() {
   const { isLoaded, loadError } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: googleMapsAPIKey || '',
-    libraries: ['places'],
+    libraries: ['places', 'marker'],
   });
 
   if (!isLoaded) {

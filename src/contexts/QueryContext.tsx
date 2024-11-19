@@ -1,30 +1,16 @@
 'use client'
 import React, { createContext, useState, useContext } from 'react';
+import { Filters, Listing } from "@/types";
 
-export interface Filters {
-    address?: string;
-    city?: string;
-    state?: string;
-    zip_code?: string;
-    bed_count?: number;
-    bath_count?: number;
-    min_price?: number;
-    max_price?: number;
-    homeType?: string;
-}
 
-// Define the type for the selectedLocation
-export type Location = google.maps.places.PlaceResult | undefined;
 
 export interface QueryContextProps {
-    searchQuery: string;
-    setSearchQuery: (query: string) => void;
     filters: Filters;
     setFilters: (filter: Filters | ((prevFilters: Filters) => Filters)) => void;
-    refresh: boolean;
-    setRefresh: (refresh: boolean) => void;
-    selectedLocation: Location;  // Use the SelectedLocation type
-    setSelectedLocation: (selectedLocation: Location) => void;
+    listings: Listing[];
+    setListings: (listings: Listing[]) => void;
+    currentCoordinates: google.maps.LatLng | undefined;
+    setCurrentCoordinates: (selectedLocation: google.maps.LatLng | undefined) => void;
 }
 
 export const QueryContext = createContext<QueryContextProps | undefined>(undefined);
@@ -41,19 +27,16 @@ export function useQuery() {
 
 export function QueryProvider({ children }: { children: React.ReactNode }) {
     const [filters, setFilters] = useState<Filters>({});
-    const [refresh, setRefresh] = useState(false);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [selectedLocation, setSelectedLocation] = useState<Location>(undefined); // Properly typed
+    const [listings, setListings] = useState<Listing[]>([]);
+    const [currentCoordinates, setCurrentCoordinates] = useState<google.maps.LatLng | undefined>(undefined);
 
     const value: QueryContextProps = {
-        searchQuery: searchQuery,
-        setSearchQuery: setSearchQuery,
         filters: filters,
         setFilters: setFilters,
-        refresh: refresh,
-        setRefresh: setRefresh,
-        selectedLocation: selectedLocation,
-        setSelectedLocation: setSelectedLocation,
+        listings: listings,
+        setListings: setListings,
+        currentCoordinates: currentCoordinates,
+        setCurrentCoordinates: setCurrentCoordinates,
     };
 
     return (

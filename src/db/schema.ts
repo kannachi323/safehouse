@@ -1,4 +1,4 @@
-import { boolean, pgTable, integer, text, serial } from 'drizzle-orm/pg-core';
+import { boolean, pgTable, integer, text, serial, doublePrecision } from 'drizzle-orm/pg-core';
 
 export type InsertUser = typeof users.$inferInsert;
 export type SelectUser = typeof users.$inferSelect;
@@ -25,6 +25,8 @@ export const listings = pgTable('listings', {
     zip_code: text('zip_code').notNull(),
     state: text('state').notNull(),
     picture_ref: text('picture_ref'),
+    latitude: doublePrecision('latitude').notNull(),
+    longitude: doublePrecision('longitude').notNull(),
 });
 
 export const features = pgTable('features', {
@@ -34,7 +36,7 @@ export const features = pgTable('features', {
   bath_count: integer('bath_count'),
   room_type: text('room_type'),
   roommate_gender: text('roommate_gender'),
-  distance_from_school: integer('distance_from_school'),
+  max_radius: integer('distance_from_school'),
   is_pets: boolean('is_pets')
 })
 

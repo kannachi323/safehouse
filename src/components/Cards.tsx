@@ -7,26 +7,9 @@ import { useState } from 'react';
 import Image from "next/image";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
-
-interface Feature {
-  bed_count?: number;
-  bath_count?: number;
-  room_type?: string;
-  roommate_gender?: string;
-  distance_from_school?: number;
-  is_pets?: boolean;
-}
+import { Listing, Feature } from "@/types";
 
 
-interface Listing {
-  price?: number;
-  address?: string;
-  city?: string;
-  state?: string;
-  zip_code?: string;
-  uid: string;
-  feature?: Feature;
-}
 
 interface ListingContentCardProps {
   className?: string;

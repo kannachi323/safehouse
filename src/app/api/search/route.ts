@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
-import { getFilteredListings } from '@/db/queries/select';
+import { getListings } from '@/db/queries/select';
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
    
     try {
-        const response = await getFilteredListings(searchParams);
+        const response = await getListings(searchParams);
         console.log(response);
         // Return the query results as JSON
         return NextResponse.json(response, { status: 200 });
