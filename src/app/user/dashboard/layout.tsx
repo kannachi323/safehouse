@@ -11,7 +11,7 @@ interface Props {
     TrendTotalViews : React.ReactNode
 }
 
-export default function DashboardLayout({children, PropertiesForRent, ListingAccuracy, UserEngagement, ListingStatus, TrendTotalViews} : Props) {
+export default function DashboardLayout({PropertiesForRent, ListingAccuracy, UserEngagement, ListingStatus, TrendTotalViews} : Props) {
     return (
        
         <UserManagerContainer node="dashboard">

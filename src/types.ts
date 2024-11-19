@@ -1,4 +1,12 @@
 
+export interface User {
+    uid: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    is_landlord: boolean;
+}
+
 export interface Feature {
     bed_count?: number;
     bath_count?: number;
@@ -7,7 +15,6 @@ export interface Feature {
     max_radius?: number;
     is_pets?: boolean;
 }
-  
   
 export interface Listing {
     price: number;
@@ -34,7 +41,8 @@ export interface Filters {
     room_type?: string;
     roommate_gender?: string;
     pets?: boolean;
-    max_radius?: number;
+    max_distance?: number;
+    uid?: string;
 }
 
 export type LocationLatLng = { lat: number, lng: number };

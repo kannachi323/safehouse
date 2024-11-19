@@ -11,7 +11,11 @@ export default function MapsContainer() {
   const mapCenter = currentCoordinates ?? defaultCoordinates;
  
 
-  const maxRadius = filters?.max_radius ?? 1;
+  const maxRadius = filters?.max_distance ?? 10;
+  console.log(maxRadius);
+
+  //apply the distance filter no matter what (we might need to think abt this)
+  const filteredListings = listings.filter((listing) => findDistanceBetweenTwoPoints(mapCenter.lat(), mapCenter.lng(), listing.latitude, listing.longitude, true) <= maxRadius);
 
   return (
     <GoogleMap
@@ -19,38 +23,25 @@ export default function MapsContainer() {
       center={mapCenter}  // Set map center to coordinates
       zoom={14}
     >
-      {listings && listings.length > 0 && listings.map((listing, index) => {
+      {filteredListings && filteredListings.length > 0 && filteredListings.map((listing, index) => {
         const listingCoordinates = new google.maps.LatLng(listing.latitude, listing.longitude);
-
-        // Calculate the distance and check if it's within the max radius
-        const distance = findDistanceBetweenTwoPoints(
-          mapCenter.lat(),
-          mapCenter.lng(),
-          listingCoordinates.lat(), 
-          listingCoordinates.lng(), 
-          true //this boolean is for converting to miles (default is km)
+        return (
+          <Marker key={index} position={listingCoordinates} />
         );
-
-        if (distance <= maxRadius) {
-          return (
-            <Marker key={index} position={listingCoordinates} />
-          );
-        }
-
-        return null;
       })}
-
-      <Circle 
-        center={mapCenter} 
-        radius={maxRadius * 1609.34}  // Convert miles to meters (1 mile = 1609.34 meters)
-        options={{
-          fillColor: 'blue',
-          fillOpacity: 0.2,
-          strokeColor: 'blue',
-          strokeOpacity: 0.5,
-          strokeWeight: 2,
-        }}
-      />
+      {maxRadius > 0 &&
+        <Circle 
+          center={mapCenter} 
+          radius={maxRadius * 1609.34}  // Convert miles to meters (1 mile = 1609.34 meters)
+          options={{
+            fillColor: 'blue',
+            fillOpacity: 0.2,
+            strokeColor: 'blue',
+            strokeOpacity: 0.5,
+            strokeWeight: 2,
+          }}
+        />
+      }
     </GoogleMap>
   );
 }

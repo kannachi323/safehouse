@@ -1,5 +1,5 @@
 {
-  "id": "1795e7c2-c21c-4459-9d73-c51609cdcf91",
+  "id": "34ab51e1-7337-4546-9037-a1d3c6d66514",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -10,48 +10,42 @@
       "columns": {
         "feature_id": {
           "name": "feature_id",
-          "type": "integer",
+          "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
         "listing_id": {
           "name": "listing_id",
-          "type": "integer",
+          "type": "serial",
           "primaryKey": false,
           "notNull": true
         },
-        "bedCount": {
-          "name": "bedCount",
+        "bed_count": {
+          "name": "bed_count",
           "type": "integer",
           "primaryKey": false,
           "notNull": false
         },
-        "bathCount": {
-          "name": "bathCount",
+        "bath_count": {
+          "name": "bath_count",
           "type": "integer",
           "primaryKey": false,
           "notNull": false
         },
-        "roomType": {
-          "name": "roomType",
-          "type": "integer",
+        "room_type": {
+          "name": "room_type",
+          "type": "text",
           "primaryKey": false,
           "notNull": false
         },
-        "roommateGender": {
-          "name": "roommateGender",
-          "type": "integer",
+        "roommate_gender": {
+          "name": "roommate_gender",
+          "type": "text",
           "primaryKey": false,
           "notNull": false
         },
-        "distanceFromSchool": {
-          "name": "distanceFromSchool",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "isPets": {
-          "name": "isPets",
+        "is_pets": {
+          "name": "is_pets",
           "type": "boolean",
           "primaryKey": false,
           "notNull": false
@@ -85,7 +79,7 @@
       "columns": {
         "listing_id": {
           "name": "listing_id",
-          "type": "integer",
+          "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
@@ -125,11 +119,23 @@
           "primaryKey": false,
           "notNull": true
         },
-        "picture_ref": {
-          "name": "picture_ref",
+        "pictures_folder_ref": {
+          "name": "pictures_folder_ref",
           "type": "text",
           "primaryKey": false,
           "notNull": false
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},

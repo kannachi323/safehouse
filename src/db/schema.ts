@@ -24,19 +24,21 @@ export const listings = pgTable('listings', {
     city: text('city').notNull(),
     zip_code: text('zip_code').notNull(),
     state: text('state').notNull(),
-    picture_ref: text('picture_ref'),
+    pictures_folder_ref: text('pictures_folder_ref'),
     latitude: doublePrecision('latitude').notNull(),
     longitude: doublePrecision('longitude').notNull(),
 });
 
+export type InsertFeature = typeof features.$inferInsert;
+export type SelectFeature = typeof features.$inferSelect;
+
 export const features = pgTable('features', {
   feature_id: serial('feature_id').primaryKey(),
-  listing_id : integer('listing_id').notNull().references(() => listings.listing_id),
+  listing_id : serial('listing_id').notNull().references(() => listings.listing_id),
   bed_count: integer('bed_count'),
   bath_count: integer('bath_count'),
   room_type: text('room_type'),
   roommate_gender: text('roommate_gender'),
-  max_radius: integer('distance_from_school'),
   is_pets: boolean('is_pets')
 })
 

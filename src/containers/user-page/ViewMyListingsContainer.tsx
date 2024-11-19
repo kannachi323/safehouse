@@ -1,24 +1,35 @@
 'use client';
 
 import { useAuth } from "@/contexts/AuthContext";
-import { useState, useEffect } from 'react';
-import { Listing, ListingContentCard } from "@components/Cards";
+import { useEffect } from 'react';
+import {  ListingContentCard } from "@components/Cards";
 import FiltersContainer from "@containers/listings-page/FiltersContainer";
 import { QueryProvider, useQuery } from "@contexts/QueryContext"
+import { findDistanceBetweenTwoPoints } from "@/utils/helper";
 
 export default function ViewMyListingsContainer() {
-    const [userListings, setUserListings] = useState<Listing[]>([]);
     
     const { user } = useAuth();
+    const { filters, listings, setListings, currentCoordinates } = useQuery();
 
-     useEffect(() => {
-        async function fetchUserListings() {        
+
+    useEffect(() => {
+        async function fetchListings() {
             try {
-                const response = await fetch(`http://localhost:3000/api/search?uid=${user?.uid}&city=${city}`);
+                //this time, pass user uid to searchParams
+                
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/search?uid=${user?.uid}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(filters),
+                });
+
                 if (response.ok) {
-                    const data = await response.json();
-                    console.log(data);
-                    setUserListings(data); // Assuming the API returns the listings array
+                    const listings = await response.json();
+                    console.log(listings);
+                    setListings(listings);
                 } else {
                     console.error("Failed to fetch listings:", response.statusText);
                 }
@@ -27,19 +38,29 @@ export default function ViewMyListingsContainer() {
             }
         }
 
-        if (user?.uid) {
-            fetchUserListings();
+        fetchListings();
+
+        if (currentCoordinates) {
+            // Apply the distance filter no matter what
+            listings.filter((listing) => 
+                findDistanceBetweenTwoPoints(
+                    currentCoordinates.lat(),
+                    currentCoordinates.lng(),
+                    listing.latitude,
+                    listing.longitude,
+                    true
+                ) <= (filters?.max_distance ?? 10)
+            );
         }
-        
-       
-     }, [user])
+    }, [filters]);
+
 
     return (
         <QueryProvider>
             <h1 className="text-3xl font-bold w-full p-5">My Listings</h1>
             <FiltersContainer />
             <div className="grid grid-cols-4 gap-4 w-full place-items-center my-5">
-                {userListings && userListings.map((listing, key) => (
+                {listings && listings.map((listing, key) => (
                     <ListingContentCard
                         className="flex flex-col w-[90%] rounded-lg border-2 border-[#013c6c]"
                         key={key}

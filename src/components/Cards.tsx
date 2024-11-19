@@ -38,7 +38,7 @@ export function ListingContentCard({ className, listing }: ListingContentCardPro
         <Image
           src={images[currentIndex]} // Correct src usage
           alt="Listing Image"
-          className="object-cover w-full h-full max-h-[200px]"
+          className="object-cover w-full h-full max-h-[300px]"
         />
         {showArrows && 
           <button

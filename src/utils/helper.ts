@@ -1,5 +1,44 @@
 import { Filters } from "@/types";
 
+export async function getCoordinates(address: string) {
+  const liveKey = process.env.RADAR_API_KEY;  // Make sure your Live Key is set in the environment variables
+  if (!liveKey) {
+    throw new Error("RADAR_API_KEY is missing");
+  }
+
+  const url = `https://api.radar.io/v1/geocode/forward?query=${encodeURIComponent(address)}`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Authorization': `${liveKey}`,  // Correct authorization header format
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to geocode address');
+    }
+
+    const data = await response.json();
+
+    // Check if no addresses were found
+    if (!data.addresses || data.addresses.length === 0) {
+      throw new Error('No coordinates found');
+    }
+
+    const latitude = data.addresses[0].latitude;
+    const longitude = data.addresses[0].longitude;
+
+    console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+
+    return { latitude, longitude };
+
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;  // Rethrow the error so the caller knows something went wrong
+  }
+}
 export function findDistanceBetweenTwoPoints(
     lat1: number, lon1: number, lat2: number, lon2: number, isMiles: boolean = false,
 ): number {

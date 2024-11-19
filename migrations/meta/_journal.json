@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1731798332070,
-      "tag": "0000_white_loners",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1731798428084,
-      "tag": "0001_wandering_morg",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1731798730020,
-      "tag": "0002_eminent_scream",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1731798983621,
-      "tag": "0003_huge_morbius",
+      "when": 1732009168778,
+      "tag": "0000_bored_shatterstar",
       "breakpoints": true
     }
   ]

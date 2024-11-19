@@ -1,5 +1,6 @@
 'use client'
 import ViewMyListingsContainer from "@/containers/user-page/ViewMyListingsContainer";
+import { QueryProvider } from "@/contexts/QueryContext";
 import { LoadScript } from "@react-google-maps/api";
 
 export default function Page() {
@@ -10,7 +11,11 @@ export default function Page() {
     
     return (
         <LoadScript googleMapsApiKey={googleMapsAPIKey} libraries={['places']}>
-            <ViewMyListingsContainer />
+            <QueryProvider>
+                <ViewMyListingsContainer />
+
+            </QueryProvider>
+            
 
         </LoadScript>
             

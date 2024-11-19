@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Filters } from "@/types";
 
 interface FilterDropdownProps {
@@ -13,7 +13,13 @@ export function BedBathFilters({filters, setFilters} : FilterDropdownProps) {
     // State for tracking bed and bath input values
     const [bed, setBed] = useState<number | undefined>(filters.bed_count);
     const [bath, setBath] = useState<number | undefined>(filters.bath_count);
-  
+
+    useEffect(() => {
+        setBed(filters.bed_count);
+        setBath(filters.bath_count);
+    }, [filters.bed_count, filters.bath_count]);
+
+   
     // Function to handle updating filters when Apply button is clicked
     function handleBedBathFilters() {
         // No need to query DOM, just use the state values
@@ -67,6 +73,12 @@ export function BedBathFilters({filters, setFilters} : FilterDropdownProps) {
   export function PriceFilters({ filters, setFilters }: FilterDropdownProps) {
     const [minPrice, setMinPrice] = useState<number | undefined>(filters.min_price || undefined);
     const [maxPrice, setMaxPrice] = useState<number | undefined>(filters.max_price || undefined);
+
+    useEffect(() => {
+        setMinPrice(filters.min_price);
+        setMaxPrice(filters.max_price);
+    }, [filters.min_price, filters.max_price]);
+  
 
     function handlePriceFilters() {
         setFilters({
@@ -128,10 +140,22 @@ export function BedBathFilters({filters, setFilters} : FilterDropdownProps) {
 }
 
 export function MoreFilters({ filters, setFilters } : FilterDropdownProps) {
-  const [minDistanceFromSchool, setMinDistanceFromSchool] = useState<number | undefined>();
-  const [maxDistanceFromSchool, setMaxDistanceFromSchool] = useState<number | undefined>();
+  const [maxDistance, setMaxDistance] = useState<number | undefined>();
   const [minSqft, setMinSqft] = useState<number | undefined>();
   const [maxSqft, setMaxSqft] = useState<number | undefined>();
+
+  useEffect(() => {
+    setMaxDistance(filters.max_distance);
+    
+  
+  }, [filters.max_distance]);
+
+  function handleMoreFilters() {
+    setFilters({
+        ...filters,
+        max_distance: maxDistance
+    });
+}
   
 
   return (
@@ -140,23 +164,14 @@ export function MoreFilters({ filters, setFilters } : FilterDropdownProps) {
       <div className="flex flex-row items-center justify-between gap-4 px-4 mb-4">
           <input
               type="number"
-              id="min-distance"
-              placeholder="Min"
-              value={minDistanceFromSchool || ""}
-              onChange={(e) => setMinDistanceFromSchool(e.target.value ? parseInt(e.target.value) : undefined)}
-              className="border p-2 rounded focus:outline-none focus:ring focus:ring-blue-300 w-full"
-              min={0}
-          />
-          <span>-</span>
-          <input
-              type="number"
               id="max-distance"
               placeholder="Max"
-              value={maxDistanceFromSchool || ""}
-              onChange={(e) => setMaxDistanceFromSchool(e.target.value ? parseInt(e.target.value) : undefined)}
+              value={maxDistance|| ""}
+              onChange={(e) => setMaxDistance(e.target.value ? parseInt(e.target.value) : undefined)}
               className="border p-2 rounded focus:outline-none focus:ring focus:ring-blue-300 w-full"
               min={0}
           />
+          
       </div>
       
       <b className="text-lg px-3 py-2 bg-slate-100 rounded-md mb-4">Square Feet</b>
@@ -213,6 +228,14 @@ export function MoreFilters({ filters, setFilters } : FilterDropdownProps) {
         <input type="checkbox" id="no-pets" className="rounded focus:outline-none focus:ring focus:ring-blue-300"/>
         
       </div>
+      {/* Apply Button */}
+      <button
+                className="self-center text-md text-white bg-[#023c6c] w-1/3 rounded-full py-2 mt-6 mb-3"
+                onClick={handleMoreFilters}
+                action-attr="close"
+            >
+                Apply
+            </button> 
     </div>
   )
 }

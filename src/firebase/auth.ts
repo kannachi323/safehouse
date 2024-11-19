@@ -1,36 +1,8 @@
 import { auth } from "@/firebase/config";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { User } from "@/types";
 
-
-export async function signInWithGoogle() {
-  const provider = new GoogleAuthProvider();
-
-  try {
-    const result = await signInWithPopup(auth, provider);
-    console.log("User signed in:", result.user);
-
-    // Try to fetch the existing user data
-    const response = await fetch(`/api/db/users?email=${result.user.email}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status} - ${response.statusText}`);
-    }
-    
-    const data = await response.json();
-    console.log('User data:', data);
-    return data;
-
-  } catch (error) {
-    console.error("Error with Google sign-in:", error);
-  }
-}
-
-export async function signUpWithGoogle(isLandlord : boolean) {
+export async function signInWithGoogle(isLandlord : boolean) {
 
   const provider = new GoogleAuthProvider();
 
@@ -45,32 +17,23 @@ export async function signUpWithGoogle(isLandlord : boolean) {
       return;
     }
 
-    // Check if the user already exists in the database
-    const response = await fetch(`/api/db/users?email=${user.email}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    //build User interface objcet
+    const userToCreate : User = {
+      uid: user.uid,
+      first_name: user.displayName?.split(' ')[0] || '',
+      last_name: user.displayName?.split(' ')[1] || '',
+      email: user.email || '',
+      is_landlord: isLandlord,
+    };
 
-    if (response.ok) {
-      const data = await response.json();
-      console.log("User already exists:", data);
-      return data; // User exists, return their data
-    }
-
-    // If user does not exist, create a new user in the database
-    const createUserResponse = await fetch(`/api/db/users`, {
+    // If user does not exist, create a new user in the database. this will also check for duplicates
+    const createUserResponse = await fetch(`/api/users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        first_name: user.displayName?.split(' ')[0] || '',
-        last_name: user.displayName?.split(' ')[1] || '',
-        email: user.email,
-        is_landlord: isLandlord,
-        uid: user.uid,
+        user: userToCreate,
       }),
     });
 
@@ -79,7 +42,7 @@ export async function signUpWithGoogle(isLandlord : boolean) {
     }
 
     const newUser = await createUserResponse.json();
-    console.log("New user created:", newUser);
+    console.log(newUser);
     return newUser;
 
   } catch (error) {

@@ -2,13 +2,14 @@ import { eq, lte, gte, and} from 'drizzle-orm/expressions';
 import { db } from '../index';
 import { listings } from '../schema';
 import { features } from '../schema';
+import { Filters } from '@/types';
 
 
-export async function getListings(searchParams: URLSearchParams) {
+export async function getListings(filters : Filters) {
     const conditions = [];
     
     // Dynamically iterate over searchParams and build conditions
-    for (const [key, value] of searchParams.entries()) {
+    for (const [key, value] of Object.entries(filters)) {
         switch (key) {
             case 'address':
                 conditions.push(eq(listings.address, value));
@@ -37,6 +38,8 @@ export async function getListings(searchParams: URLSearchParams) {
             case 'pets':
                 conditions.push(eq(features.is_pets, value === 'true')); // assuming pets is a boolean
                 break;
+            case 'uid':
+                conditions.push(eq(listings.uid, value));
             default:
                 // Ignore unknown keys
                 break;
@@ -66,7 +69,6 @@ export async function getListings(searchParams: URLSearchParams) {
                 room_type: feature.room_type,
                 roommate_gender: feature.roommate_gender,
                 is_pets: feature.is_pets,
-                max_radius: feature.max_radius
             }
         };
     });

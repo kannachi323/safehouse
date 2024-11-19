@@ -1,11 +1,19 @@
 import { NextResponse } from 'next/server';
-import { getListings } from '@/db/queries/select';
+import { getListings } from '@/db/listings/select';
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
     const { searchParams } = new URL(request.url);
-   
+    const uid = searchParams.get('uid');
+    
     try {
-        const response = await getListings(searchParams);
+        const filters = await request.json();
+        console.log(filters);
+        
+        if (uid) {
+            filters.uid = uid;
+        }
+
+        const response = await getListings(filters);
         console.log(response);
         // Return the query results as JSON
         return NextResponse.json(response, { status: 200 });

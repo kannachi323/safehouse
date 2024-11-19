@@ -1,6 +1,6 @@
 
 import { db } from "@/firebase/config";
-import { setDoc, doc, collection, serverTimestamp, addDoc, query, where, getDoc, getDocs } from "firebase/firestore";
+import { setDoc, doc, collection, serverTimestamp, addDoc, query, where, getDocs } from "firebase/firestore";
 
 
 export async function createChat(member1: string, member2: string) {
@@ -47,20 +47,20 @@ export async function createChat(member1: string, member2: string) {
     return chatId;
 }
 
-async function addMessageToChat(chatId : string, senderId : string, text : string) {
-// Reference the specific chat's messages subcollection
-const messagesRef = collection(db, "chats", chatId, "messages");
+export async function addMessageToChat(chatId : string, senderId : string, text : string) {
+  // Reference the specific chat's messages subcollection
+  const messagesRef = collection(db, "chats", chatId, "messages");
 
-// Add a new message document with sender, text, and timestamp
-await addDoc(messagesRef, {
-    senderId: senderId,
-    text: text,
-    timestamp: serverTimestamp(),
-    readBy: [], // Initialize with an empty array for read receipts if needed
-    messageType: "text"
-});
+  // Add a new message document with sender, text, and timestamp
+  await addDoc(messagesRef, {
+      senderId: senderId,
+      text: text,
+      timestamp: serverTimestamp(),
+      readBy: [], // Initialize with an empty array for read receipts if needed
+      messageType: "text"
+  });
 
-console.log("Message added to chat:", chatId);
+  console.log("Message added to chat:", chatId);
 }
 
 export async function getChat() {
