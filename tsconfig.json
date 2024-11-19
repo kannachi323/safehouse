@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "target": "es2015",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -24,9 +25,11 @@
       "@containers/*": ["./src/containers/*"],
       "@api/*": ["./src/app/api/*"],
       "@utils/*": ["./src/utils/*"],
-      "@contexts/*": ["./src/contexts/*"]
+      "@contexts/*": ["./src/contexts/*"],
+      "@actions/*": ["./src/actions/*"],
+      "@types/*": ["./src/types/*"],
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/auth/[provider]/route.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/auth/route.ts"],
   "exclude": ["node_modules"]
 }
