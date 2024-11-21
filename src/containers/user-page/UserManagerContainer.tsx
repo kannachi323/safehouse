@@ -7,6 +7,7 @@ import { FaHouseUser } from "react-icons/fa";
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { IoSettingsSharp } from "react-icons/io5";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
+import { MdSavedSearch } from "react-icons/md";
 import { useAuth } from "@/contexts/AuthContext";
 
 
@@ -66,6 +67,12 @@ export default function UserManagerContainer({children, node} : Props) {
                     </span>
                   </Link>
                   
+                  <Link className={selectedLinkStyles('account') + ' mt-auto'} href="/user/saved">
+                    <span className="inline-flex justify-center items-center">
+                      <MdSavedSearch className="inline-flex text-2xl mx-2"/>
+                      Saved Searches
+                    </span>
+                  </Link>
                  
                   <Link className={selectedLinkStyles('account') + ' mt-auto'} href="/user/account">
                     <span className="inline-flex justify-center items-center">
@@ -73,7 +80,7 @@ export default function UserManagerContainer({children, node} : Props) {
                       {user.email}
                     </span>
                   </Link>
-                  
+
 
 
                   

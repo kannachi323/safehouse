@@ -16,6 +16,7 @@ export default function NavBar() {
   const userElements = [
     { href: '/user/dashboard', label: 'Dashboard' },
     { href: '/user/properties', label: 'My Properties' },
+    { href: '/user/saved', label: 'Saved Searches' },
     { href: '/user/messages', label: 'Messages' },
     { href: '/user/settings', label: 'Settings' },
   ];
