@@ -8,6 +8,7 @@ import Image from "next/image";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { Listing, Feature } from "@/types";
+import { BsFillBookmarkStarFill } from "react-icons/bs";
 
 
 
@@ -15,12 +16,19 @@ interface ListingContentCardProps {
   className?: string;
   listing?: Listing;
   feature?: Feature;
+  isBookmarked?: boolean;
+  onBookmark?: () => void;
 }
 
-export function ListingContentCard({ className, listing }: ListingContentCardProps) {
+export function ListingContentCard({
+  className,
+  listing,
+  isBookmarked = false,
+  onBookmark,
+}: ListingContentCardProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showArrows, setShowArrows] = useState(false);
-  
+
   const images = [RENT1, RENT2, SAMMY, BKG]; // Keep these as imports
 
   function nextStep() {
@@ -33,48 +41,70 @@ export function ListingContentCard({ className, listing }: ListingContentCardPro
 
   return (
     <div className={`${className} bg-white shadow-lg rounded-lg overflow-hidden`}>
-      <div id="framer-slideshow" className="relative w-full" onMouseEnter={() => setShowArrows(true)} onMouseLeave={() => setShowArrows(false)}> 
-        
+      <div
+        id="framer-slideshow"
+        className="relative w-full"
+        onMouseEnter={() => setShowArrows(true)}
+        onMouseLeave={() => setShowArrows(false)}
+      >
         <Image
-          src={images[currentIndex]} // Correct src usage
+          src={images[currentIndex]}
           alt="Listing Image"
           className="object-cover w-full h-full max-h-[300px]"
         />
-        {showArrows && 
+        {showArrows && (
           <button
             className="absolute top-1/2 left-0 text-white"
             onClick={prevStep}
           >
-            <MdKeyboardArrowLeft className="text-5xl"/>
+            <MdKeyboardArrowLeft className="text-5xl" />
           </button>
-        }
-        {showArrows &&
+        )}
+        {showArrows && (
           <button
             className="absolute top-1/2 right-0 text-white"
             onClick={nextStep}
           >
             <MdKeyboardArrowRight className="text-5xl" />
           </button>
-        }
+        )}
+
+        {onBookmark && (
+          <button
+            className="absolute top-4 right-4 text-white"
+            onClick={onBookmark}
+          >
+            <BsFillBookmarkStarFill
+              className={`text-3xl ${
+                isBookmarked ? "text-yellow-500" : "text-gray-300"
+              }`}
+            />
+          </button>
+        )}
       </div>
 
       {listing && (
         <div className="flex flex-col w-full p-4">
           {/* Price */}
-          <h1 className="text-2xl font-semibold text-gray-800 mb-2">${listing.price} /mo</h1>
-          
+          <h1 className="text-2xl font-semibold text-gray-800 mb-2">
+            ${listing.price} /mo
+          </h1>
+
           {/* Address Details */}
           <p className="text-gray-700 mt-2">
-            {listing.address + ' '}{listing.city + ' '}
+            {listing.address + " "}
+            {listing.city + " "}
           </p>
           <p className="text-gray-700 mt-2">
-            {listing.state + ' '}{listing.zip_code}
+            {listing.state + " "}
+            {listing.zip_code}
           </p>
 
           {/* Feature */}
           {listing.feature && (
             <p className="text-gray-600 text-sm mt-2">
-              {listing.feature.bed_count ?? 0} bd / {listing.feature.bath_count ?? 0} ba
+              {listing.feature.bed_count ?? 0} bd /{" "}
+              {listing.feature.bath_count ?? 0} ba
             </p>
           )}
         </div>

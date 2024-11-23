@@ -2,6 +2,8 @@ import { boolean, pgTable, integer, text, serial, doublePrecision } from 'drizzl
 
 export type InsertUser = typeof users.$inferInsert;
 export type SelectUser = typeof users.$inferSelect;
+export type InsertBookmark = typeof bookmarks.$inferInsert;
+export type SelectBookmark = typeof bookmarks.$inferSelect;
 
 
 export const users = pgTable('users', {
@@ -47,6 +49,11 @@ export const settings = pgTable('settings', {
     display_name: text('display_name').notNull(),
     theme: integer('theme').notNull(),
     notifs: integer('notifs').notNull().default(0)
+});
+export const bookmarks = pgTable('bookmarks', {
+  bookmark_id: serial('bookmark_id').primaryKey(),
+  uid: text('uid').notNull().references(() => users.uid),
+  listing_id: integer('listing_id').notNull().references(() => listings.listing_id),
 });
   
 
