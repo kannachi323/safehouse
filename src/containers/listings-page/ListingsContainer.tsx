@@ -5,13 +5,9 @@ import { useQuery } from '@/contexts/QueryContext';
 import { HiOutlineEmojiSad } from "react-icons/hi";
 import { findDistanceBetweenTwoPoints } from '@/utils/helper';
 
-
-
-
 export default function ListingsContainer({ className }: { className: string }) {
     
     const { filters, listings, setListings, currentCoordinates } = useQuery();
-
 
     useEffect(() => {
         async function fetchUserListings() {
@@ -47,7 +43,7 @@ export default function ListingsContainer({ className }: { className: string }) 
                     listing.latitude,
                     listing.longitude,
                     true
-                ) <= (filters?.max_distance ?? 5)
+                ) <= (filters?.max_distance ?? 20)
             );
         }
     }, [filters]);
