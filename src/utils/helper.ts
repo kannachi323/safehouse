@@ -67,11 +67,11 @@ export function findDistanceBetweenTwoPoints(
 
 interface BuildFiltersProps {
     autocompleteRef: React.RefObject<google.maps.places.Autocomplete | null>;
-    setCurrentCoordinates: (currentCoordiantes: google.maps.LatLng | undefined) => void;
+    setCircleCenterCoordinates: (currentCoordiantes: google.maps.LatLng | undefined) => void;
     setFilters: (filters: Filters) => void;
 }
 
-export function buildFilters({ autocompleteRef, setFilters, setCurrentCoordinates }: BuildFiltersProps) {
+export function buildFilters({ autocompleteRef, setFilters, setCircleCenterCoordinates }: BuildFiltersProps) {
     if (autocompleteRef.current) {
       const place = autocompleteRef.current.getPlace();
       const address_components = place.address_components;
@@ -98,13 +98,12 @@ export function buildFilters({ autocompleteRef, setFilters, setCurrentCoordinate
           }
         });
 
-        // Set filters based on the extracted components
-        console.log(newFilters);
+      
         setFilters(newFilters);
       }
  
       if (place.geometry) {
-        setCurrentCoordinates(place.geometry.location); // Update selected location with place details
+        setCircleCenterCoordinates(place.geometry.location); // Update selected location with place details
       }
     }
   };

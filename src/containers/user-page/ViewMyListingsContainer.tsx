@@ -10,7 +10,7 @@ import { findDistanceBetweenTwoPoints } from "@/utils/helper";
 export default function ViewMyListingsContainer() {
     
     const { user } = useAuth();
-    const { filters, listings, setListings, currentCoordinates } = useQuery();
+    const { filters, listings, setListings, circleCenterCoordinates } = useQuery();
 
 
     useEffect(() => {
@@ -41,12 +41,12 @@ export default function ViewMyListingsContainer() {
 
         fetchListings();
 
-        if (currentCoordinates) {
+        if (circleCenterCoordinates) {
             // Apply the distance filter no matter what
             listings.filter((listing) => 
                 findDistanceBetweenTwoPoints(
-                    currentCoordinates.lat(),
-                    currentCoordinates.lng(),
+                    circleCenterCoordinates.lat(),
+                    circleCenterCoordinates.lng(),
                     listing.latitude,
                     listing.longitude,
                     true

@@ -15,6 +15,8 @@ export interface Feature {
     roommate_gender?: string;
     max_radius?: number;
     is_pets?: boolean;
+    description?: string;
+    policies?: string;
 }
   
 export interface Listing {

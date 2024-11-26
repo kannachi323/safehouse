@@ -9,8 +9,8 @@ export interface QueryContextProps {
     setFilters: (filter: Filters | ((prevFilters: Filters) => Filters)) => void;
     listings: Listing[];
     setListings: (listings: Listing[]) => void;
-    currentCoordinates: google.maps.LatLng | undefined;
-    setCurrentCoordinates: (selectedLocation: google.maps.LatLng | undefined) => void;
+    circleCenterCoordinates: google.maps.LatLng | undefined;
+    setCircleCenterCoordinates: (selectedLocation: google.maps.LatLng | undefined) => void;
 }
 
 export const QueryContext = createContext<QueryContextProps | undefined>(undefined);
@@ -28,15 +28,15 @@ export function useQuery() {
 export function QueryProvider({ children }: { children: React.ReactNode }) {
     const [filters, setFilters] = useState<Filters>({});
     const [listings, setListings] = useState<Listing[]>([]);
-    const [currentCoordinates, setCurrentCoordinates] = useState<google.maps.LatLng | undefined>(undefined);
+    const [circleCenterCoordinates, setCircleCurrentCoordinates] = useState<google.maps.LatLng | undefined>(undefined);
 
     const value: QueryContextProps = {
         filters: filters,
         setFilters: setFilters,
         listings: listings,
         setListings: setListings,
-        currentCoordinates: currentCoordinates,
-        setCurrentCoordinates: setCurrentCoordinates,
+        circleCenterCoordinates: circleCenterCoordinates,
+        setCircleCenterCoordinates: setCircleCurrentCoordinates,
     };
 
     return (

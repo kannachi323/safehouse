@@ -1,53 +1,85 @@
 
 import { db } from "@/firebase/config";
-import { setDoc, doc, collection, serverTimestamp, addDoc, 
-  query, where, getDocs, getDoc, onSnapshot, orderBy, limit, 
+import { setDoc, doc, collection, addDoc, 
+  query, getDoc, onSnapshot, orderBy, limit, 
   DocumentReference, updateDoc, Timestamp
 } from "firebase/firestore";
 import { Chat } from "@/types";
 
 
-export async function createChat(member1: string, member2: string) {
-    const member1ChatsRef = collection(db, "users", member1, "userChats");
-    const member1ChatQuery = query(member1ChatsRef, where("participants", "array-contains", member2));
+
+export async function createChat(userOneId: string | undefined, userTwoId: string | undefined, text: string) {
   
-    const querySnapshot = await getDocs(member1ChatQuery);
-  
-   
-    if (!querySnapshot.empty) {
-      const existingChatId = querySnapshot.docs[0].id;
-      console.log("Chat already exists with ID:", existingChatId);
-      return existingChatId;
+  try {
+    if (!userOneId || !userTwoId) {
+      console.log("User IDs are required");
+      return
     }
   
-    
-    const chatRef = doc(collection(db, "chats"));
-    const chatId = chatRef.id;
+    if (userOneId === userTwoId) {
+      throw new Error("Users cannot be the same");
+    }
   
+    //check if users exist first
+    const userOneDoc = await getDoc(doc(db, "users", userOneId));
+    const userTwoDoc = await getDoc(doc(db, "users", userTwoId));
+  
+    if (!userOneDoc.exists() || !userTwoDoc.exists()) {
+      throw new Error("User does not exist");
+    }
+  
+    //after verifying users exist, make sure the chat does not already exist
+    const chatRef = doc(db, "chats", userOneId + userTwoId)
+    const chatDoc = await getDoc(chatRef);
+    if (chatDoc.exists()) {
+      throw new Error("Chat already exists");
+    }
+    
+  
+    //now grab first and last name from userOne and userTwo
+    const userOneName = userOneDoc.data().firstName + ' ' + userOneDoc.data().lastName;
+    const userTwoName = userTwoDoc.data().firstName + ' ' + userTwoDoc.data().lastName;
+  
+  
+  
+    //then if chat does not exist, create it in the chats collection first
     await setDoc(chatRef, {
-      title: "General Chat",
-      createdAt: serverTimestamp(),
-      members: [member1, member2],
-      lastMessage: "Welcome to the chat!",
-      type: "group"
+      chatId: chatRef,
+      createdAt: Timestamp.now(),
+      lastMessage: text,
+      lastTimestamp: Timestamp.now(),
+      members: [userOneName, userTwoName],
+      title: userTwoName,
+      type: "direct",
+    })
+    
+    //also create a messages subcollection for the chat
+    const messagesCollection = collection(chatRef, "messages");
+    await addDoc(messagesCollection, {
+      senderId: userOneId,
+      text: text,
+      timestamp: Timestamp.now(),
     });
   
+    //need add the chat doc reference to users/userChats
+    const userOneChats = collection(db, "users", userOneId, "userChats");
+    const userTwoChats= collection(db, "users", userTwoId, "userChats");
+  
+    
+    //now create a ref to the chat in the userChats collection and this will trigger the snapshot listener
+    await addDoc(userOneChats, {
+      chatId: chatRef,
+    });
+    await addDoc(userTwoChats, {
+      chatId: chatRef,
+    })
 
-    const member1ChatRef = doc(db, "users", member1, "userChats", chatId);
-    const member2ChatRef = doc(db, "users", member2, "userChats", chatId);
+  } catch (error) {
+    //TODO: delete chat if i created it
+    console.error("Error creating chat:", error);
+  }
+  console.log("chat created!");
   
-    const userChatData = {
-      chatId: chatId,
-      participants: [member1, member2],
-      lastMessage: "Welcome to the chat!",
-      type: "group"
-    };
-  
-    await setDoc(member1ChatRef, userChatData);
-    await setDoc(member2ChatRef, userChatData);
-  
-    console.log("New chat created with ID:", chatId);
-    return chatId;
 }
 
 export async function sendMessage(
@@ -62,7 +94,7 @@ export async function sendMessage(
   try {
     const messagesRef = collection(chatId, "messages"); // Access the 'messages' subcollection
 
-    const currTimestamp = Timestamp.fromDate(new Date());
+    const currTimestamp = Timestamp.now();
 
     const updates = await updateDoc(chatId, {
       lastTimestamp: currTimestamp
