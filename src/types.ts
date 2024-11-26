@@ -1,3 +1,4 @@
+import { DocumentReference, Timestamp } from "firebase/firestore";
 
 export interface User {
     uid: string;
@@ -44,6 +45,24 @@ export interface Filters {
     max_distance?: number;
     uid?: string;
 }
+
+export interface Message {
+    text: string;
+    senderId: string;
+    timestamp?: Timestamp;
+}
+
+export interface Chat {
+    createdAt: Timestamp;
+    lastMessage: string;
+    lastTimestamp: Timestamp;
+    title: string;
+    members: User[];
+    messages: Message[];
+    type: string;
+    chatId: DocumentReference;
+}
+  
 
 export type LocationLatLng = { lat: number, lng: number };
 
