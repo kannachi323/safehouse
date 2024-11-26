@@ -20,9 +20,6 @@ export default function UserManagerContainer({children, node} : Props) {
 
     const { user } = useAuth();
     
-    
-   
-
     const selectedLinkStyles = (linkNode : string | string[]) => {
       return node === linkNode
         ? 'w-full my-5 p-2 text-lg text-[#013c6c] bg-slate-200 rounded-3xl justify-center align-center'
