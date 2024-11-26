@@ -12,11 +12,11 @@ type SearchBarProps = {
 }
 
 export default function SearchBar({ children, className }: SearchBarProps) {
-  const { setCurrentCoordinates, setFilters } = useQuery();
+  const { setCircleCenterCoordinates, setFilters } = useQuery();
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
 
   function handlePlaceChanged() {
-    buildFilters({ autocompleteRef, setFilters, setCurrentCoordinates });
+    buildFilters({ autocompleteRef, setFilters, setCircleCenterCoordinates });
   }
 
   

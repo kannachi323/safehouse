@@ -38,7 +38,7 @@ export default function NavBar() {
               <Link
                 key={index}
                 href={item.href}
-                className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200 rounded-md"
+                className="block px-4 py-2 m-1 text-sm text-gray-800 hover:bg-gray-200 rounded-md"
               >
                 {item.label}
               </Link>
@@ -47,9 +47,9 @@ export default function NavBar() {
             <button
               onClick={async () => {
                 await userSignOut();
-                router.push('/');
+                router.replace('/');
               }}
-              className="block w-full px-4 py-2 text-sm text-gray-800 hover:bg-gray-200 text-left rounded-md"
+              className="block w-full px-4 py-2 m-1 text-sm text-gray-800 hover:bg-gray-200 text-left rounded-md"
               key="logout"
             >
               

@@ -3,18 +3,17 @@ import { sendMessage } from '@/firebase/db';
 import { DocumentReference } from "firebase/firestore";
 
 interface Props {
+  className?: string;
   selectedChatIndex: number;
   setSelectedChatIndex: React.Dispatch<React.SetStateAction<number | null>>;
   chatId: DocumentReference | null;
   senderId: string;
 }
 
-export function ChatInput({ setSelectedChatIndex, selectedChatIndex, chatId, senderId }: Props) {
+export function ChatInput({ className, setSelectedChatIndex, selectedChatIndex, chatId, senderId}: Props) {
   
-  // Step 1: Create state for storing textarea values, keyed by chatId
   const [textareaValues, setTextareaValues] = useState<{ [key: string]: string }>({});
 
-  // Step 2: Handle input change to update the specific chat's message input
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.target;
 
@@ -25,7 +24,7 @@ export function ChatInput({ setSelectedChatIndex, selectedChatIndex, chatId, sen
     }));
   };
 
-  // Step 3: Handle sending the message
+
   async function handleSend() {
     console.log(chatId);
 
@@ -49,7 +48,7 @@ export function ChatInput({ setSelectedChatIndex, selectedChatIndex, chatId, sen
   };
 
   return (
-    <div className="flex items-center gap-4 h-[10%] p-6 border-t-2 border-2-slate-200">
+    <div className={`${className}`}>
       {/* Step 4: Bind the value and onChange to the textarea for the specific chat */}
       <textarea
         className="resize-none rounded-md w-full h-10 p-2 outline-none"
@@ -66,3 +65,4 @@ export function ChatInput({ setSelectedChatIndex, selectedChatIndex, chatId, sen
     </div>
   );
 }
+

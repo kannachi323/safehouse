@@ -19,6 +19,8 @@ export default function ChatsPage() {
 
   
 
+  
+
   useEffect(() => {
     if (!user || !user.uid) return
     // Listen to changes in the user's `userChats` subcollection (detect new chats)
@@ -30,11 +32,6 @@ export default function ChatsPage() {
       unsubscribeUserChats();
       messageListeners.forEach((unsubscribeMessage : Unsubscribe) => unsubscribeMessage());
     }
-  
-    
-
- 
-    
   }, [user])
 
   useEffect(() => {
@@ -42,6 +39,8 @@ export default function ChatsPage() {
       messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight
     }
   }, [activeChat?.messages, activeChat]);
+
+  
 
 
   return (
@@ -109,7 +108,10 @@ export default function ChatsPage() {
           
 
             {/* Input Section */}
-            <ChatInput setSelectedChatIndex={setSelectedChatIndex} selectedChatIndex={selectedChatIndex} chatId={chats && chats[selectedChatIndex].chatId || null} senderId={user?.uid || ''} />
+            <ChatInput className="flex items-center gap-4 h-[10%] p-6 border-t-2 border-2-slate-200"
+              setSelectedChatIndex={setSelectedChatIndex} selectedChatIndex={selectedChatIndex} 
+              chatId={chats && chats[selectedChatIndex].chatId || null} senderId={user?.uid || ''} />
+              
           </div>
         ) : (
           <div id="chat-content" className="flex w-2/3 h-full justify-center items-center">

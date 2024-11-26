@@ -33,7 +33,7 @@ export default function Listings() {
             
             
               <div className="flex flex-row">
-                <MapsContainer />
+                <MapsContainer width="50vw" height="82vh"/>
               
                 <ListingsContainer className="w-[50vw] h-[82vh] overflow-y-scroll p-5"/>
               
