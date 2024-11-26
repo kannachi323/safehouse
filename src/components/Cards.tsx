@@ -2,16 +2,15 @@
 import RENT1 from "@public/images/rent1.jpg";
 import RENT2 from "@public/images/rent2.jpg";
 import BKG from "@public/images/bkg1.jpg";
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from "next/image";
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdOutlinePersonOutline} from "react-icons/md";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdOutlinePersonOutline}  from "react-icons/md";
 import { Listing } from "@/types";
 import { IoMdClose } from "react-icons/io";
 import { FaPhone, FaRegBookmark, FaBookmark, FaBed} from "react-icons/fa6";
 import MapsContainer from "@containers/listings-page/MapsContainer"
 import { createChat } from '@/firebase/db';
 import { useAuth } from "@/contexts/AuthContext";
-import { ChatInput } from "./Inputs";
 
 interface ListingContentCardProps {
   className?: string;
@@ -236,13 +235,7 @@ export function ListingFullDetailsCard({ className, listing, onClose }: ListingF
             </form>
           </>
         )}
-
-  
-      
       </div>
-
-     
-      
     </>
   );
 }

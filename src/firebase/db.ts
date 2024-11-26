@@ -1,11 +1,11 @@
 
 import { db } from "@/firebase/config";
-import { setDoc, doc, collection, serverTimestamp, addDoc, 
-  query, where, getDocs, getDoc, onSnapshot, orderBy, limit, 
+import { setDoc, doc, collection, addDoc, 
+  query, getDoc, onSnapshot, orderBy, limit, 
   DocumentReference, updateDoc, Timestamp
 } from "firebase/firestore";
 import { Chat } from "@/types";
-import { timestamp } from "drizzle-orm/mysql-core";
+
 
 
 export async function createChat(userOneId: string | undefined, userTwoId: string | undefined, text: string) {
@@ -94,7 +94,7 @@ export async function sendMessage(
   try {
     const messagesRef = collection(chatId, "messages"); // Access the 'messages' subcollection
 
-    const currTimestamp = Timestamp.fromDate(new Date());
+    const currTimestamp = Timestamp.now();
 
     const updates = await updateDoc(chatId, {
       lastTimestamp: currTimestamp
