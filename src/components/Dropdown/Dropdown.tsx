@@ -11,6 +11,7 @@ interface DropdownProps {
   children: ReactNode;
   hover?: boolean;
   action?: boolean;
+  function?: (params : string) => void
 }
 
 function Dropdown({ className, width, elements, children, hover = false, action = false, position = 'top-[80%] right-0'}: DropdownProps) {
@@ -23,9 +24,10 @@ function Dropdown({ className, width, elements, children, hover = false, action 
 
   const handleAction = (event: React.MouseEvent) => {
     const target = event.target as HTMLElement;
-    const targetAttr = target.getAttribute('action-attr');
+    const actionAttr = target.getAttribute('action-attr');
+    
 
-    if (targetAttr?.startsWith('close') && action) {
+    if (actionAttr?.endsWith('close') && action) {
       closeDropdown();
     }
   }

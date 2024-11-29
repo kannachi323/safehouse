@@ -29,7 +29,9 @@ export default function CreateListingContainer({listingValues, setListingValues}
 
   return (
     <>
-      <h2 className="text-2xl text-center font-semibold text-gray-800 mb-6">Property Info</h2>
+      <div className="w-full border-b-4 border-b-[#013c6c]">
+        <h2 className="text-2xl text-center font-semibold text-gray-800 mb-1">Property</h2>
+      </div>
       {/* Price */}
       <div className="flex flex-col">
         <label className="text-gray-700 font-medium mb-1" htmlFor="prices">Price (per month)</label>

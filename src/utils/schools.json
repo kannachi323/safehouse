@@ -1,0 +1,58 @@
+[
+    {
+      "name": "UC Santa Cruz",
+      "address": "1156 High St",
+      "city": "Santa Cruz",
+      "state": "CA",
+      "zip_code": "95064"
+    },
+    {
+      "name": "UC Berkeley",
+      "address": "200 California Hall",
+      "city": "Berkeley",
+      "state": "CA",
+      "zip_code": "94720"
+    },
+    {
+      "name": "UCLA",
+      "address": "405 Hilgard Ave",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip_code": "90095"
+    },
+    {
+      "name": "UC Riverside",
+      "address": "900 University Ave",
+      "city": "Riverside",
+      "state": "CA",
+      "zip_code": "92521"
+    },
+    {
+      "name": "UC Santa Barbara",
+      "address": "Santa Barbara, CA 93106",
+      "city": "Santa Barbara",
+      "state": "CA",
+      "zip_code": "93106"
+    },
+    {
+      "name": "UC Davis",
+      "address": "1 Shields Ave",
+      "city": "Davis",
+      "state": "CA",
+      "zip_code": "95616"
+    },
+    {
+      "name": "UC San Diego",
+      "address": "9500 Gilman Dr",
+      "city": "La Jolla",
+      "state": "CA",
+      "zip_code": "92093"
+    },
+    {
+      "name": "UC Irvine",
+      "address": "Irvine, CA 92697",
+      "city": "Irvine",
+      "state": "CA",
+      "zip_code": "92697"
+    }
+  ]

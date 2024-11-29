@@ -1,31 +1,36 @@
 'use client'
-import ViewMyListingsContainer from "@/containers/user-page/ViewMyListingsContainer";
+import UserManagerContainer from "@/containers/user-page/UserManagerContainer";
+import FiltersContainer from "@containers/listings-page/FiltersContainer";
+import ListingsContainer from "@/containers/listings-page/ListingsContainer";
+
 import { QueryProvider } from "@/contexts/QueryContext";
-import { useJsApiLoader } from "@react-google-maps/api";
+import Link from "next/link";
+
 
 export default function Page() {
-    const googleMapsAPIKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-  
-    const { isLoaded, loadError } = useJsApiLoader({
-        id: 'google-map-script',
-        googleMapsApiKey: googleMapsAPIKey || '',
-        libraries: ['places', 'marker'],
-    });
-
-    if (!isLoaded) {
-        return <div className="self-center items-center">Loading...</div>;
-    }
-    if (loadError) {
-        return <div className="self-center items-center">Sorry, experiencing some issues at the moment</div>
-    }
-
-
+    
     
     return (
         
             <QueryProvider>
-                <ViewMyListingsContainer />
+                <UserManagerContainer node="properties">
+                    {/* Breadcrumb Section */}
+                    
+                    <div className="w-4/5 overflow-y-scroll p-5">
+                        <div className="flex items-center space-x-2 mb-2">
+                            <Link href="/user/properties" className="hover:underline">
+                                <span className="text-2xl font-semibold">Properties</span>
+                            </Link>
+                            <span className="text-2xl">{'>'}</span> {/* Separator */}
+                            <span className="text-2xl font-semibold text-[#fdc100]">My Listings</span>
+                        </div>
+              
+                        <FiltersContainer />
+                        <ListingsContainer className="w-full"/>
+                        
 
+                    </div>
+                </UserManagerContainer>
             </QueryProvider>
             
 

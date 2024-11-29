@@ -1,7 +1,8 @@
 import { Filters } from "@/types";
 
 export async function getCoordinates(address: string) {
-  const liveKey = process.env.RADAR_API_KEY;  // Make sure your Live Key is set in the environment variables
+const liveKey = process.env.NEXT_PUBLIC_RADAR_API_KEY;  // Make sure your Live Key is set in the environment variables
+  console.log(liveKey);
   if (!liveKey) {
     throw new Error("RADAR_API_KEY is missing");
   }
@@ -72,38 +73,41 @@ interface BuildFiltersProps {
 }
 
 export function buildFilters({ autocompleteRef, setFilters, setCircleCenterCoordinates }: BuildFiltersProps) {
-    if (autocompleteRef.current) {
-      const place = autocompleteRef.current.getPlace();
-      const address_components = place.address_components;
-      console.log(address_components);
+  if (autocompleteRef.current) {
+    const place = autocompleteRef.current.getPlace();
+    const address_components = place.address_components;
+    console.log(address_components);
 
-      // Initialize filters object
-      const newFilters: Filters = {};
+    // Initialize filters object
+    const newFilters: Filters = {};
 
-      if (address_components) {
-        address_components.forEach((component) => {
-          const types = component.types;
+    if (address_components) {
+      address_components.forEach((component) => {
+        const types = component.types;
 
-          // Map address component types to the filters
-          if (types.includes('street_number')) {
-            newFilters.address = component.long_name; // Street number
-          } else if (types.includes('route')) {
-            newFilters.address = (newFilters.address || '') + ' ' + component.long_name; // Street name
-          } else if (types.includes('locality')) {
-            newFilters.city = component.long_name; // City
-          } else if (types.includes('administrative_area_level_1')) {
-            newFilters.state = component.short_name; // State (e.g., 'CA')
-          } else if (types.includes('postal_code')) {
-            newFilters.zip_code = component.long_name; // Zip code
-          }
-        });
+        // Map address component types to the filters
+        if (types.includes('street_number')) {
+          newFilters.address = component.long_name; // Street number
+        } else if (types.includes('route')) {
+          newFilters.address = (newFilters.address || '') + ' ' + component.long_name; // Street name
+        } else if (types.includes('locality')) {
+          newFilters.city = component.long_name; // City
+        } else if (types.includes('administrative_area_level_1')) {
+          newFilters.state = component.short_name; // State (e.g., 'CA')
+        } else if (types.includes('postal_code')) {
+          newFilters.zip_code = component.long_name; // Zip code
+        }
+      });
 
-      
-        setFilters(newFilters);
-      }
- 
-      if (place.geometry) {
-        setCircleCenterCoordinates(place.geometry.location); // Update selected location with place details
-      }
+    
+      setFilters(newFilters);
     }
-  };
+
+    if (place.geometry) {
+      setCircleCenterCoordinates(place.geometry.location); // Update selected location with place details
+    }
+  }
+};
+
+
+

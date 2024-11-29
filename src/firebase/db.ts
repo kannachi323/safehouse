@@ -96,11 +96,10 @@ export async function sendMessage(
 
     const currTimestamp = Timestamp.now();
 
-    const updates = await updateDoc(chatId, {
+    await updateDoc(chatId, {
       lastTimestamp: currTimestamp
     })
-
-    console.log(updates);
+   
   
     const messageRef = await addDoc(messagesRef, {
       senderId: senderId,

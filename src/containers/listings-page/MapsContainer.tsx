@@ -16,14 +16,13 @@ export default function MapsContainer({width, height, showRadius = true, listing
   if (listing && listing.latitude && listing.longitude) {
     console.log(listing.latitude, listing.longitude);
   }
-
   
   const defaultCoordinates = new google.maps.LatLng(36.9741, -122.0308);
   const mapCenter = circleCenterCoordinates ?? defaultCoordinates;
  
 
   const maxRadius = filters?.max_distance ?? 5;
-  console.log(listing?.latitude, listing?.longitude);
+
 
   //apply the distance filter no matter what (we might need to think abt this)
   const filteredListings = listings.filter((listing) => findDistanceBetweenTwoPoints(mapCenter.lat(), mapCenter.lng(), listing.latitude, listing.longitude, true) <= maxRadius);

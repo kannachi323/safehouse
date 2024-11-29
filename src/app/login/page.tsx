@@ -5,7 +5,8 @@ import { GoogleButton } from "@/components/Buttons/Buttons";
 import { useRouter } from "next/navigation";
 import ChooseUser from "@/containers/auth-page/ChooseUserContainer";
 import { useState } from "react";
-import { IoMdArrowRoundBack } from "react-icons/io";
+import Image from "next/image";
+import BKG1 from "@public/images/bkg1.jpg";
 
 export default function LogIn() {
     const router = useRouter();
@@ -20,16 +21,15 @@ export default function LogIn() {
     }
 
     return (
-        <div className="h-screen flex flex-col items-center justify-center relative">
-            {/* Back button */}
-            {showPage > 0 && (
-                <div className="absolute top-4 left-4 p-2 hover:text-gray-500">
-                    <IoMdArrowRoundBack 
-                        className="text-6xl cursor-pointer" 
-                        onClick={() => setShowPage(showPage - 1)} 
-                    />
-                </div>
-            )}
+        <div className="h-screen w-full flex flex-col items-center justify-center relative">
+            <Image
+                src={BKG1.src}
+                alt="Background"
+                layout="fill"
+                objectFit="cover"
+                priority={true}
+                className="absolute z-[-1]"
+            />
 
             {/* Page content */}
             {showPage === 0 && (
@@ -40,7 +40,7 @@ export default function LogIn() {
                 />
             )}
             {showPage === 1 && (
-                <div className="p-8 rounded-lg shadow-2xl max-w-md w-full border-2 flex flex-col">
+                <div className="p-8 rounded-lg shadow-2xl w-[35%] h-[55%] border-2 flex flex-col bg-white">
                     <h2 className="text-3xl font-bold mb-6 text-center">Sign In</h2>
                     <form className="flex flex-col space-y-6">
                         <div>
