@@ -26,8 +26,8 @@ export default function NavBar() {
       <div className="flex flex-row items-center justify-start w-1/3">
         <MdOutlineMenu className="text-3xl m-5 cursor-pointer hover:text-[#ffc00c]" />
         <Link className="m-5 hover:text-[#ffc00c]" href="/listings/default">Rent</Link>
-        <Link className="m-5 hover:text-[#ffc00c]" href="/contact">Contact Us</Link>
-        <Link className="m-5 hover:text-[#ffc00c]" href="/help">Help</Link>
+        <Link className="m-5 hover:text-[#ffc00c]" href="/help-center">Help Center</Link>
+        <Link className="m-5 hover:text-[#ffc00c]" href="/about">About</Link>
       </div>
 
       <Logo className="flex flex-row items-center justify-center w-1/3" />

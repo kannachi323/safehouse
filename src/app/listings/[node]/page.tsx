@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import FiltersContainer from "@containers/listings-page/FiltersContainer"
 import ListingsContainer from "@containers/listings-page/ListingsContainer"
 import MapsContainer from "@containers/listings-page/MapsContainer"
