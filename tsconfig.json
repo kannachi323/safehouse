@@ -28,7 +28,8 @@
       "@contexts/*": ["./src/contexts/*"],
       "@actions/*": ["./src/actions/*"],
       "@types/*": ["./src/types/*"],
-    }
+    },
+    "types": ["jest", "@testing-library/jest-dom"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/auth/route.ts"],
   "exclude": ["node_modules"]
