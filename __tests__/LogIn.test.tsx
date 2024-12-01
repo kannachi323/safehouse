@@ -1,8 +1,9 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen } from '@testing-library/react'; 
 import userEvent from "@testing-library/user-event";
 import LogIn from "@/app/login/page";
 import { signInWithGoogle } from "@/firebase/auth";
 import { useRouter } from "next/navigation";
+import React from 'react'; 
 
 // Mock the external dependencies
 jest.mock("@/firebase/auth", () => ({

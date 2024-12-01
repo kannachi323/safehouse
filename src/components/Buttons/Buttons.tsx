@@ -1,4 +1,4 @@
-import '@components/Buttons/styles.css'
+import '@/components/Buttons/styles.css'
 
 interface Props {
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void

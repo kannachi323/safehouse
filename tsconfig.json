@@ -1,36 +1,36 @@
 {
-  "compilerOptions": {
-    "target": "es2015",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "paths": {
-      "@/*": ["./src/*"],
-      "@public/*": ["./public/*"],
-      "@components/*": ["./src/components/*"],
-      "@containers/*": ["./src/containers/*"],
-      "@api/*": ["./src/app/api/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@contexts/*": ["./src/contexts/*"],
-      "@actions/*": ["./src/actions/*"],
-      "@types/*": ["./src/types/*"],
+    "compilerOptions": {
+      "target": "es2015",
+      "lib": ["dom", "dom.iterable", "esnext"],
+      "allowJs": true,
+      "skipLibCheck": true,
+      "strict": true,
+      "noEmit": true,
+      "esModuleInterop": true,
+      "module": "esnext",
+      "moduleResolution": "bundler",
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "jsx": "preserve",
+      "incremental": true,
+      "plugins": [
+        {
+          "name": "next"
+        }
+      ],
+      "paths": {
+        "@/*": ["./src/*"],
+        "@public/*": ["./public/*"],
+        "@components/*": ["./src/components/*"],
+        "@containers/*": ["./src/containers/*"],
+        "@api/*": ["./src/app/api/*"],
+        "@utils/*": ["./src/utils/*"],
+        "@contexts/*": ["./src/contexts/*"],
+        "@actions/*": ["./src/actions/*"],
+        "@types/*": ["./src/types/*"],
+      },
+      "types": ["jest", "@testing-library/jest-dom"]
     },
-    "types": ["jest", "@testing-library/jest-dom"]
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/auth/route.ts"],
-  "exclude": ["node_modules"]
-}
+    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/auth/route.ts"],
+    "exclude": ["node_modules"]
+  }
