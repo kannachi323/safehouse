@@ -1,7 +1,11 @@
 'use client';
 import HelpContainer from "@containers/help-page/HelpContainer"
+import NavBar from "@/components/NavBar";
 export default function HelpPage() {
     return (
-        <HelpContainer/>
-    )
+        <div>
+          <NavBar />
+          <HelpContainer />
+        </div>
+      );
 }
