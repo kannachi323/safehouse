@@ -3,7 +3,6 @@ import { useQuery } from '@/contexts/QueryContext';
 import { findDistanceBetweenTwoPoints } from '@/utils/helper';
 import { Circle, GoogleMap, Marker } from '@react-google-maps/api';
 import { Listing } from '@/types';
-import { useEffect } from 'react';
 
 interface MapsContainerProps {
   width: string;
@@ -13,30 +12,7 @@ interface MapsContainerProps {
 }
 
 export default function MapsContainer({width, height, showRadius = true, listing = undefined}: MapsContainerProps) {
-  const { circleCenterCoordinates, setCircleCenterCoordinates, listings, filters } = useQuery();
-
-  useEffect(() => {
-    const geometryString : string = localStorage.getItem('geometry') || '';
-    
-
-    if (geometryString) {
-      
-      const coordinatesString = JSON.parse(geometryString);
-      if (coordinatesString.lat && coordinatesString.lng) {
-     
-        const coordinates = new google.maps.LatLng(coordinatesString.lat, coordinatesString.lng);
-       
-        setCircleCenterCoordinates(coordinates)
-      }
-      
-    }
-    
-  }, [])
-
-
-  if (listing && listing.latitude && listing.longitude) {
-    console.log(listing.latitude, listing.longitude);
-  }
+  const { circleCenterCoordinates, listings, filters } = useQuery();
   
   const defaultCoordinates = new google.maps.LatLng(36.9741, -122.0308);
   const mapCenter = circleCenterCoordinates ?? defaultCoordinates;
@@ -46,7 +22,6 @@ export default function MapsContainer({width, height, showRadius = true, listing
 
 
   //apply the distance filter no matter what (we might need to think abt this)
-  console.log(mapCenter);
   const filteredListings = listings.filter((listing) => findDistanceBetweenTwoPoints(mapCenter.lat(), mapCenter.lng(), listing.latitude, listing.longitude, true) <= maxRadius);
   
   return (

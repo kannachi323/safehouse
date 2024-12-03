@@ -58,7 +58,7 @@ export async function getListings(filters : Filters) {
         .from(listings)
         .innerJoin(features, eq(listings.listing_id, features.listing_id))// Join the features table
         .where(and(...conditions));
-    console.log(rows);
+    
     // Now, merge the listings and features
     const filteredListings = rows.map((item) => {
         // Destructure listings and features from the result

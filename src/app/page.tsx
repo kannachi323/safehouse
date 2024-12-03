@@ -24,7 +24,6 @@ export default function Home() {
   const sample_images = ["/images/sample/sample1.jpg", "/images/sample/sample2.jpg", "/images/sample/sample3.jpg", 
     "/images/sample/sample4.jpg", "/images/sample/sample5.jpg", "/images/sample/sample6.jpg"
   ];
-  //const brand_images = ["/images/brands/facebook.png", "/images/brands/redfin.png"];
   
   const { isLoaded, loadError } = useGoogleMaps();
 
@@ -92,7 +91,7 @@ export default function Home() {
             <Image src={"/images/brands/craigslist.png"}  alt="Some logo" width={300} height={100} />
             <Image src={"/images/brands/trulia.png"}  alt="Some logo" width={150} height={100} />
           </div>
-          <Carousel images={sample_images} height="300px" width="300px"/>
+          <Carousel images={sample_images}/>
           
         </div>
 

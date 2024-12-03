@@ -2,8 +2,12 @@
 import BKG1 from "@public/images/bkg1.jpg"
 import SearchBar from "@components/SearchBar"
 import { CiLocationOn } from "react-icons/ci";
+import { IoMdSearch } from "react-icons/io";
+import { useRouter } from "next/navigation";
 
 export default function FindPlacesContainer() {
+  const router = useRouter();
+
   return (
     <div className="flex flex-col justify-center items-center bg-blue-500 relative h-[45vh] w-full text-3xl"
       style={{
@@ -13,12 +17,22 @@ export default function FindPlacesContainer() {
       }}
     >
 
-        <b className="text-white text-xl mb-2">Find a specific location</b>
+        <b className="text-white text-2xl mb-2">We're excited you're here. Let's find your next home.</b>
         
 
-        <SearchBar className="relative inline-flex items-center justify-center rounded-lg bg-white h-10 border-[#013c6c] border-2 w-[45%]">
-          <CiLocationOn className="text-3xl text-[#013c6c] hover:text-[#d4d2d2] cursor-pointer" />
-        </SearchBar>
+       
+        <button
+          className="p-4 bg-[#013c6c] rounded-full text-white w-[1/3] text-lg font-semibold shadow-lg 
+                    hover:bg-[#fdc100] hover:text-[#013c6c] hover:shadow-xl 
+                    transition-all duration-300 ease-in-out transform hover:scale-105"
+          onClick={() => {
+            router.push('/listings/default');
+          }}
+        >
+          Get Started
+        </button>
+
+  
 
     
 
