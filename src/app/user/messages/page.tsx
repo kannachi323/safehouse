@@ -14,12 +14,7 @@ export default function ChatsPage() {
   const [chats, setChats] = useState<Chat[] | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
  
-  
   const { user } = useAuth();
-
-  
-
-  
 
   useEffect(() => {
     if (!user || !user.uid) return
@@ -46,8 +41,6 @@ export default function ChatsPage() {
   return (
     <UserManagerContainer node="messages">
       <div className="flex flex-row h-full w-4/5">
-        
-        
         <div
           id="chat-select"
           className="w-1/3 bg-[#f5f5f5] p-4 border-r-2 border-gray-300 overflow-y-scroll"

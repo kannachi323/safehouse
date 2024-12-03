@@ -72,40 +72,54 @@ interface BuildFiltersProps {
     setFilters: (filters: Filters) => void;
 }
 
-export function buildFilters({ autocompleteRef, setFilters, setCircleCenterCoordinates }: BuildFiltersProps) {
+
+
+export function buildFilters(address_components : any) {
+
+  const newFilters: Filters = {};
+
+  if (address_components) {
+    address_components.forEach((component : any) => {
+      const types = component.types;
+
+      // Map address component types to the filters
+      if (types.includes('street_number')) {
+        newFilters.address = component.long_name; // Street number
+      } else if (types.includes('route')) {
+        newFilters.address = (newFilters.address || '') + ' ' + component.long_name; // Street name
+      } else if (types.includes('locality')) {
+        newFilters.city = component.long_name; // City
+      } else if (types.includes('administrative_area_level_1')) {
+        newFilters.state = component.short_name; // State (e.g., 'CA')
+      } else if (types.includes('postal_code')) {
+        newFilters.zip_code = component.long_name; // Zip code
+      }
+    });
+
+    return newFilters as Filters;
+  }
+
+}
+
+export function buildFiltersFromSearch({ autocompleteRef, setFilters, setCircleCenterCoordinates }: BuildFiltersProps) {
   if (autocompleteRef.current) {
     const place = autocompleteRef.current.getPlace();
     const address_components = place.address_components;
-    console.log(address_components);
 
     // Initialize filters object
-    const newFilters: Filters = {};
+    const newFilters = buildFilters(address_components);
 
-    if (address_components) {
-      address_components.forEach((component) => {
-        const types = component.types;
-
-        // Map address component types to the filters
-        if (types.includes('street_number')) {
-          newFilters.address = component.long_name; // Street number
-        } else if (types.includes('route')) {
-          newFilters.address = (newFilters.address || '') + ' ' + component.long_name; // Street name
-        } else if (types.includes('locality')) {
-          newFilters.city = component.long_name; // City
-        } else if (types.includes('administrative_area_level_1')) {
-          newFilters.state = component.short_name; // State (e.g., 'CA')
-        } else if (types.includes('postal_code')) {
-          newFilters.zip_code = component.long_name; // Zip code
-        }
-      });
-
-    
+    if (newFilters) {
       setFilters(newFilters);
     }
+    
+    localStorage.setItem('autoCompletePlace', JSON.stringify(place));
 
     if (place.geometry) {
       setCircleCenterCoordinates(place.geometry.location); // Update selected location with place details
+      localStorage.setItem('geometry', JSON.stringify(place.geometry.location));
     }
+ 
   }
 };
 

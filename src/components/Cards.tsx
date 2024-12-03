@@ -27,11 +27,11 @@ export function ListingContentCard({
   animate = true,
 }: ListingContentCardProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  console.log(currentIndex);
+
   const [showArrows, setShowArrows] = useState(false);
 
   const images = listing?.media || [];
-  console.log(images);
+
 
   const nextStep = () => setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
   const prevStep = () => setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
@@ -125,7 +125,6 @@ interface ListingFullDetailsCardProps {
 export function ListingFullDetailsCard({ className, listing, onClose, preview=false}: ListingFullDetailsCardProps) {
   const { user } = useAuth();
   const [showCreateChat, setShowCreateChat] = useState(false);
-  console.log(listing);
 
   const [isSaved, setIsSaved] = useState(false);
 
