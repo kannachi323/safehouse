@@ -4,9 +4,28 @@ import { setDoc, doc, collection, addDoc,
   query, getDoc, onSnapshot, orderBy, limit, 
   DocumentReference, updateDoc, Timestamp
 } from "firebase/firestore";
+import { User } from "firebase/auth";
 import { Chat } from "@/types";
 
+export async function createFirestoreUser(user : User | undefined) {
+  try {
+    if (!user?.uid) {
+      throw new Error("User ID is required.");
+    }
 
+    const usersRef = collection(db, "users");
+    const fullName = user.displayName?.split(' ')|| '';
+    const userDoc = doc(usersRef, user.uid);
+    await setDoc(userDoc,{
+      firstName: fullName[0],
+      lastName: fullName[1],
+    })
+
+
+  } catch (error) {
+    console.error("Error creating user:", error);
+  }
+}
 
 export async function createChat(userOneId: string | undefined, userTwoId: string | undefined, text: string) {
   
@@ -25,6 +44,7 @@ export async function createChat(userOneId: string | undefined, userTwoId: strin
     const userTwoDoc = await getDoc(doc(db, "users", userTwoId));
   
     if (!userOneDoc.exists() || !userTwoDoc.exists()) {
+    
       throw new Error("User does not exist");
     }
   
@@ -63,7 +83,7 @@ export async function createChat(userOneId: string | undefined, userTwoId: strin
   
     //need add the chat doc reference to users/userChats
     const userOneChats = collection(db, "users", userOneId, "userChats");
-    const userTwoChats= collection(db, "users", userTwoId, "userChats");
+    const userTwoChats = collection(db, "users", userTwoId, "userChats");
   
     
     //now create a ref to the chat in the userChats collection and this will trigger the snapshot listener
@@ -75,7 +95,7 @@ export async function createChat(userOneId: string | undefined, userTwoId: strin
     })
 
   } catch (error) {
-    //TODO: delete chat if i created it
+   
     console.error("Error creating chat:", error);
   }
   console.log("chat created!");
@@ -123,12 +143,15 @@ export async function sendMessage(
 
 export function listenToUserChatsAndMessages(
   uid: string | undefined,
+  userFullName : string,
   setChats: React.Dispatch<React.SetStateAction<Chat[] | null>>,
 
 ) {
   if (!uid) {
     throw new Error("User ID is required.");
   }
+
+ 
 
   const userChatsRef = collection(db, "users", uid, "userChats");
   const messageListeners: (() => void)[] = []; // store all the listeners for messages
@@ -157,6 +180,7 @@ export function listenToUserChatsAndMessages(
             
             chatData.messages = updatedMessages.reverse();
             chatData.lastTimestamp = messageSnapshot.docs[messageSnapshot.docs.length - 1]?.data().timestamp;
+            chatData.title = chatData.members.filter((member) => member !== userFullName).join(", ");
           
             setChats((prevChats) => {
               if (!prevChats) return [chatData]; // If no previous chats, return a new array with chatData
@@ -192,10 +216,7 @@ export function listenToUserChatsAndMessages(
    
   });
 
-  
-
-  
-
   // Return the cleanup function that will unsubscribe from the userChats listener and message listeners
   return { unsubscribeUserChats, messageListeners };
 }
+

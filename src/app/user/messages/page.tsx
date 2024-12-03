@@ -20,8 +20,8 @@ export default function ChatsPage() {
     if (!user || !user.uid) return
     // Listen to changes in the user's `userChats` subcollection (detect new chats)
     
-  
-    const { unsubscribeUserChats, messageListeners } = listenToUserChatsAndMessages(user?.uid, setChats);
+    const userFullName = user.displayName
+    const { unsubscribeUserChats, messageListeners } = listenToUserChatsAndMessages(user?.uid, userFullName || '', setChats);
     
     return () => {
       unsubscribeUserChats();
@@ -34,8 +34,6 @@ export default function ChatsPage() {
       messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight
     }
   }, [activeChat?.messages, activeChat]);
-
-  
 
 
   return (
@@ -61,10 +59,10 @@ export default function ChatsPage() {
                 } shadow-sm border border-gray-200`}
               >
                 <div id="chat-user-profile" className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-lg font-semibold">
+                  <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-lg font-semibold p-5">
                     {chat && chat.title.charAt(0)}
                   </div>
-                  <div>
+                  <div className="overflow-hidden">
                     <p className="font-semibold">{chat && chat.title}</p>
                     <p className="text-sm text-gray-500 truncate">{chat && chat.messages && chat.messages[chat.messages.length - 1]?.text || ''}</p>
                   </div>

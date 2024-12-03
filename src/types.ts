@@ -63,7 +63,7 @@ export interface Chat {
     lastMessage: string;
     lastTimestamp: Timestamp;
     title: string;
-    members: User[];
+    members: string[];
     messages: Message[];
     type: string;
     chatId: DocumentReference;

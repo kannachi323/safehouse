@@ -1,8 +1,5 @@
 'use client'
 import BKG1 from "@public/images/bkg1.jpg"
-import SearchBar from "@components/SearchBar"
-import { CiLocationOn } from "react-icons/ci";
-import { IoMdSearch } from "react-icons/io";
 import { useRouter } from "next/navigation";
 
 export default function FindPlacesContainer() {

@@ -146,6 +146,7 @@ export function ListingFullDetailsCard({ className, listing, onClose, preview=fa
     }
 
     setShowCreateChat(false);
+    alert("Message sent! Check your message in the Messages tab");
   }
 
   return (

@@ -8,11 +8,9 @@ import { QueryProvider } from "@/contexts/QueryContext";
 import { Carousel } from "@/components/Carousel";
 import { BiMessageSquareDetail } from "react-icons/bi";
 import { TbSpy } from "react-icons/tb";
-import { FaRegBookmark } from "react-icons/fa"; 
+import { FaRegBookmark, FaTools, FaCloudUploadAlt } from "react-icons/fa"; 
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { useState } from "react";
-import { FaHouse } from "react-icons/fa6";
-import { FaCloudUploadAlt } from "react-icons/fa";
 import { BsPeopleFill } from "react-icons/bs";
 import Logo from "@/components/Logos";
 
@@ -103,7 +101,7 @@ export default function Home() {
             <div className="w-[400px] h-[400px] bg-[#ffffff] rounded-xl shadow-lg transform transition-transform hover:scale-105">
               <div className="flex flex-col justify-center items-center h-full p-6">
                 <b className="text-[#013c6c] text-2xl mb-4">Find a Place to Rent</b>
-                <FaHouse className="w-[300px] h-[300px] mb-4" />
+                <Image src="/images/house.jpg" alt="roommates" width={200} height={100} className="mb-4 rounded-lg" />
                 <Link href="/rent" passHref>
                   <button className="bg-[#ffc00c] text-[#013c6c] px-4 py-2 rounded-lg mt-4 hover:bg-[#fd9c00] transition-colors">
                     Explore Rentals
@@ -116,13 +114,7 @@ export default function Home() {
             <div className="w-[400px] h-[400px] bg-[#ffffff] rounded-xl shadow-lg transform transition-transform hover:scale-105">
               <div className="flex flex-col justify-center items-center h-full p-6">
                 <b className="text-[#013c6c] text-2xl mb-4">Find Roommates</b>
-                <Image 
-                  src="/images/sample/sample2.jpg" 
-                  alt="Roommates" 
-                  width={250} 
-                  height={150} 
-                  className="rounded-lg mb-4"
-                />
+                <Image src="/images/roommates.jpg" alt="roommates" width={300} height={200} className="mb-4 rounded-lg" />
                 <Link href="/roommates" passHref>
                   <button className="bg-[#ffc00c] text-[#013c6c] px-4 py-2 rounded-lg mt-4 hover:bg-[#fd9c00] transition-colors">
                     Find Roommates
@@ -183,6 +175,7 @@ function Renter() {
           <p className="text-lg mt-4">
             Scam detection system that ensures you only see legitimate listings
           </p>
+          <b className="m-5">COMING SOON</b>
         </div>
 
         {/* Save Listings */}
@@ -191,8 +184,9 @@ function Renter() {
             <FaRegBookmark className="text-6xl text-[#ffc00c]" />
           </div>
           <p className="text-lg mt-4">
-            Save your favorite listings for easy access later
+            Save your favorite listings for easy access and organization
           </p>
+          
         </div>
 
         {/* Find Roommates */}
@@ -200,9 +194,11 @@ function Renter() {
           <div className="bg-[#013c6c] p-4 rounded-full">
             <BsPeopleFill className="text-6xl text-[#ffc00c]" />
           </div>
+          
           <p className="text-lg mt-4">
             Find roommates and share your preferences with them
           </p>
+          <b className="m-5">COMING SOON</b>
         </div>
       </div>
     
@@ -215,7 +211,7 @@ function Landlord() {
     <>
       {/* landlord section */}
       <h2 className="text-4xl font-bold text-start py-5 mb-10">
-        As a <span className="text-[#013c6c]">landlord</span>, you are able to
+        As a <span className="text-[#013c6c]">landlord</span>, you'll have access to
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
         
@@ -228,6 +224,7 @@ function Landlord() {
           <p className="text-lg mt-4">
             Track you listings statistics such as total views, user engagment, ratings, and more
           </p>
+          <b className="m-5">COMING SOON</b>
         </div>
 
         {/* publish listings */}
@@ -236,7 +233,7 @@ function Landlord() {
             <FaCloudUploadAlt className="text-6xl text-[#013c6c]" />
           </div>
           <p className="text-lg mt-4">
-            Easily publish your listings to with our simple to use listing builder
+            Create, edit, and publish your listings with our simple to use properties manager
           </p>
         </div>
 
@@ -253,11 +250,13 @@ function Landlord() {
         {/* Track your listings */}
         <div className="flex flex-col items-center bg-white rounded-xl shadow-lg p-6 text-center max-w-xs">
           <div className="bg-[#ffc00c] p-4 rounded-full">
-            <BiMessageSquareDetail className="text-6xl text-[#013c6c]" />
+            <FaTools className="text-6xl text-[#013c6c]" />
+            
           </div>
           <p className="text-lg mt-4">
-            Manage, create, your properties with our properties manager
+            Tenant screening tools that perform background checks, credit checks, and rental history reviews.
           </p>
+          <b className="m-5">COMING SOON</b>
         </div>
 
 
