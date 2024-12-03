@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { getListings } from '@/db/listings/select';
+import { getListings, getMediaByListingId } from '@/db/listings/select';
+import { Listing, Media } from '@/types';
 
 export async function POST(request: Request) {
     const { searchParams } = new URL(request.url);
@@ -7,16 +8,35 @@ export async function POST(request: Request) {
     
     try {
         const filters = await request.json();
-        console.log(filters);
+  
         
         if (uid) {
             filters.uid = uid;
         }
-        console.log(filters);
-        const response = await getListings(filters);
-        console.log(response);
-        // Return the query results as JSON
-        return NextResponse.json(response, { status: 200 });
+ 
+        let listings = await getListings(filters);
+
+        const listingIds = listings.map((listing) => listing.listing_id);
+        
+         //now fetch all the media and put them in listings
+        const mediaRows = await getMediaByListingId(listingIds);
+        const mediaByListingId = mediaRows.reduce<Record<number, Media[]>>((acc, mediaItem: Media) => {
+            if (!acc[mediaItem.listing_id]) {
+                acc[mediaItem.listing_id] = [];
+            }
+            acc[mediaItem.listing_id].push(mediaItem);
+            return acc;
+        }, {});
+
+        const fullListings = listings.map((listing) => ({
+            ...listing,
+            media: mediaByListingId[listing.listing_id],
+        }));
+
+        
+        
+        
+        return NextResponse.json(fullListings as Listing[], { status: 200 });
     
     } catch (error) {
         console.error("Database query error:", error);

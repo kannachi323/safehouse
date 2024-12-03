@@ -20,7 +20,7 @@ export default function NavBar() {
   ];
 
   return (
-    <div className="flex flex-row h-[10vh] justify-between items-center bg-[#013c6c] text-white border-b-2 border-b-[#ffc00c] p-1">
+    <div className="flex flex-row h-[10vh] justify-between items-center bg-[#013c6c] text-white border-b-2 border-b-[#ffc00c] p-3">
       <div className="flex flex-row items-center justify-start w-1/3">
         <Link className="m-5 hover:text-[#ffc00c]" href="/listings/default">Rent</Link>
         <Link className="m-5 hover:text-[#ffc00c]" href="/contact">Contact Us</Link>
@@ -31,7 +31,7 @@ export default function NavBar() {
 
       <div className="flex flex-row items-center justify-end w-1/3">
         {user ? (
-          <Dropdown className="text-[#013c6c]" width="250%" hover={true} action={true} elements={[
+          <Dropdown className="text-[#013c6c]" width="200px" position="top-[90%] right-0" hover={true} action={true} elements={[
             ...userElements.map((item, index) => (
               <Link
                 key={index}
@@ -55,10 +55,15 @@ export default function NavBar() {
               Logout
             </button>
           ]}>
-            <CgProfile className="text-white text-4xl m-5 hover:text-[#ffc00c] cursor-pointer" />
+            <span className="inline-flex items-center gap-3 mx-5">
+              <CgProfile className="text-white text-4xl hover:text-[#ffc00c] cursor-pointer" />
+              <p className="text-white">{user.email?.split('@')[0]}</p>
+            </span>
+           
           </Dropdown>
         ) : (
           <>
+           
             <Link className="m-5 hover:text-[#ffc00c]" href="/login">Log In</Link>
             <Link className="m-5 hover:text-[#ffc00c]" href="/register">Sign Up</Link>
           </>

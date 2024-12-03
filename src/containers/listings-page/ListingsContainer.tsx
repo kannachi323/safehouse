@@ -26,7 +26,7 @@ export default function ListingsContainer({ className }: { className: string }) 
 
                 if (response.ok) {
                     const listings = await response.json();
-                    console.log(listings);
+                   
                     setListings(listings);
                 } else {
                     console.error("Failed to fetch listings:", response.statusText);

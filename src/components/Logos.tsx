@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import SammySlug from '@public/images/sammy_logo.jpg'
+import SammySlug from '@public/images/sammy.png'
 import Link from 'next/link';
 
 interface Props {
