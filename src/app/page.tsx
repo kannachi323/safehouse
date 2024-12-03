@@ -24,7 +24,7 @@ export default function Home() {
   const sample_images = ["/images/sample/sample1.jpg", "/images/sample/sample2.jpg", "/images/sample/sample3.jpg", 
     "/images/sample/sample4.jpg", "/images/sample/sample5.jpg", "/images/sample/sample6.jpg"
   ];
-  const brand_images = ["/images/brands/facebook.png", "/images/brands/redfin.png"];
+  //const brand_images = ["/images/brands/facebook.png", "/images/brands/redfin.png"];
   
   const { isLoaded, loadError } = useGoogleMaps();
 

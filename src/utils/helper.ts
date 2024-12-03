@@ -74,12 +74,12 @@ interface BuildFiltersProps {
 
 
 
-export function buildFilters(address_components : any) {
+export function buildFilters(address_components : google.maps.GeocoderAddressComponent[] | undefined) {
 
   const newFilters: Filters = {};
 
   if (address_components) {
-    address_components.forEach((component : any) => {
+    address_components.forEach((component) => {
       const types = component.types;
 
       // Map address component types to the filters
