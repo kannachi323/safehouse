@@ -4,26 +4,21 @@ import RENT2 from "@public/images/rent2.jpg"
 import Image from "next/image"
 import FindPlacesContainer from "@/containers/home-page/FindPlacesContainer"
 import NavBar from "@/components/NavBar";
-import { useJsApiLoader } from "@react-google-maps/api";
+import { useGoogleMaps } from "@/contexts/GoogleMapsContext";
+import { QueryProvider } from "@/contexts/QueryContext";
 
 export default function Home() {
-  const googleMapsAPIKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-  
-  const { isLoaded, loadError } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: googleMapsAPIKey || '',
-    libraries: ['places', 'marker'],
-  });
+  const { isLoaded, loadError } = useGoogleMaps();
 
   if (!isLoaded) {
-    return <div className="self-center items-center">Loading...</div>;
+    return
   }
   if (loadError) {
     return <div className="self-center items-center">Sorry, experiencing some issues at the moment</div>
   }
 
   return(
-    <>
+    <QueryProvider>
         <NavBar/>
         {/* section 1 */}
         <div className="bg-white text-[#013c6c] flex flex-col justify-start items-center" >
@@ -84,6 +79,6 @@ export default function Home() {
 
           
         </div> 
-      </>
+      </QueryProvider>
   );
 }

@@ -26,7 +26,7 @@ export default function ListingsContainer({ className }: { className: string }) 
 
                 if (response.ok) {
                     const listings = await response.json();
-                    console.log(listings);
+                   
                     setListings(listings);
                 } else {
                     console.error("Failed to fetch listings:", response.statusText);
@@ -55,8 +55,8 @@ export default function ListingsContainer({ className }: { className: string }) 
   
     return (
         <div className={className}>
-            <h1 className="text-3xl font-bold w-full px-5 items-center mb-5">{filters?.city} {filters.state} Rental Listings</h1>
-            <div className="grid grid-cols-2 gap-4 w-full place-items-center py-1">
+            <h1 className="text-3xl font-bold w-full items-center p-5">{(filters?.city && filters.state) ? filters.city + ', ' + filters.state : 'All'} Rental Listings</h1>
+            <div className="grid grid-cols-2 gap-4 w-full place-items-center">
                 {listings.length > 0 ? listings.map((listing, id) => (
                   <ListingContentCard
                     className="flex flex-col w-[90%] rounded-lg"

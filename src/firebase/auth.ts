@@ -1,6 +1,65 @@
 import { auth } from "@/firebase/config";
-import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { User } from "@/types";
+
+export async function addUserToPostgres(user : User) {
+    try {
+      const createUserResponse = await fetch(`/api/users`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user: user,
+        }),
+      });
+
+      const newUser = await createUserResponse.json();
+
+      return newUser;
+
+    } catch (error) {
+      console.error("Error adding user to database:", error);
+    }
+  
+}
+
+export async function loginWithEmailAndPassword(email: string, password: string) {
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    console.error("Error with email sign-in:", error);
+  }
+    
+}
+
+export async function registerUserWithEmailAndPassword(email: string, password: string, isLandlord : boolean) {
+  try {
+    const result = await createUserWithEmailAndPassword(auth, email, password);
+    
+    // Extract user details
+    const user = result.user;
+    console.log(user);
+    if (!user) {
+      console.error("User not found after Google sign-up");
+      return;
+    }
+    
+    const userToCreate : User = {
+      uid: user.uid,
+      first_name: user.displayName?.split(' ')[0] || '',
+      last_name: user.displayName?.split(' ')[1] || '',
+      email: user.email || '',
+      is_landlord: isLandlord,
+    };
+
+    await addUserToPostgres(userToCreate);
+
+
+  } catch (error) {
+    throw new Error(`Error with email sign-up:", ${error}`);
+  }
+} 
 
 export async function signInWithGoogle(isLandlord : boolean) {
 
@@ -16,8 +75,7 @@ export async function signInWithGoogle(isLandlord : boolean) {
       console.error("User not found after Google sign-up");
       return;
     }
-
-    //build User interface objcet
+    
     const userToCreate : User = {
       uid: user.uid,
       first_name: user.displayName?.split(' ')[0] || '',
@@ -26,24 +84,7 @@ export async function signInWithGoogle(isLandlord : boolean) {
       is_landlord: isLandlord,
     };
 
-    // If user does not exist, create a new user in the database. this will also check for duplicates
-    const createUserResponse = await fetch(`/api/users`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user: userToCreate,
-      }),
-    });
-
-    if (!createUserResponse.ok) {
-      throw new Error(`Error creating user: ${createUserResponse.status} - ${createUserResponse.statusText}`);
-    }
-
-    const newUser = await createUserResponse.json();
-    console.log(newUser);
-    return newUser;
+    await addUserToPostgres(userToCreate);
 
   } catch (error) {
     console.error("Error with Google sign-up:", error);
@@ -56,6 +97,6 @@ export async function userSignOut() {
     
     
   } catch (error) {
-    console.error("Error trying to log out:", error);
+    throw new Error(`Error with email sign-up:", ${error}`);
   }
 }

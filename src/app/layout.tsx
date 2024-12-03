@@ -1,5 +1,7 @@
+'use client';
 import "./globals.css";
 import { AuthProvider } from "@contexts/AuthContext"
+import { GoogleMapsProvider } from "@/contexts/GoogleMapsContext";
 
 
 export default function RootLayout({
@@ -11,8 +13,9 @@ export default function RootLayout({
     <html lang="en">
         <body>
           <AuthProvider>
-         
-            <main>{children}</main>
+            <GoogleMapsProvider>
+              <main>{children}</main>
+            </GoogleMapsProvider>
           
           </AuthProvider>
         </body>
