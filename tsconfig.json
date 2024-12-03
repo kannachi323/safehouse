@@ -31,6 +31,6 @@
       },
       "types": ["jest", "@testing-library/jest-dom"]
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/auth/route.ts"],
+    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/auth/route.ts", "src"],
     "exclude": ["node_modules"]
   }

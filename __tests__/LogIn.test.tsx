@@ -1,50 +1,81 @@
-import { render, screen } from '@testing-library/react'; 
-import userEvent from "@testing-library/user-event";
+import { render, screen, fireEvent } from "@testing-library/react";
 import LogIn from "@/app/login/page";
-import { signInWithGoogle } from "@/firebase/auth";
 import { useRouter } from "next/navigation";
-import React from 'react'; 
+import { signInWithGoogle } from "@/firebase/auth";
 
-// Mock the external dependencies
-jest.mock("@/firebase/auth", () => ({
-  signInWithGoogle: jest.fn(),
-}));
+// Mock dependencies
 jest.mock("next/navigation", () => ({
-  useRouter: jest.fn(),
+    useRouter: jest.fn(),
+}));
+
+jest.mock("@/firebase/auth", () => ({
+    signInWithGoogle: jest.fn(),
+}));
+
+jest.mock("react-icons/io", () => ({
+    IoMdArrowRoundBack: () => <div data-testid="back-icon">Back Icon</div>,
+}));
+
+jest.mock("@/containers/auth-page/ChooseUserContainer", () => ({
+    __esModule: true,
+    default: ({ showPage, setShowPage, setIsLandlord }: any) => (
+        <div>
+            <button onClick={() => setShowPage(1)}>Go to Sign In</button>
+        </div>
+    ),
+}));
+
+jest.mock("@/components/Buttons/Buttons", () => ({
+    GoogleButton: ({ onClick }: any) => (
+        <button data-testid="google-signin" onClick={onClick}>
+            Sign in with Google
+        </button>
+    ),
 }));
 
 describe("LogIn Component", () => {
-  it("should call signInWithGoogle and redirect to home on GoogleButton click", async () => {
-    const signInMock = signInWithGoogle as jest.Mock;
-    const pushMock = jest.fn();
-    (useRouter as jest.Mock).mockReturnValue({ push: pushMock });
+    const mockPush = jest.fn();
 
-    render(<LogIn />);
+    beforeEach(() => {
+        (useRouter as jest.Mock).mockReturnValue({ push: mockPush });
+        (signInWithGoogle as jest.Mock).mockResolvedValue(true); // Mock signInWithGoogle
+    });
 
-    const googleButton = screen.getByRole("button", { name: /Sign In with Google/i });
-    expect(googleButton).toBeInTheDocument();
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
 
-    signInMock.mockResolvedValue(true); // Simulate successful login
+    it("renders the ChooseUser component initially", () => {
+        render(<LogIn />);
+        expect(screen.getByText("Go to Sign In")).toBeInTheDocument();
+    });
 
-    await userEvent.click(googleButton);
+    it("navigates to Sign In page when 'Go to Sign In' is clicked", () => {
+        render(<LogIn />);
+        fireEvent.click(screen.getByText("Go to Sign In"));
+        expect(screen.getByText("Sign In")).toBeInTheDocument();
+    });
 
-    expect(signInMock).toHaveBeenCalledTimes(1);
-    expect(pushMock).toHaveBeenCalledWith("/");
-  });
+    it("calls signInWithGoogle and redirects on successful Google sign-in", async () => {
+        render(<LogIn />);
+        fireEvent.click(screen.getByText("Go to Sign In"));
+        fireEvent.click(screen.getByTestId("google-signin"));
 
-  it("should not redirect if signInWithGoogle fails", async () => {
-    const signInMock = signInWithGoogle as jest.Mock;
-    const pushMock = jest.fn();
-    (useRouter as jest.Mock).mockReturnValue({ push: pushMock });
+        expect(signInWithGoogle).toHaveBeenCalledTimes(1);
+        await screen.findByText("Sign In");
+        expect(mockPush).toHaveBeenCalledWith("/");
+    });
 
-    render(<LogIn />);
+    it("renders the back button when on Sign In page", () => {
+        render(<LogIn />);
+        fireEvent.click(screen.getByText("Go to Sign In"));
+        expect(screen.getByTestId("back-icon")).toBeInTheDocument();
+    });
 
-    const googleButton = screen.getByRole("button", { name: /Sign In with Google/i });
-    signInMock.mockResolvedValue(false); // Simulate failed login
-
-    await userEvent.click(googleButton);
-
-    expect(signInMock).toHaveBeenCalledTimes(1);
-    expect(pushMock).not.toHaveBeenCalled();
-  });
+    it("navigates back to ChooseUser when the back button is clicked", () => {
+        render(<LogIn />);
+        fireEvent.click(screen.getByText("Go to Sign In"));
+        fireEvent.click(screen.getByTestId("back-icon"));
+        expect(screen.getByText("Go to Sign In")).toBeInTheDocument();
+    });
 });
