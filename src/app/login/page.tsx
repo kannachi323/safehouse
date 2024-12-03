@@ -35,6 +35,7 @@ export default function LogIn() {
                 router.push('/');
             } catch (error) {
                 alert("Sorry, authentication failed! Please check your username/password and try again");
+                return error;
             }
         } else {
             alert("Something went wrong with the form");

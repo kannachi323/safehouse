@@ -1,7 +1,7 @@
 import { eq, lte, gte, and, inArray} from 'drizzle-orm/expressions';
 import { db } from '../index';
 import { listings, features, media } from '../schema';
-import { Filters, Media } from '@/types';
+import { Filters } from '@/types';
 
 export async function getMediaByListingId(listingIds : number[]) {
     const rows = await db

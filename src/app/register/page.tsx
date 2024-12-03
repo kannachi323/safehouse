@@ -55,6 +55,7 @@ function SignUp({ isLandlord }: { isLandlord: boolean }) {
                 router.push('/');
             } catch (error) {
                 alert("Sorry, authentication failed! Please check your username/password and try again");
+                return error;
             }
         } else {
             alert("Something went wrong with the form");

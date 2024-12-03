@@ -16,15 +16,13 @@ export const GoogleMapsProvider = ({ children }: { children: React.ReactNode }) 
 
   const googleMapsAPIKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
   const googleMapsLibraries = process.env.NEXT_PUBLIC_GOOGLE_MAPS_LIBRARIES?.split(',') as Libraries;
-  if (!googleMapsAPIKey || !googleMapsLibraries) {
-    return;
-  }
+
 
   // Use the Google Maps API loader hook
   const { isLoaded: loaded, loadError: error } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: googleMapsAPIKey,
-    libraries: googleMapsLibraries,
+    googleMapsApiKey: googleMapsAPIKey || '',
+    libraries: googleMapsLibraries || [],
   });
 
   useEffect(() => {

@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createListing } from '@/db/listings/insert';
 import { getCoordinates } from '@/utils/helper';
-import { Media } from '@/types';
 
 
 export async function POST(request: Request) {
@@ -24,7 +23,6 @@ export async function POST(request: Request) {
       longitude: longitude,
 
     };
-    console.log(media);
     // Insert the listing into the database
     await createListing(updatedListing, feature, media);
 

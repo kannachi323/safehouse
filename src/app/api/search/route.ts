@@ -14,7 +14,7 @@ export async function POST(request: Request) {
             filters.uid = uid;
         }
  
-        let listings = await getListings(filters);
+        const listings = await getListings(filters);
 
         const listingIds = listings.map((listing) => listing.listing_id);
         
