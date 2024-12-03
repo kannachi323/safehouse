@@ -33,7 +33,7 @@ export type SelectFeature = typeof features.$inferSelect;
 
 export const features = pgTable('features', {
   feature_id: serial('feature_id').primaryKey(),
-  listing_id : serial('listing_id').notNull().references(() => listings.listing_id),
+  listing_id : serial('listing_id').notNull().references(() => listings.listing_id, { onDelete: 'cascade'}),
   bed_count: integer('bed_count'),
   bath_count: integer('bath_count'),
   room_type: text('room_type'),
@@ -55,7 +55,7 @@ export type SelectMedia = typeof media.$inferSelect;
 
 export const media = pgTable('media', {
   ref: text('ref').notNull().primaryKey(),
-  listing_id: serial('listing_id').notNull().references(() => listings.listing_id),
+  listing_id: serial('listing_id').notNull().references(() => listings.listing_id, { onDelete: 'cascade'}),
 })
   
 
