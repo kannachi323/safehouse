@@ -1,3 +1,4 @@
+import { DocumentReference, Timestamp } from "firebase/firestore";
 
 export interface User {
     uid: string;
@@ -12,8 +13,8 @@ export interface Feature {
     bath_count?: number;
     room_type?: string;
     roommate_gender?: string;
-    max_radius?: number;
-    is_pets?: boolean;
+    description?: string;
+    policies?: string;
 }
   
 export interface Listing {
@@ -26,6 +27,7 @@ export interface Listing {
     latitude: number;
     longitude: number;
     feature?: Feature;
+    media?: Media[];
 }
 
 export interface Filters {
@@ -45,7 +47,38 @@ export interface Filters {
     uid?: string;
 }
 
+export interface Media {
+    ref: string;
+    listing_id: number;
+}
+
+export interface Message {
+    text: string;
+    senderId: string;
+    timestamp?: Timestamp;
+}
+
+export interface Chat {
+    createdAt: Timestamp;
+    lastMessage: string;
+    lastTimestamp: Timestamp;
+    title: string;
+    members: string[];
+    messages: Message[];
+    type: string;
+    chatId: DocumentReference;
+}
+  
+
 export type LocationLatLng = { lat: number, lng: number };
 
 export type Location = google.maps.places.PlaceResult | undefined;
+
+export interface School {
+    name: string;
+    address: string;
+    city: string;
+    state: string;
+    zip_code: string;
+}
 

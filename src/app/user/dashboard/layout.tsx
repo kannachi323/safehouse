@@ -30,6 +30,8 @@ export default function DashboardLayout({PropertiesForRent, ListingAccuracy, Use
 
               {TrendTotalViews}
 
+              
+
             </div>
         </UserManagerContainer>
         

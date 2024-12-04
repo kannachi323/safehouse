@@ -1,23 +1,42 @@
 'use client'
-import ViewMyListingsContainer from "@/containers/user-page/ViewMyListingsContainer";
-import { QueryProvider } from "@/contexts/QueryContext";
-import { LoadScript } from "@react-google-maps/api";
+import UserManagerContainer from "@/containers/user-page/UserManagerContainer";
+import FiltersContainer from "@containers/listings-page/FiltersContainer";
+import ListingsContainer from "@/containers/listings-page/ListingsContainer";
+import { QueryProvider, useQuery } from "@/contexts/QueryContext";
+import Link from "next/link";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Page() {
-    const googleMapsAPIKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-    if (googleMapsAPIKey === undefined) {
-        return
-    }
+    const { user } = useAuth();
+
+   if (!user) {
+    return;
+   }
     
     return (
-        <LoadScript googleMapsApiKey={googleMapsAPIKey} libraries={['places']}>
-            <QueryProvider>
-                <ViewMyListingsContainer />
+        <QueryProvider>
+            <UserManagerContainer node="properties">
+                {/* Breadcrumb Section */}
+                
+                <div className="w-4/5 overflow-y-scroll p-5">
+                    <div className="flex items-center space-x-2 mb-2">
+                        <Link href="/user/properties" className="hover:underline">
+                            <span className="text-2xl font-semibold">Properties</span>
+                        </Link>
+                        <span className="text-2xl">{'>'}</span> {/* Separator */}
+                        <span className="text-2xl font-semibold text-[#fdc100]">My Listings</span>
+                    </div>
+            
+                    <FiltersContainer/>
+                    <ListingsContainer className="w-full"/>
+                    
 
-            </QueryProvider>
+                </div>
+            </UserManagerContainer>
+        </QueryProvider>
             
 
-        </LoadScript>
+        
             
     )
 }

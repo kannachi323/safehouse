@@ -1,14 +1,17 @@
-'use client';
-
+'use client'
 import React, { useEffect, useState } from 'react';
-import { ListingContentCard } from "@components/Cards";
+import { ListingContentCard, ListingFullDetailsCard } from "@components/Cards";
 import { useQuery } from '@/contexts/QueryContext';
 import { HiOutlineEmojiSad } from "react-icons/hi";
 import { findDistanceBetweenTwoPoints } from '@/utils/helper';
+import { Listing } from "@/types";
 
 export default function ListingsContainer({ className }: { className: string }) {
-    const { filters, listings, setListings, currentCoordinates } = useQuery();
-    const [bookmarkedListings, setBookmarkedListings] = useState<string[]>([]);
+    
+    const { filters, listings, setListings, circleCenterCoordinates } = useQuery();
+
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [selectedListing, setSelectedListing] = useState<Listing | null>(null);
 
     useEffect(() => {
         async function fetchUserListings() {
@@ -23,6 +26,7 @@ export default function ListingsContainer({ className }: { className: string }) 
 
                 if (response.ok) {
                     const listings = await response.json();
+                   
                     setListings(listings);
                 } else {
                     console.error("Failed to fetch listings:", response.statusText);
@@ -34,48 +38,53 @@ export default function ListingsContainer({ className }: { className: string }) 
 
         fetchUserListings();
 
-        if (currentCoordinates) {
-            // Apply the distance filter
-            listings.filter((listing) =>
+        if (circleCenterCoordinates) {
+            // Apply the distance filter no matter what
+            listings.filter((listing) => 
                 findDistanceBetweenTwoPoints(
-                    currentCoordinates.lat(),
-                    currentCoordinates.lng(),
+                    circleCenterCoordinates.lat(),
+                    circleCenterCoordinates.lng(),
                     listing.latitude,
                     listing.longitude,
                     true
-                ) <= (filters?.max_distance ?? 10)
+                ) <= (filters?.max_distance ?? 20)
             );
         }
     }, [filters]);
 
-    const toggleBookmark = (listingId: string) => {
-        setBookmarkedListings((prev) =>
-            prev.includes(listingId)
-                ? prev.filter((id) => id !== listingId)
-                : [...prev, listingId]
-        );
-    };
-
+  
     return (
         <div className={className}>
-            <h1 className="text-3xl font-bold w-full pb-5">Available for rent</h1>
+            <h1 className="text-3xl font-bold w-full items-center p-5">{(filters?.city && filters.state) ? filters.city + ', ' + filters.state : 'All'} Rental Listings</h1>
             <div className="grid grid-cols-2 gap-4 w-full place-items-center">
-                {listings.length > 0 ? (
-                    listings.map((listing, id) => (
-                        <ListingContentCard
-                            className="flex flex-col w-[90%] rounded-lg border-2 border-[#013c6c]"
-                            key={id}
-                            listing={listing}
-                            isBookmarked={bookmarkedListings.includes(listing.id)}
-                            onBookmark={() => toggleBookmark(listing.id)}
-                        />
-                    ))
-                ) : (
-                    <span className="inline-flex items-center justify-evenly w-full h-full bg-red-50">
-                        <h1 className="text-lg font-bold">No listings found</h1>
-                        <HiOutlineEmojiSad className="text-3xl text-[#013c6c]" />
-                    </span>
+                {listings.length > 0 ? listings.map((listing, id) => (
+                  <ListingContentCard
+                    className="flex flex-col w-[90%] rounded-lg"
+                    key={id}
+                    listing={listing}
+                    toggleFunction={() => {
+                      setSelectedListing(listing);
+                      setIsPopupOpen(true)
+                    }}
+                  />
+                )) : (
+                  <span className="inline-flex items-center justify-evenly w-full h-full bg-red-50">
+                      <h1 className="text-lg font-bold">No listings found</h1>
+                      <HiOutlineEmojiSad className="text-3xl text-[#013c6c]" />
+                  </span>
                 )}
+                {isPopupOpen && selectedListing &&
+                  
+                     
+                  <ListingFullDetailsCard
+                    className="fixed flex flex-row bg-white rounded-lg p-10 gap-x-8 z-[99]"
+                    listing={selectedListing}
+                    onClose={() => setIsPopupOpen(false)}
+                  />
+                  
+                  
+                 
+                }
             </div>
         </div>
     );

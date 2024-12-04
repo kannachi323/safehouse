@@ -1,6 +1,7 @@
 import { auth } from "@/firebase/config";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { User } from "@/types";
+import { Router } from "next/router";
 
 export async function signInWithGoogle(isLandlord : boolean) {
 
@@ -8,7 +9,6 @@ export async function signInWithGoogle(isLandlord : boolean) {
 
   try {
     const result = await signInWithPopup(auth, provider);
-    console.log("User signed up:", result.user);
 
     // Extract user details
     const user = result.user;
@@ -42,8 +42,10 @@ export async function signInWithGoogle(isLandlord : boolean) {
     }
 
     const newUser = await createUserResponse.json();
-    console.log(newUser);
-    return newUser;
+
+    if (newUser && result) {
+      return result.user;
+    }
 
   } catch (error) {
     console.error("Error with Google sign-up:", error);
@@ -53,6 +55,7 @@ export async function signInWithGoogle(isLandlord : boolean) {
 export async function userSignOut() {
   try {
     await signOut(auth);
+
     
     
   } catch (error) {

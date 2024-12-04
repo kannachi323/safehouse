@@ -8,6 +8,27 @@
       "when": 1732009168778,
       "tag": "0000_bored_shatterstar",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1732840047781,
+      "tag": "0001_many_the_renegades",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1732865359895,
+      "tag": "0002_sour_scream",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1732909159058,
+      "tag": "0003_free_masque",
+      "breakpoints": true
     }
   ]
 }

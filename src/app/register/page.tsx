@@ -1,10 +1,11 @@
 "use client";
 import { signInWithGoogle } from '@/firebase/auth';
+import { createFirestoreUser } from '@/firebase/db';
 import { GoogleButton } from '@/components/Buttons/Buttons';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-import { IoMdArrowRoundBack } from "react-icons/io";
 import ChooseUser from '@/containers/auth-page/ChooseUserContainer';
+import Image from 'next/image';
 
 export default function Page() {
     const [showPage, setShowPage] = useState<number>(0);
@@ -12,15 +13,6 @@ export default function Page() {
 
     return (
         <div className="h-screen flex flex-col items-center justify-center relative">
-            
-            {showPage > 0 && (
-                <div className="absolute top-4 left-4 p-2 hover:text-gray-500">
-                    <IoMdArrowRoundBack 
-                        className="text-6xl cursor-pointer" 
-                        onClick={() => setShowPage(showPage - 1)} 
-                    />
-                </div>
-            )}
 
             {/* Content */}
             {showPage === 0 && <ChooseUser showPage={showPage} setShowPage={setShowPage} setIsLandlord={setIsLandlord} />}
@@ -35,14 +27,24 @@ function SignUp({isLandlord} : {isLandlord : boolean}) {
     const router = useRouter();
 
     async function handleAuth() {
-        const result = await signInWithGoogle(isLandlord);
-        if (result) {
-            router.push('/listings/default')
-        }
+        const user = await signInWithGoogle(isLandlord);
+      
+        await createFirestoreUser(user);
+        router.push('/');
     }
+
     return (
         <>
-            <div className="p-8 rounded-lg shadow-2xl max-w-md w-full border-2 flex flex-col">
+            <Image
+                src={"/images/ucsc-bg.jpg"}
+                alt="Background"
+                layout="fill"
+                objectFit="cover"
+                priority={true}
+                className="absolute z-[-1]"
+            />
+            <div className="p-8 rounded-lg shadow-2xl max-w-md w-full border-2 flex flex-col bg-white">
+                
                 
 
                 <h2 className="text-3xl font-bold mb-6 text-center">Create an account</h2>
@@ -97,5 +99,3 @@ function SignUp({isLandlord} : {isLandlord : boolean}) {
         
     );
 }
-
-

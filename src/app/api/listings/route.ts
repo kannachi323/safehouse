@@ -7,8 +7,8 @@ export async function POST(request: Request) {
   try {
    
     const body = await request.json();
-    console.log(body);
-    const { feature, ...listing } = body;  
+    
+    const { feature, media, ...listing } = body;  
 
    
     const { latitude, longitude } = await getCoordinates(listing.address);
@@ -23,11 +23,8 @@ export async function POST(request: Request) {
       longitude: longitude,
 
     };
-
-    console.log(updatedListing);
-
     // Insert the listing into the database
-    await createListing(updatedListing, feature);
+    await createListing(updatedListing, feature, media);
 
     return NextResponse.json({ message: 'Listing created successfully' }, { status: 201 });
   } catch (error) {

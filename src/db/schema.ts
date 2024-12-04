@@ -2,8 +2,6 @@ import { boolean, pgTable, integer, text, serial, doublePrecision } from 'drizzl
 
 export type InsertUser = typeof users.$inferInsert;
 export type SelectUser = typeof users.$inferSelect;
-export type InsertBookmark = typeof bookmarks.$inferInsert;
-export type SelectBookmark = typeof bookmarks.$inferSelect;
 
 
 export const users = pgTable('users', {
@@ -26,7 +24,6 @@ export const listings = pgTable('listings', {
     city: text('city').notNull(),
     zip_code: text('zip_code').notNull(),
     state: text('state').notNull(),
-    pictures_folder_ref: text('pictures_folder_ref'),
     latitude: doublePrecision('latitude').notNull(),
     longitude: doublePrecision('longitude').notNull(),
 });
@@ -41,7 +38,8 @@ export const features = pgTable('features', {
   bath_count: integer('bath_count'),
   room_type: text('room_type'),
   roommate_gender: text('roommate_gender'),
-  is_pets: boolean('is_pets')
+  description: text('description'),
+  policies: text('policies'),
 })
 
 export const settings = pgTable('settings', {
@@ -50,10 +48,13 @@ export const settings = pgTable('settings', {
     theme: integer('theme').notNull(),
     notifs: integer('notifs').notNull().default(0)
 });
-export const bookmarks = pgTable('bookmarks', {
-  bookmark_id: serial('bookmark_id').primaryKey(),
-  uid: text('uid').notNull().references(() => users.uid),
-  listing_id: integer('listing_id').notNull().references(() => listings.listing_id),
-});
-  
 
+
+export type InsertMedia = typeof media.$inferInsert;
+export type SelectMedia = typeof media.$inferSelect;
+
+export const media = pgTable('media', {
+  ref: text('ref').notNull().primaryKey(),
+  listing_id: serial('listing_id').notNull().references(() => listings.listing_id),
+})
+  

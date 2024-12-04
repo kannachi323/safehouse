@@ -1,8 +1,17 @@
-import { eq, lte, gte, and} from 'drizzle-orm/expressions';
+import { eq, lte, gte, and, inArray} from 'drizzle-orm/expressions';
 import { db } from '../index';
-import { listings } from '../schema';
-import { features } from '../schema';
+import { listings, features, media } from '../schema';
 import { Filters } from '@/types';
+
+export async function getMediaByListingId(listingIds : number[]) {
+    const rows = await db
+        .select()
+        .from(media)
+        .where(inArray(media.listing_id, listingIds));
+    
+     return rows;
+
+}
 
 
 export async function getListings(filters : Filters) {
@@ -35,9 +44,6 @@ export async function getListings(filters : Filters) {
             case 'roommate_gender':
                 conditions.push(eq(features.roommate_gender, value));
                 break;
-            case 'pets':
-                conditions.push(eq(features.is_pets, value === 'true')); // assuming pets is a boolean
-                break;
             case 'uid':
                 conditions.push(eq(listings.uid, value));
             default:
@@ -52,9 +58,7 @@ export async function getListings(filters : Filters) {
         .from(listings)
         .innerJoin(features, eq(listings.listing_id, features.listing_id))// Join the features table
         .where(and(...conditions));
-
-    console.log(rows);
-
+    
     // Now, merge the listings and features
     const filteredListings = rows.map((item) => {
         // Destructure listings and features from the result
@@ -68,7 +72,8 @@ export async function getListings(filters : Filters) {
                 bath_count: feature.bath_count,
                 room_type: feature.room_type,
                 roommate_gender: feature.roommate_gender,
-                is_pets: feature.is_pets,
+                description: feature.description,
+                policies: feature.policies,
             }
         };
     });
