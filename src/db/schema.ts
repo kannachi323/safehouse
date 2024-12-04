@@ -58,4 +58,3 @@ export const media = pgTable('media', {
   listing_id: serial('listing_id').notNull().references(() => listings.listing_id),
 })
   
-

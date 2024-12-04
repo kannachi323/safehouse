@@ -1,3 +1,4 @@
+
 "use client";
 import { useEffect, useState, useRef } from "react";
 import { listenToUserChatsAndMessages } from '@/firebase/db';
@@ -6,6 +7,7 @@ import { ChatInput } from "@/components/Inputs";
 import UserManagerContainer from "@/containers/user-page/UserManagerContainer";
 import { useAuth } from "@/contexts/AuthContext";
 import { Unsubscribe } from "firebase/auth";
+import UserManagerContainer from "@/containers/user-page/UserManagerContainer";
 
 
 export default function ChatsPage() {

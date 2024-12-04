@@ -15,6 +15,7 @@ export default function NavBar() {
   const userElements = [
     { href: '/user/dashboard', label: 'Dashboard' },
     { href: '/user/properties', label: 'My Properties' },
+    { href: '/user/saved', label: 'Saved Searches' },
     { href: '/user/messages', label: 'Messages' },
     { href: '/user/settings', label: 'Settings' },
   ];
@@ -23,8 +24,8 @@ export default function NavBar() {
     <div className="flex flex-row h-[10vh] justify-between items-center bg-[#013c6c] text-white border-b-2 border-b-[#ffc00c] p-3">
       <div className="flex flex-row items-center justify-start w-1/3">
         <Link className="m-5 hover:text-[#ffc00c]" href="/listings/default">Rent</Link>
-        <Link className="m-5 hover:text-[#ffc00c]" href="/contact">Contact Us</Link>
-        <Link className="m-5 hover:text-[#ffc00c]" href="/help">Help</Link>
+        <Link className="m-5 hover:text-[#ffc00c]" href="/help-center">Help Center</Link>
+        <Link className="m-5 hover:text-[#ffc00c]" href="/about">About</Link>
       </div>
 
       <Logo className="flex flex-row items-center justify-center" />
