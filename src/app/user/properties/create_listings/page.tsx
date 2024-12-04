@@ -3,7 +3,6 @@ import CreateListingContainer from "@/containers/user-page/create-listings/Creat
 import CreateFeatureContainer from "@/containers/user-page/create-listings/CreateFeatureContainer";
 import CreateMediaContainer from "@/containers/user-page/create-listings/CreateMediaContainer";
 import Link from "next/link";
-import { getCoordinates } from "@/utils/helper";
 import { useAuth } from "@/contexts/AuthContext";
 import { ListingContentCard, ListingFullDetailsCard } from "@/components/Cards"
 import { useRouter } from "next/navigation";
@@ -78,8 +77,23 @@ export default function Page() {
       return;
     }
     const place = listingValues.address + ' ' + listingValues.city + ', ' + listingValues.state + ' ' + listingValues.zip_code;
-    console.log(place);
-    const coordinates = await getCoordinates(place);
+   
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/geocode`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ place }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch coordinates');
+    }
+  
+    const coordinates = await response.json();
+    console.log(coordinates); // Should log the coordinates
+
+
     setListingValues({
       ...listingValues,
       latitude: coordinates.latitude,
