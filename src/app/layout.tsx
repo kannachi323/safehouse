@@ -2,6 +2,7 @@
 import "./globals.css";
 import { AuthProvider } from "@contexts/AuthContext"
 import { GoogleMapsProvider } from "@/contexts/GoogleMapsContext";
+import { QueryProvider } from "@/contexts/QueryContext";
 
 
 export default function RootLayout({
@@ -13,10 +14,11 @@ export default function RootLayout({
     <html lang="en">
         <body>
           <AuthProvider>
-            <GoogleMapsProvider>
-              <main>{children}</main>
-            </GoogleMapsProvider>
-          
+            <QueryProvider>
+              <GoogleMapsProvider>
+                <main>{children}</main>
+              </GoogleMapsProvider>
+            </QueryProvider>
           </AuthProvider>
         </body>
     </html>

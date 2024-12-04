@@ -1,5 +1,4 @@
 'use client'
-import BKG1 from "@public/images/bkg1.jpg"
 import { useRouter } from "next/navigation";
 
 export default function FindPlacesContainer() {
@@ -8,7 +7,7 @@ export default function FindPlacesContainer() {
   return (
     <div className="flex flex-col justify-center items-center bg-blue-500 relative h-[45vh] w-full text-3xl"
       style={{
-        backgroundImage: `url(${BKG1.src})`,
+        backgroundImage: `url(/images/ucsc-bg.jpg)`,
         backgroundPosition: "center",
         backgroundSize: "cover"
       }}

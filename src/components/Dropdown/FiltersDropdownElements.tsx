@@ -160,7 +160,7 @@ export function MoreFilters({ filters, setFilters } : FilterDropdownProps) {
 
   return (
     <div className="flex flex-col justify-evenly w-full rounded-md">
-      <b className="text-lg px-3 py-2 bg-slate-100 rounded-md mb-4">Distance from School</b>
+      <b className="text-lg px-3 py-2 bg-slate-100 rounded-md mb-4">Distance from School (COMING SOON)</b>
       <div className="flex flex-row items-center justify-between gap-4 px-4 mb-4">
           <input
               type="number"
@@ -174,7 +174,7 @@ export function MoreFilters({ filters, setFilters } : FilterDropdownProps) {
           
       </div>
       
-      <b className="text-lg px-3 py-2 bg-slate-100 rounded-md mb-4">Square Feet</b>
+      <b className="text-lg px-3 py-2 bg-slate-100 rounded-md mb-4">Square Feet (COMING SOON)</b>
       <div className="flex flex-row items-center justify-between gap-4 px-4 mb-4">
           <input
               type="number"
@@ -218,24 +218,14 @@ export function MoreFilters({ filters, setFilters } : FilterDropdownProps) {
         </select>
           
       </div>
-      <b className="text-lg px-3 py-2 bg-slate-100 rounded-md mb-4">Pets</b>
-      <div className="flex flex-row justify-start items-center gap-4 px-4 mb-4">
-        <label className="text-gray-700 font-medium">Dogs OK</label>
-        <input type="checkbox" id="dog-ok" className="rounded focus:outline-none focus:ring focus:ring-blue-300"/>
-        <label className="text-gray-700 font-medium">Cats OK</label>
-        <input type="checkbox" id="cat-ok" className="rounded focus:outline-none focus:ring focus:ring-blue-300"/>
-        <label className="text-gray-700 font-medium">No Pets</label>
-        <input type="checkbox" id="no-pets" className="rounded focus:outline-none focus:ring focus:ring-blue-300"/>
-        
-      </div>
       {/* Apply Button */}
       <button
-                className="self-center text-md text-white bg-[#023c6c] w-1/3 rounded-full py-2 mt-6 mb-3"
-                onClick={handleMoreFilters}
-                action-attr="close"
-            >
-                Apply
-            </button> 
+        className="self-center text-md text-white bg-[#023c6c] w-1/3 rounded-full py-2 mt-6 mb-3"
+        onClick={handleMoreFilters}
+        action-attr="close"
+        >
+            Apply
+      </button> 
     </div>
   )
 }

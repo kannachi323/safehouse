@@ -4,15 +4,12 @@ import { Listing, Media } from '@/types';
 
 export async function POST(request: Request) {
     const { searchParams } = new URL(request.url);
-    const uid = searchParams.get('uid');
+
     
     try {
         const filters = await request.json();
-  
-        
-        if (uid) {
-            filters.uid = uid;
-        }
+        console.log(filters);
+
  
         const listings = await getListings(filters);
 
