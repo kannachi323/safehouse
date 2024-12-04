@@ -12,8 +12,17 @@ export const users = pgTable('users', {
   is_landlord: boolean('is_landlord').notNull(),  
 });
 
+export type InsertSavedListing = typeof bookmarks.$inferInsert;
+export type SelectSavedListing = typeof bookmarks.$inferSelect;
+
+export const bookmarks = pgTable('bookmarks', {
+  listing_id: serial('listing_id').notNull().references(() => listings.listing_id),
+  uid: text('uid').notNull().references(() => users.uid),
+})
+
 export type InsertListing = typeof listings.$inferInsert;
 export type SelectListing = typeof listings.$inferSelect;
+
 
 
 export const listings = pgTable('listings', {

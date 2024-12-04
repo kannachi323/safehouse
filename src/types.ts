@@ -17,6 +17,11 @@ export interface Feature {
     policies?: string;
 }
   
+export interface Bookmark {
+    uid: string;
+    listing_id: number;
+}
+
 export interface Listing {
     price: number;
     address: string;
@@ -28,6 +33,7 @@ export interface Listing {
     longitude: number;
     feature?: Feature;
     media?: Media[];
+    listing_id?: number;
 }
 
 export interface Filters {
@@ -39,7 +45,6 @@ export interface Filters {
     bath_count?: number;
     min_price?: number;
     max_price?: number;
-    homeType?: string;
     room_type?: string;
     roommate_gender?: string;
     pets?: boolean;

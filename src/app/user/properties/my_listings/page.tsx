@@ -2,7 +2,7 @@
 import UserManagerContainer from "@/containers/user-page/UserManagerContainer";
 import FiltersContainer from "@containers/listings-page/FiltersContainer";
 import ListingsContainer from "@/containers/listings-page/ListingsContainer";
-import { QueryProvider, useQuery } from "@/contexts/QueryContext";
+import { QueryProvider } from "@/contexts/QueryContext";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 

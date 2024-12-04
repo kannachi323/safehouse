@@ -139,93 +139,109 @@ export function BedBathFilters({filters, setFilters} : FilterDropdownProps) {
     );
 }
 
-export function MoreFilters({ filters, setFilters } : FilterDropdownProps) {
+export function MoreFilters({ filters, setFilters }: FilterDropdownProps) {
   const [maxDistance, setMaxDistance] = useState<number | undefined>();
   const [minSqft, setMinSqft] = useState<number | undefined>();
   const [maxSqft, setMaxSqft] = useState<number | undefined>();
+  const [roomType, setRoomType] = useState<string>('Any'); // Added state for room type
+  const [roommateGender, setRoommateGender] = useState<string>('Any'); // Added state for roommate gender
 
   useEffect(() => {
-    setMaxDistance(filters.max_distance);
-    
-  
-  }, [filters.max_distance]);
+    setRoomType(filters.room_type || 'any');
+    setRoommateGender(filters.roommate_gender || 'any');
+  }, [filters.room_type, filters.roommate_gender]);
+
+  // Debug: Log filters and states before applying
+  console.log("Current filters:", filters);
+  console.log("Room Type:", roomType, "Roommate Gender:", roommateGender);
 
   function handleMoreFilters() {
+    // Debug: Log states when Apply is clicked
+    console.log("Applying filters with:", { maxDistance, minSqft, maxSqft, roomType, roommateGender });
+
     setFilters({
-        ...filters,
-        max_distance: maxDistance
+      ...filters,
+      room_type: roomType,
+      roommate_gender: roommateGender,
+      max_distance: maxDistance, // Add any other filter values here
     });
-}
-  
+  }
 
   return (
     <div className="flex flex-col justify-evenly w-full rounded-md">
       <b className="text-lg px-3 py-2 bg-slate-100 rounded-md mb-4">Distance from School (COMING SOON)</b>
       <div className="flex flex-row items-center justify-between gap-4 px-4 mb-4">
-          <input
-              type="number"
-              id="max-distance"
-              placeholder="Max"
-              value={maxDistance|| ""}
-              onChange={(e) => setMaxDistance(e.target.value ? parseInt(e.target.value) : undefined)}
-              className="border p-2 rounded focus:outline-none focus:ring focus:ring-blue-300 w-full"
-              min={0}
-          />
-          
-      </div>
-      
-      <b className="text-lg px-3 py-2 bg-slate-100 rounded-md mb-4">Square Feet (COMING SOON)</b>
-      <div className="flex flex-row items-center justify-between gap-4 px-4 mb-4">
-          <input
-              type="number"
-              id="min-sqft"
-              placeholder="Min"
-              value={minSqft || ""}
-              onChange={(e) => setMinSqft(e.target.value ? parseInt(e.target.value) : undefined)}
-              className="border p-2 rounded focus:outline-none focus:ring focus:ring-blue-300 w-full"
-              min={0}
-          />
-          <span>-</span>
-          <input
-              type="number"
-              id="max-sqft"
-              placeholder="Max"
-              value={maxSqft || ""}
-              onChange={(e) => setMaxSqft(e.target.value ? parseInt(e.target.value) : undefined)}
-              className="border p-2 rounded focus:outline-none focus:ring focus:ring-blue-300 w-full"
-              min={0}
-          />
+        <input
+          type="number"
+          id="max-distance"
+          placeholder="Max"
+          value={maxDistance || ""}
+          onChange={(e) => setMaxDistance(e.target.value ? parseInt(e.target.value) : undefined)}
+          className="border p-2 rounded focus:outline-none focus:ring focus:ring-blue-300 w-full"
+          min={0}
+        />
       </div>
 
+      <b className="text-lg px-3 py-2 bg-slate-100 rounded-md mb-4">Square Feet (COMING SOON)</b>
+      <div className="flex flex-row items-center justify-between gap-4 px-4 mb-4">
+        <input
+          type="number"
+          id="min-sqft"
+          placeholder="Min"
+          value={minSqft || ""}
+          onChange={(e) => setMinSqft(e.target.value ? parseInt(e.target.value) : undefined)}
+          className="border p-2 rounded focus:outline-none focus:ring focus:ring-blue-300 w-full"
+          min={0}
+        />
+        <span>-</span>
+        <input
+          type="number"
+          id="max-sqft"
+          placeholder="Max"
+          value={maxSqft || ""}
+          onChange={(e) => setMaxSqft(e.target.value ? parseInt(e.target.value) : undefined)}
+          className="border p-2 rounded focus:outline-none focus:ring focus:ring-blue-300 w-full"
+          min={0}
+        />
+      </div>
 
       <b className="text-lg px-3 py-2 bg-slate-100 rounded-md mb-4">Other</b>
       <div className="flex flex-row justify-start items-center gap-4 px-4 mb-4">
         <p className="text-gray-700 font-medium">Room Type</p>
-        <select className="border p-2 rounded focus:outline-none focus:ring focus:ring-blue-300 w-1/3">
-          <option value="Any">Any</option>
-          <option value="Single">Single</option>
-          <option value="Double">Double</option>
-          <option value="Triple">Triple</option>
+        <select
+          className="border p-2 rounded focus:outline-none focus:ring focus:ring-blue-300 w-1/3"
+          value={roomType} // Set the value from state
+          onChange={(e) => setRoomType(e.target.value)} // Update state when the selection changes
+        >
+          <option value="any">Any</option>
+          <option value="single">Single</option>
+          <option value="double">Double</option>
+          <option value="triple">Triple</option>
         </select>
       </div>
+
       <div className="flex flex-row justify-start items-center gap-4 px-4 mb-4">
         <p className="text-gray-700 font-medium">Roommate Gender</p>
-        <select className="border p-2 rounded focus:outline-none focus:ring focus:ring-blue-300 w-1/3">
-          <option value="Any">Any</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
+        <select
+          className="border p-2 rounded focus:outline-none focus:ring focus:ring-blue-300 w-1/3"
+          value={roommateGender} // Set the value from state
+          onChange={(e) => setRoommateGender(e.target.value)} // Update state when the selection changes
+        >
+          <option value="any">Any</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
           <option value="Non-binary">Non-binary</option>
         </select>
-          
       </div>
+
       {/* Apply Button */}
       <button
         className="self-center text-md text-white bg-[#023c6c] w-1/3 rounded-full py-2 mt-6 mb-3"
         onClick={handleMoreFilters}
         action-attr="close"
-        >
-            Apply
-      </button> 
+      >
+        Apply
+      </button>
     </div>
-  )
+  );
 }

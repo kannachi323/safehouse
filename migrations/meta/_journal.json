@@ -29,6 +29,20 @@
       "when": 1732909159058,
       "tag": "0003_free_masque",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1733279733220,
+      "tag": "0004_jittery_leopardon",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1733279766223,
+      "tag": "0005_gray_vector",
+      "breakpoints": true
     }
   ]
 }

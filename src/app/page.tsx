@@ -71,7 +71,7 @@ export default function Home() {
 
         <div className="bg-white text-[#013c6c] flex flex-col justify-start items-center py-10">
           <b className="text-[#013c6c] self-center text-3xl p-10 shadow-lg rounded-2xl">
-            All your rental options from <span className="text-[#ffc00c]">trusted</span> sources
+            All your rental options, all in one place (COMING SOON)
           </b>
 
           
@@ -102,7 +102,7 @@ export default function Home() {
               <div className="flex flex-col justify-center items-center h-full p-6">
                 <b className="text-[#013c6c] text-2xl mb-4">Find a Place to Rent</b>
                 <Image src="/images/house.jpg" alt="explore rentals" width={200} height={100} className="mb-4 rounded-lg" />
-                <Link href="/rent" passHref>
+                <Link href="/listings/default">
                   <button className="bg-[#ffc00c] text-[#013c6c] px-4 py-2 rounded-lg mt-4 hover:bg-[#fd9c00] transition-colors">
                     Explore Rentals
                   </button>
@@ -115,7 +115,7 @@ export default function Home() {
               <div className="flex flex-col justify-center items-center h-full p-6">
                 <b className="text-[#013c6c] text-2xl mb-4">Find Roommates</b>
                 <Image src="/images/roommates.jpg" alt="roommates" width={300} height={200} className="mb-4 rounded-lg" />
-                <Link href="/roommates" passHref>
+                <Link href="/roommates">
                   <button className="bg-[#ffc00c] text-[#013c6c] px-4 py-2 rounded-lg mt-4 hover:bg-[#fd9c00] transition-colors">
                     Find Roommates
                   </button>

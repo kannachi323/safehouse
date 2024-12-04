@@ -4,7 +4,6 @@ import { useEffect, useState, useRef } from "react";
 import { listenToUserChatsAndMessages } from '@/firebase/db';
 import { Chat } from '@/types';
 import { ChatInput } from "@/components/Inputs";
-import UserManagerContainer from "@/containers/user-page/UserManagerContainer";
 import { useAuth } from "@/contexts/AuthContext";
 import { Unsubscribe } from "firebase/auth";
 import UserManagerContainer from "@/containers/user-page/UserManagerContainer";

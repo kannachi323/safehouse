@@ -1,7 +1,6 @@
 import { auth } from "@/firebase/config";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { User } from "@/types";
-import { Router } from "next/router";
 
 export async function signInWithGoogle(isLandlord : boolean) {
 

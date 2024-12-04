@@ -1,4 +1,4 @@
-import { Filters, Listing } from "@/types";
+import { Filters } from "@/types";
 
 export async function getCoordinates(address: string) {
 const liveKey = process.env.NEXT_PUBLIC_RADAR_API_KEY;  // Make sure your Live Key is set in the environment variables

@@ -50,7 +50,7 @@ export function ListingContentCard({
       >
         {images.length > 0 ? (
           <Image
-            src={images[currentIndex].ref}
+            src={images[currentIndex].ref ?? ''}
             alt="Listing Image"
             className="object-cover w-full h-full"
             fill
@@ -120,16 +120,39 @@ interface ListingFullDetailsCardProps {
   listing?: Listing;
   onClose: () => void;
   preview?: boolean;
+  saved?: boolean;
 }
 
-export function ListingFullDetailsCard({ className, listing, onClose, preview=false}: ListingFullDetailsCardProps) {
+export function ListingFullDetailsCard({ className, listing, onClose, preview=false, saved=false}: ListingFullDetailsCardProps) {
   const { user } = useAuth();
   const [showCreateChat, setShowCreateChat] = useState(false);
 
-  const [isSaved, setIsSaved] = useState(false);
+  const [isSaved, setIsSaved] = useState(saved);
 
-  function handleSaveListing() {
-    //TODO: do some db stuff to save listing
+  async function handleBookmark() {
+    if (isSaved) {
+      fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/bookmarks`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          uid: user?.uid,
+          listing_id: listing?.listing_id,
+        }),
+      });
+    } else {
+      fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/bookmarks`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          uid: user?.uid,
+          listing_id: listing?.listing_id,
+        }),
+      });
+    }
     setIsSaved(!isSaved);
   }
 
@@ -180,10 +203,17 @@ export function ListingFullDetailsCard({ className, listing, onClose, preview=fa
             <div className="flex flex-row justify-evenly items-center h-[10%] w-full bg-white p-4 shadow-md z-50 mb-5">
               <button
                 className="flex items-center px-4 py-2  bg-[#fdc100] text-[#023c6c] rounded-lg"
-                onClick={() => handleSaveListing()}
+                onClick={handleBookmark}
               >
-                {isSaved && !preview ? <FaBookmark className="text-2xl mr-2" /> : <FaRegBookmark className="text-2xl mr-2" />}
-                Save Listing
+                {isSaved && !preview ? (
+                  <FaBookmark className="text-2xl mr-2" /> 
+                  
+                ) : (
+                
+                <FaRegBookmark className="text-2xl mr-2"/>
+                
+                )}
+                {isSaved ? 'Remove bookmark' : 'Save Listing'}
               </button>
               
               {/* Contact Button */}
@@ -215,27 +245,13 @@ export function ListingFullDetailsCard({ className, listing, onClose, preview=fa
                 <MdOutlinePersonOutline className="text-5xl mr-2"/>
                 <p className="text-md pl-2">{listing?.feature?.roommate_gender? listing.feature.roommate_gender : 'No roommate gender preferences available...'}</p>
               </div>
-                
-        
-              
-              
-              
-              
              
               <b className="text-2xl bg-[#fdc100] p-2">Policies</b>
                 
               <p className="text-md w-full py-5 px-3">{listing?.feature?.policies? listing?.feature.policies : 'No policies available...'}</p>
-             
 
-
-
-
-              
             </div>
 
-            
-
-          
         </div>
         
         {showCreateChat && (

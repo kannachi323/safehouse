@@ -62,7 +62,10 @@ export default function Page() {
         return;
       }
       console.log("New listing created");
+      alert('Listing added successfully!');
       router.replace("/user/properties")
+      
+
     } catch (error) {
       console.error("Error during the server request:", error);
     }

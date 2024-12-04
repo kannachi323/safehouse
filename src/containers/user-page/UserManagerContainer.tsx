@@ -1,5 +1,4 @@
 'use client'
-import { QueryProvider } from "@/contexts/QueryContext";
 import Logo from "@/components/Logos";
 import Link from 'next/link';
 import { BiMessageSquareDetail } from "react-icons/bi";
@@ -68,7 +67,7 @@ export default function UserManagerContainer({children, node} : Props) {
                     Messages
                   </Link>
 
-                  <Link className={`w-full my-5 p-2 text-lg text-[#013c6c] rounded-3xl flex flex-row items-center hover:shadow-2xl transform hover:scale-105 cursor-pointer transition-all duration-300 ${selectedLink("saved-searches")}`} href="/user/messages">
+                  <Link className={`w-full my-5 p-2 text-lg text-[#013c6c] rounded-3xl flex flex-row items-center hover:shadow-2xl transform hover:scale-105 cursor-pointer transition-all duration-300 ${selectedLink("saved-searches")}`} href="/user/saved">
                     <CiSaveDown2 className="inline-flex text-2xl font-bold mx-2"/>
                     Saved Searches
                   </Link>

@@ -52,6 +52,7 @@ export default function ListingsContainer({ className }: { className: string }) 
         }
     }, [filters]);
 
+    console.log(listings);
   
     return (
         <div className={className}>

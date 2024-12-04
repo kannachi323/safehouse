@@ -1,6 +1,6 @@
 import { db } from '../index';
 import { bookmarks, users, listings } from '../schema';
-import { eq } from 'drizzle-orm/expressions';
+import { eq, and } from 'drizzle-orm/expressions';
 
 export async function addBookmark(uid: string, listingId: number): Promise<void> {
   try {
@@ -23,10 +23,9 @@ export async function addBookmark(uid: string, listingId: number): Promise<void>
     }
 
     const bookmarkExists = await db
-      .select({ bookmark_id: bookmarks.bookmark_id })
+      .select({ listing_id: bookmarks.listing_id })
       .from(bookmarks)
-      .where(eq(bookmarks.uid, uid))
-      .and(eq(bookmarks.listing_id, listingId));
+      .where(and(eq(bookmarks.uid, uid), eq(bookmarks.listing_id, listingId)));
 
     if (bookmarkExists.length > 0) {
       throw new Error("Bookmark already exists");
@@ -40,20 +39,3 @@ export async function addBookmark(uid: string, listingId: number): Promise<void>
   }
 }
 
-export async function removeBookmark(uid: string, listingId: number): Promise<void> {
-  try {
-    const deletedCount = await db
-      .delete(bookmarks)
-      .where(eq(bookmarks.uid, uid))
-      .and(eq(bookmarks.listing_id, listingId));
-
-    if (deletedCount === 0) {
-      throw new Error("Bookmark not found");
-    }
-
-    console.log("Bookmark removed successfully");
-  } catch (error) {
-    console.error("Error removing bookmark:", error);
-    throw new Error("Failed to remove bookmark");
-  }
-}

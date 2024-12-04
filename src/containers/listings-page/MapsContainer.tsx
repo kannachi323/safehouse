@@ -41,9 +41,9 @@ export default function MapsContainer({width, height, showRadius = true, listing
         ))
       )}
       
-      {showRadius && maxRadius > 0 &&
+      {showRadius && circleCenterCoordinates &&maxRadius > 0 &&
         <Circle 
-          center={mapCenter}
+          center={circleCenterCoordinates}
           radius={maxRadius * 1609.34}  // Convert miles to meters (1 mile = 1609.34 meters)
           options={{
             fillColor: 'blue',
