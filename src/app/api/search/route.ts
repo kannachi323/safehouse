@@ -3,12 +3,10 @@ import { getListings, getMediaByListingId } from '@/db/listings/select';
 import { Listing, Media } from '@/types';
 
 export async function POST(request: Request) {
-    const { searchParams } = new URL(request.url);
 
     
     try {
         const filters = await request.json();
-        console.log(filters);
 
  
         const listings = await getListings(filters);

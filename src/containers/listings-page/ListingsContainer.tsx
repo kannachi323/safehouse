@@ -6,12 +6,12 @@ import { HiOutlineEmojiSad } from "react-icons/hi";
 import { findDistanceBetweenTwoPoints } from '@/utils/helper';
 import { Listing } from "@/types";
 
-export default function ListingsContainer({ className, uid }: { className: string, uid: string }) {
+export default function ListingsContainer({ className }: { className: string }) {
     
     const { filters, listings, setListings, circleCenterCoordinates } = useQuery();
-    
+
     const [isPopupOpen, setIsPopupOpen] = useState(false);
-    const [selectedListing, setSelectedListing] = useState<Listing | null>(null); 
+    const [selectedListing, setSelectedListing] = useState<Listing | null>(null);
 
     useEffect(() => {
         async function fetchUserListings() {
@@ -25,34 +25,9 @@ export default function ListingsContainer({ className, uid }: { className: strin
                 });
 
                 if (response.ok) {
-                    const fetchedListings = await response.json();
-                    let filteredListings = [...fetchedListings];
-
-
-                    // Apply the distance filter if circleCenterCoordinates are present
-                    if (circleCenterCoordinates) {
-                        filteredListings = filteredListings.filter((listing) => {
-                            return findDistanceBetweenTwoPoints(
-                                circleCenterCoordinates.lat(),
-                                circleCenterCoordinates.lng(),
-                                listing.latitude,
-                                listing.longitude,
-                                true
-                            ) <= (filters?.max_distance ?? 20)
-                            
-                        });
-                    }
-
-                    
-                    
-
-                    // Filter by UID if provided
-                    if (uid) {
-                        filteredListings = filteredListings.filter((listing) => listing.uid === uid);
-                    }
-
-                    
-                    setListings(filteredListings);
+                    const listings = await response.json();
+                   
+                    setListings(listings);
                 } else {
                     console.error("Failed to fetch listings:", response.statusText);
                 }
@@ -62,13 +37,25 @@ export default function ListingsContainer({ className, uid }: { className: strin
         }
 
         fetchUserListings();
-    }, [filters]);  // Added dependencies for re-triggering
 
+        if (circleCenterCoordinates) {
+            // Apply the distance filter no matter what
+            listings.filter((listing) => 
+                findDistanceBetweenTwoPoints(
+                    circleCenterCoordinates.lat(),
+                    circleCenterCoordinates.lng(),
+                    listing.latitude,
+                    listing.longitude,
+                    true
+                ) <= (filters?.max_distance ?? 20)
+            );
+        }
+    }, [filters]);
+
+  
     return (
         <div className={className}>
-            <h1 className="text-3xl font-bold w-full items-center p-5">
-                {(filters?.city && filters.state) ? filters.city + ', ' + filters.state : 'All'} Rental Listings
-            </h1>
+            <h1 className="text-3xl font-bold w-full items-center p-5">{(filters?.city && filters.state) ? filters.city + ', ' + filters.state : 'All'} Rental Listings</h1>
             <div className="grid grid-cols-2 gap-4 w-full place-items-center">
                 {listings.length > 0 ? listings.map((listing, id) => (
                   <ListingContentCard
@@ -86,12 +73,17 @@ export default function ListingsContainer({ className, uid }: { className: strin
                       <HiOutlineEmojiSad className="text-3xl text-[#013c6c]" />
                   </span>
                 )}
-                {isPopupOpen && selectedListing && 
+                {isPopupOpen && selectedListing &&
+                  
+                     
                   <ListingFullDetailsCard
                     className="fixed flex flex-row bg-white rounded-lg p-10 gap-x-8 z-[99]"
                     listing={selectedListing}
                     onClose={() => setIsPopupOpen(false)}
                   />
+                  
+                  
+                 
                 }
             </div>
         </div>

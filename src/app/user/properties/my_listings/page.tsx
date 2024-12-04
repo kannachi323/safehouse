@@ -2,7 +2,6 @@
 import UserManagerContainer from "@/containers/user-page/UserManagerContainer";
 import FiltersContainer from "@containers/listings-page/FiltersContainer";
 import ListingsContainer from "@/containers/listings-page/ListingsContainer";
-import { useEffect } from "react";
 import { QueryProvider, useQuery } from "@/contexts/QueryContext";
 import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
@@ -29,7 +28,7 @@ export default function Page() {
                     </div>
             
                     <FiltersContainer/>
-                    <ListingsContainer uid={user.uid} className="w-full"/>
+                    <ListingsContainer className="w-full"/>
                     
 
                 </div>

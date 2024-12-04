@@ -13,12 +13,15 @@ interface MapsContainerProps {
 
 export default function MapsContainer({width, height, showRadius = true, listing = undefined}: MapsContainerProps) {
   const { circleCenterCoordinates, listings, filters } = useQuery();
+  if (listing && listing.latitude && listing.longitude) {
+    console.log(listing.latitude, listing.longitude);
+  }
   
   const defaultCoordinates = new google.maps.LatLng(36.9741, -122.0308);
   const mapCenter = circleCenterCoordinates ?? defaultCoordinates;
  
 
-  const maxRadius = filters?.max_distance ?? 5;
+  const maxRadius = filters?.max_distance ?? 20;
 
 
   //apply the distance filter no matter what (we might need to think abt this)
