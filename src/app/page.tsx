@@ -101,7 +101,7 @@ export default function Home() {
             <div className="w-[400px] h-[400px] bg-[#ffffff] rounded-xl shadow-lg transform transition-transform hover:scale-105">
               <div className="flex flex-col justify-center items-center h-full p-6">
                 <b className="text-[#013c6c] text-2xl mb-4">Find a Place to Rent</b>
-                <Image src="/images/house.jpg" alt="roommates" width={200} height={100} className="mb-4 rounded-lg" />
+                <Image src="/images/house.jpg" alt="explore rentals" width={200} height={100} className="mb-4 rounded-lg" />
                 <Link href="/rent" passHref>
                   <button className="bg-[#ffc00c] text-[#013c6c] px-4 py-2 rounded-lg mt-4 hover:bg-[#fd9c00] transition-colors">
                     Explore Rentals
@@ -125,9 +125,7 @@ export default function Home() {
 
           </div>
       
-
-
-       
+      
 
         {/* footer */}
         <div className="bg-white text-[#013c6c] py-8 flex flex-col justify-center items-center">
