@@ -18,7 +18,7 @@ export default function AboutUsPage() {
         <section className="mb-16">
           <h2 className="text-3xl font-semibold mb-4 text-[#013c6c]">Our Story</h2>
           <p className="text-lg leading-relaxed text-gray-700">
-            We started Dwello to help people easily find their perfect rental property. After experiencing the struggles of searching for quality rental properties ourselves, we realized there had to be a better way. Our goal is to empower renters and landlords with tools that make renting easy and stress-free.
+            We started SafeHouse to help people easily find their perfect rental property. After experiencing the struggles of searching for quality rental properties ourselves, we realized there had to be a better way. Our goal is to empower renters and landlords with tools that make renting easy and stress-free.
           </p>
         </section>
 
