@@ -29,4 +29,4 @@ To deploy, run
 ```bash
 npm run build
 ```
-Then push changes and check deployed version on [vercel] (https://safehouse-amber.vercel.app/).
+Then push changes and check deployed version on [vercel] (https://safehouse-amber.vercel.app/). 
