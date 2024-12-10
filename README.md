@@ -24,3 +24,9 @@ npm test register
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser of choice
+
+To deploy, run 
+```bash
+npm run build
+```
+Then push changes and check deployed version on [vercel] (https://safehouse-amber.vercel.app/).
