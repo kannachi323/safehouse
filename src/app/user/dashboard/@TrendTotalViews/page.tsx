@@ -7,6 +7,7 @@ export default function Page() {
                 <p className="text-2xl">Trend for Total Views</p>
                 <BsGraphUp className="text-3xl" />
             </span>
+            <p className="mt-4 text-xl text-gray-500">Coming Soon</p> 
         </div>
     )
 }
