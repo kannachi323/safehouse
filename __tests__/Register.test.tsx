@@ -63,7 +63,6 @@ describe('Register Page', () => {
     const googleButton = screen.getByRole('button', { name: /Continue with Google/i }); 
     fireEvent.click(googleButton);
 
-    // await screen.findByText(/create an account/i);
 
     expect(signInWithGoogle).toHaveBeenCalledWith(true); 
     expect(createFirestoreUser).toHaveBeenCalledWith({ uid: '12345', email: 'test@example.com' });
