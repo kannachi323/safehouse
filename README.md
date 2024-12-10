@@ -13,4 +13,10 @@ npm install
 npm run dev
 ```
 
+### Running tests
+To test our features, run:
+```bash
+npm run test
+```
+
 Open [http://localhost:3000](http://localhost:3000) with your browser of choice
