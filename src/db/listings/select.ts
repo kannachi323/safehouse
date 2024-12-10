@@ -8,16 +8,14 @@ export async function getMediaByListingId(listingIds : number[]) {
         .select()
         .from(media)
         .where(inArray(media.listing_id, listingIds));
-    
      return rows;
 
 }
 
-
 export async function getListings(filters : Filters) {
     const conditions = [];
     
-    // Dynamically iterate over searchParams and build conditions
+    // apply filters to listings
     for (const [key, value] of Object.entries(filters)) {
         switch (key) {
             case 'address':
@@ -47,26 +45,25 @@ export async function getListings(filters : Filters) {
             case 'uid':
                 conditions.push(eq(listings.uid, value));
             default:
-                // Ignore unknown keys
+                // ignore unknown keys
                 break;
         }
     }
 
-    // Construct the query with the dynamically built conditions
+    // query the tables with the filter
     const rows = await db
         .select()
         .from(listings)
-        .innerJoin(features, eq(listings.listing_id, features.listing_id))// Join the features table
+        .innerJoin(features, eq(listings.listing_id, features.listing_id)) // join features table
         .where(and(...conditions));
     
-    // Now, merge the listings and features
+    // merge listings and features
     const filteredListings = rows.map((item) => {
-        // Destructure listings and features from the result
         const { listings: listing, features: feature } = item;
 
-        // Return the merged result
+        // return merged object representing filtered listings
         return {
-            ...listing, // Spread listing fields
+            ...listing,
             feature: {
                 bed_count: feature.bed_count,
                 bath_count: feature.bath_count,
