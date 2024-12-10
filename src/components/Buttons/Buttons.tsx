@@ -7,7 +7,7 @@ interface Props {
 export function GoogleButton({ onClick } : Props): JSX.Element {
     return (
         <button className="gsi-material-button" onClick={onClick}>
-            <div data-testid="google-signin" className="gsi-material-button-state"></div>
+            <div className="gsi-material-button-state"></div>
             <div className="gsi-material-button-content-wrapper">
                 <div className="gsi-material-button-icon">
                     <svg 
