@@ -12,7 +12,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Address is required' }, { status: 400 });
     }
 
-    // Call your geocoding function
     const coordinates = await getCoordinates(address);
     
     

@@ -18,5 +18,9 @@ To test our features, run:
 ```bash
 npm run test
 ```
+To run a specific test, use the name in the first part of the test file. For example, to run register.test.tsx alone, do: 
+```bash
+npm test register
+```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser of choice

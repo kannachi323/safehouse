@@ -7,6 +7,13 @@ import ChooseUser from "@/containers/auth-page/ChooseUserContainer";
 import { useState } from "react";
 import Image from "next/image";
 
+<Image
+  src="/images/ucsc-bg.jpg"
+  alt="Background"
+  fill
+  style={{ objectFit: "cover" }}
+/> // fix #1
+
 export default function LogIn() {
     const router = useRouter();
     const [showPage, setShowPage] = useState<number>(0); // Manage page state
